@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "build": "vite build",
+    "cf-typegen": "wrangler types --env-interface Env",
     "ci": "bun run typecheck && bun run lint && bun run format",
+    "deploy": "npm run build && wrangler deploy",
     "dev": "vite dev",
     "format": "eslint --fix . && prettier --write .",
     "lint": "eslint .",
@@ -35,7 +37,8 @@
     "typescript": "^5.9.0-beta",
     "typescript-eslint": "^8.38.0",
     "vite": "^6.3.5",
-    "vite-tsconfig-paths": "^5.1.4"
+    "vite-tsconfig-paths": "^5.1.4",
+    "wrangler": "^4.27.0"
   },
   "trustedDependencies": [
     "@parcel/watcher"
