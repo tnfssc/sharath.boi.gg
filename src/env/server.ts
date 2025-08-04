@@ -3,8 +3,8 @@ import { type } from "arktype";
 import { clientEnv, ClientEnvArk } from "./client";
 
 const ServerEnvArk = type({
-  "DISCORD_WEBHOOK_URL?": "string",
-  "TURNSTILE_SECRET_KEY?": "string",
+  "DISCORD_WEBHOOK_URL?": "string | undefined",
+  "TURNSTILE_SECRET_KEY?": "string | undefined",
 }).and(ClientEnvArk);
 
 export type ServerEnv = typeof ServerEnvArk.infer;
