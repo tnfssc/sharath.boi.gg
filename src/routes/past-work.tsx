@@ -100,7 +100,7 @@ function RouteComponent() {
           <Section title="Work Experience">
             <Item
               href="https://www.veritus.ai/"
-              period="Aug 2024 — Present"
+              period="Aug 2024 — July 2024"
               subtitle="Senior Software Development Engineer"
               title="Veritus"
             >
