@@ -1,6 +1,6 @@
 import { Link, useMatchRoute } from "@tanstack/react-router";
 import { useAtom } from "jotai";
-import { FileIcon, GithubIcon, HomeIcon, LinkedinIcon, SparklesIcon, TwitterIcon, UserIcon } from "lucide-react";
+import { FileIcon, GithubIcon, HomeIcon, LinkedinIcon, SparklesIcon, TwitterIcon } from "lucide-react";
 import * as React from "react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
@@ -63,7 +63,7 @@ export function PageHeader() {
       className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12"
       ref={headerRef}
     >
-      <div className="flex items-center gap-2 justify-between w-full px-4">
+      <div className="flex w-full items-center justify-between gap-2 px-4">
         <SidebarTrigger className="-ml-1 size-8" />
       </div>
     </header>
@@ -80,11 +80,6 @@ const navData = [
     icon: FileIcon,
     title: "Past work",
     url: "/past-work",
-  },
-  {
-    icon: UserIcon,
-    title: "Hire me",
-    url: "/hire",
   },
   {
     icon: SparklesIcon,
@@ -104,11 +99,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <Link to="/">
               <SidebarMenuButton size="lg">
-                <div className="flex aspect-square size-8 items-center justify-center rounded-base">
+                <div className="rounded-base flex aspect-square size-8 items-center justify-center">
                   <img alt="Sharath's logo" className="size-7" src="/icon.svg" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-heading">sharath</span>
+                  <span className="font-heading truncate">sharath</span>
                   <span className="truncate text-xs">sharath@boi.gg</span>
                 </div>
               </SidebarMenuButton>
@@ -143,7 +138,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton
-                  className="group-data-[state=collapsed]:hover:outline-0 group-data-[state=collapsed]:hover:bg-transparent overflow-visible"
+                  className="overflow-visible group-data-[state=collapsed]:hover:bg-transparent group-data-[state=collapsed]:hover:outline-0"
                   size="lg"
                 >
                   <Avatar className="h-8 w-8">
@@ -151,7 +146,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     <AvatarFallback>T</AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-heading">Socials</span>
+                    <span className="font-heading truncate">Socials</span>
                     <span className="truncate text-xs">Contact me</span>
                   </div>
                 </SidebarMenuButton>
@@ -162,8 +157,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 side={isMobile ? "bottom" : "right"}
                 sideOffset={4}
               >
-                <DropdownMenuLabel className="p-0 font-base">
-                  <div className="flex items-center gap-2 px-2 py-1.5 text-sm justify-end">
+                <DropdownMenuLabel className="font-base p-0">
+                  <div className="flex items-center justify-end gap-2 px-2 py-1.5 text-sm">
                     <ModeToggle />
                   </div>
                 </DropdownMenuLabel>

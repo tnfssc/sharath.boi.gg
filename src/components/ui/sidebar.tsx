@@ -114,7 +114,7 @@ function Sidebar({
           // Adjust the padding for floating and inset variants.
           variant === "floating" || variant === "inset"
             ? "p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]"
-            : "group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[side=left]:border-r-2 border-r-border group-data-[side=right]:border-l-2 border-l-border",
+            : "border-r-border border-l-border group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[side=left]:border-r-2 group-data-[side=right]:border-l-2",
           className,
         )}
         data-slot="sidebar-container"
@@ -149,7 +149,7 @@ function SidebarContent({ className, ...props }: React.ComponentProps<"div">) {
 function SidebarFooter({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
-      className={cn("flex flex-col gap-2 p-2 border-t-2 border-t-border", className)}
+      className={cn("border-t-border flex flex-col gap-2 border-t-2 p-2", className)}
       data-sidebar="footer"
       data-slot="sidebar-footer"
       {...props}
@@ -160,7 +160,7 @@ function SidebarFooter({ className, ...props }: React.ComponentProps<"div">) {
 function SidebarGroup({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
-      className={cn("relative flex w-full min-w-0 flex-col p-2 border-b-2 border-b-border last:border-b-0", className)}
+      className={cn("border-b-border relative flex w-full min-w-0 flex-col border-b-2 p-2 last:border-b-0", className)}
       data-sidebar="group"
       data-slot="sidebar-group"
       {...props}
@@ -178,7 +178,7 @@ function SidebarGroupAction({
   return (
     <Comp
       className={cn(
-        "absolute top-3.5 right-3 flex aspect-square w-5 items-center justify-center rounded-base p-0 outline-hidden transition-transform focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
+        "rounded-base absolute top-3.5 right-3 flex aspect-square w-5 items-center justify-center p-0 outline-hidden transition-transform focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
         // Increases the hit area of the button on mobile.
         "after:absolute after:-inset-2 md:after:hidden",
         "group-data-[collapsible=icon]:hidden",
@@ -212,7 +212,7 @@ function SidebarGroupLabel({
   return (
     <Comp
       className={cn(
-        "text-foreground ring-ring flex h-8 shrink-0 items-center rounded-base px-2 text-sm font-heading outline-hidden transition-[margin,opacity] duration-200 ease-linear focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
+        "text-foreground ring-ring rounded-base font-heading flex h-8 shrink-0 items-center px-2 text-sm outline-hidden transition-[margin,opacity] duration-200 ease-linear focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
         "group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0",
         className,
       )}
@@ -226,7 +226,7 @@ function SidebarGroupLabel({
 function SidebarHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
-      className={cn("flex flex-col gap-2 p-2 border-b-2 border-b-border", className)}
+      className={cn("border-b-border flex flex-col gap-2 border-b-2 p-2", className)}
       data-sidebar="header"
       data-slot="sidebar-header"
       {...props}
@@ -250,7 +250,7 @@ function SidebarInset({ className, ...props }: React.ComponentProps<"main">) {
     <main
       className={cn(
         "bg-secondary-background relative flex w-full flex-1 flex-col",
-        "md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-base md:peer-data-[variant=inset]:shadow-sm md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-2",
+        "md:peer-data-[variant=inset]:rounded-base md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:shadow-sm md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-2",
         className,
       )}
       data-slot="sidebar-inset"
@@ -273,7 +273,7 @@ function SidebarMenu({ className, ...props }: React.ComponentProps<"ul">) {
 function SidebarMenuItem({ className, ...props }: React.ComponentProps<"li">) {
   return (
     <li
-      className={cn("group/menu-item relative font-base", className)}
+      className={cn("group/menu-item font-base relative", className)}
       data-sidebar="menu-item"
       data-slot="sidebar-menu-item"
       {...props}
@@ -470,7 +470,7 @@ function SidebarMenuAction({
   return (
     <Comp
       className={cn(
-        "[&_svg]:text-foreground hover:[&_svg]:text-main-foreground text-main-foreground hover:bg-main hover:outline-border outline-transparent outline-2 absolute top-1.5 right-1 flex aspect-square w-5 items-center justify-center rounded-base p-0 transition-transform focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
+        "[&_svg]:text-foreground hover:[&_svg]:text-main-foreground text-main-foreground hover:bg-main hover:outline-border rounded-base absolute top-1.5 right-1 flex aspect-square w-5 items-center justify-center p-0 outline-2 outline-transparent transition-transform focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0",
         // Increases the hit area of the button on mobile.
         "after:absolute after:-inset-2 md:after:hidden",
         "peer-data-[size=sm]/menu-button:top-1",
@@ -490,7 +490,7 @@ function SidebarMenuBadge({ className, ...props }: React.ComponentProps<"div">) 
   return (
     <div
       className={cn(
-        "text-foreground pointer-events-none absolute right-1 flex h-5 min-w-5 items-center justify-center rounded-base px-1 text-xs font-base tabular-nums select-none",
+        "text-foreground rounded-base font-base pointer-events-none absolute right-1 flex h-5 min-w-5 items-center justify-center px-1 text-xs tabular-nums select-none",
         "peer-hover/menu-button:text-main-foreground",
         "peer-data-[size=sm]/menu-button:top-1",
         "peer-data-[size=default]/menu-button:top-1.5",
@@ -564,12 +564,12 @@ function SidebarMenuSkeleton({
 
   return (
     <div
-      className={cn("flex h-8 items-center gap-2 rounded-base px-2", className)}
+      className={cn("rounded-base flex h-8 items-center gap-2 px-2", className)}
       data-sidebar="menu-skeleton"
       data-slot="sidebar-menu-skeleton"
       {...props}
     >
-      {showIcon && <Skeleton className="size-4 rounded-base" data-sidebar="menu-skeleton-icon" />}
+      {showIcon && <Skeleton className="rounded-base size-4" data-sidebar="menu-skeleton-icon" />}
       <Skeleton
         className="h-4 max-w-(--skeleton-width) flex-1"
         data-sidebar="menu-skeleton-text"
@@ -614,7 +614,7 @@ function SidebarMenuSubButton({
   return (
     <Comp
       className={cn(
-        "text-foreground hover:bg-main hover:outline-border hover:text-main-foreground  active:bg-main outline-transparent outline-2 [&>svg]:text-main-foreground flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-base px-2 focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0",
+        "text-foreground hover:bg-main hover:outline-border hover:text-main-foreground active:bg-main [&>svg]:text-main-foreground rounded-base flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden px-2 outline-2 outline-transparent focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0",
         "data-[active=true]:bg-main data-[active=true]:outline-border",
         size === "sm" && "text-xs",
         size === "md" && "text-sm",

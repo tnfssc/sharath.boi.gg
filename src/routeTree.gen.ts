@@ -9,8 +9,20 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as PingRouteImport } from './routes/ping'
+import { Route as PastWorkRouteImport } from './routes/past-work'
 import { Route as IndexRouteImport } from './routes/index'
 
+const PingRoute = PingRouteImport.update({
+  id: '/ping',
+  path: '/ping',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PastWorkRoute = PastWorkRouteImport.update({
+  id: '/past-work',
+  path: '/past-work',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +31,50 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/past-work': typeof PastWorkRoute
+  '/ping': typeof PingRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/past-work': typeof PastWorkRoute
+  '/ping': typeof PingRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/past-work': typeof PastWorkRoute
+  '/ping': typeof PingRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/past-work' | '/ping'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/past-work' | '/ping'
+  id: '__root__' | '/' | '/past-work' | '/ping'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PastWorkRoute: typeof PastWorkRoute
+  PingRoute: typeof PingRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/ping': {
+      id: '/ping'
+      path: '/ping'
+      fullPath: '/ping'
+      preLoaderRoute: typeof PingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/past-work': {
+      id: '/past-work'
+      path: '/past-work'
+      fullPath: '/past-work'
+      preLoaderRoute: typeof PastWorkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,6 +87,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PastWorkRoute: PastWorkRoute,
+  PingRoute: PingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -3,6 +3,8 @@ import * as React from "react";
 
 import { currentInsetAtom } from "~/components/sidebar";
 
+import { TextHoverEffect } from "./text-hover-effect";
+
 /**
  * Hydration-safe version:
  * - SSR renders with neutral insets (0,0) to avoid mismatch.
@@ -22,15 +24,13 @@ export const ScreenCenter: React.FC<React.PropsWithChildren> = ({ children }) =>
 
   return (
     <div
-      className="flex flex-col items-center justify-center overflow-hidden snap-start"
-      style={
-        {
-          height: `calc(100vh - ${vertical})`,
-          width: `calc(100vw - ${horizontal})`,
-        } as React.CSSProperties
-      }
+      className="flex snap-start flex-col items-center justify-center overflow-clip"
+      style={{ height: `calc(100vh - ${vertical})`, width: `calc(100vw - ${horizontal})` } as React.CSSProperties}
     >
-      <div className="max-w-2xl">{children}</div>
+      {children}
+      <div className="absolute bottom-0 flex h-32 max-w-xl items-center justify-center">
+        <TextHoverEffect text="boi.gg" />
+      </div>
     </div>
   );
 };
