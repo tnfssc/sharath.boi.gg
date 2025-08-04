@@ -74,7 +74,6 @@ function Section({ children, title }: { children: React.ReactNode; title: string
     <section className="mx-auto mt-8 w-full max-w-3xl">
       <div className="mb-4">
         <h2 className="text-xl font-semibold tracking-tight">{title}</h2>
-        <div className="via-border mt-2 h-px w-full bg-gradient-to-r from-transparent to-transparent" />
       </div>
       <div className="space-y-4">{children}</div>
     </section>
@@ -94,7 +93,6 @@ function RouteComponent() {
               className="bg-primary/10 pointer-events-none absolute -top-8 left-1/2 h-24 w-[40rem] -translate-x-1/2 rounded-full blur-3xl"
             />
             <h1 className="text-2xl font-bold tracking-tight">Past Work</h1>
-            <div className="via-border mt-4 h-px w-full bg-gradient-to-r from-transparent to-transparent" />
           </header>
 
           <Section title="Work Experience">

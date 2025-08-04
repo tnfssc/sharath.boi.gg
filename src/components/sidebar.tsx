@@ -99,7 +99,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <Link to="/">
               <SidebarMenuButton size="lg">
-                <div className="rounded-base flex aspect-square size-8 items-center justify-center">
+                <div className="flex aspect-square size-8 items-center justify-center rounded-full bg-black">
                   <img alt="Sharath's logo" className="size-7" src="/icon.svg" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
