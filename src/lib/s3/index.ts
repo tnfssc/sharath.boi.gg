@@ -1,19 +1,24 @@
+import type * as Minio from "minio";
 import type { ReadableStream as ReadableWebStream } from "node:stream/web";
-
-import * as Minio from "minio";
 
 import { serverEnv } from "~/env/server";
 
-const minio = new Minio.Client({
-  accessKey: serverEnv.R2_ACCESS_KEY_ID,
-  endPoint: `${serverEnv.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
-  secretKey: serverEnv.R2_SECRET_ACCESS_KEY,
-});
+let minio = null as Minio.Client | null;
+const getMinio = async () => {
+  const { Client } = await import("minio");
+  minio ??= new Client({
+    accessKey: serverEnv.R2_ACCESS_KEY_ID,
+    endPoint: `${serverEnv.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
+    secretKey: serverEnv.R2_SECRET_ACCESS_KEY,
+  });
+  return minio;
+};
 
 export const S3 = {
   put: async (key: string, data: ReadableWebStream) => {
     const { Readable } = await import("node:stream");
     const stream = Readable.fromWeb(data);
+    const minio = await getMinio();
     await minio.putObject(serverEnv.R2_BUCKET_NAME, key, stream);
     return "ok" as const;
   },

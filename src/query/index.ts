@@ -21,6 +21,7 @@ export const mutations = {
           headers: { "Content-Type": file.type },
           method: "PUT",
         });
+        if (!response.ok) throw new Error("Failed to upload to CDN");
         return response.json() as Promise<{ url: string }>;
       },
       mutationKey: ["upload-to-cdn"],

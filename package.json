@@ -6,9 +6,10 @@
   "scripts": {
     "build": "vite build",
     "cf-typegen": "wrangler types --env-interface Env",
-    "ci": "bun run typecheck && bun run lint && bun run format",
-    "deploy": "npm run build && wrangler deploy",
+    "ci": "pnpm run typecheck && pnpm run lint && pnpm run format",
+    "deploy": "pnpm run build && wrangler deploy",
     "dev": "vite dev",
+    "dev:workerd": "wrangler dev",
     "format": "eslint --fix . && prettier --write .",
     "lint": "eslint .",
     "start": "node .output/server/index.mjs",

@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Provider as JotaiProvider } from "jotai";
 import { domAnimation, LazyMotion } from "motion/react";
+import { toast } from "sonner";
 
 import { ThemeProvider } from "~/components/theme-provider";
 import { SidebarInset, SidebarProvider } from "~/components/ui/sidebar";
@@ -18,7 +19,16 @@ const getQueryClient = () => {
   if (_queryClientSingleton) {
     return _queryClientSingleton;
   }
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      mutations: {
+        onError: (error) => {
+          toast.error("Something went wrong");
+          return error;
+        },
+      },
+    },
+  });
   _queryClientSingleton = queryClient;
   return queryClient;
 };
