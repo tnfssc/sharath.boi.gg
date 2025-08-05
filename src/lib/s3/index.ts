@@ -1,7 +1,6 @@
 import type { ReadableStream as ReadableWebStream } from "node:stream/web";
 
 import * as Minio from "minio";
-import { Readable } from "node:stream";
 
 import { serverEnv } from "~/env/server";
 
@@ -13,6 +12,7 @@ const minio = new Minio.Client({
 
 export const S3 = {
   put: async (key: string, data: ReadableWebStream) => {
+    const { Readable } = await import("node:stream");
     const stream = Readable.fromWeb(data);
     await minio.putObject(serverEnv.R2_BUCKET_NAME, key, stream);
     return "ok" as const;
