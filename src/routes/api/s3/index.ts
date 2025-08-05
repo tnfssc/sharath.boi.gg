@@ -1,5 +1,3 @@
-import type { ReadableStream as ReadableWebStream } from "node:stream/web";
-
 import { init as CUID2 } from "@paralleldrive/cuid2";
 import { createServerFileRoute } from "@tanstack/react-start/server";
 
@@ -25,7 +23,7 @@ export const ServerRoute = createServerFileRoute("/api/s3/").methods({
     const today = new Date();
     const key = today.getFullYear().toString() + (today.getMonth() + 1).toString() + `-${createId()}.${ext}`;
 
-    await S3.put(key, request.body as ReadableWebStream);
+    await S3.put(key, request.body);
 
     return Response.json({ url: new URL(key, serverEnv.CDN_BASE_URL) });
   },
