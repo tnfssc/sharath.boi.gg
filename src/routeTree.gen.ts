@@ -11,13 +11,21 @@
 import { createServerRootRoute } from '@tanstack/react-start/server'
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as UploadToCdnRouteImport } from './routes/upload-to-cdn'
 import { Route as PingRouteImport } from './routes/ping'
 import { Route as PastWorkRouteImport } from './routes/past-work'
 import { Route as IndexRouteImport } from './routes/index'
+import { ServerRoute as ApiS3IndexServerRouteImport } from './routes/api/s3/index'
+import { ServerRoute as ApiAccessControlIndexServerRouteImport } from './routes/api/access-control/index'
 import { ServerRoute as ApiAuthSplatServerRouteImport } from './routes/api/auth/$'
 
 const rootServerRouteImport = createServerRootRoute()
 
+const UploadToCdnRoute = UploadToCdnRouteImport.update({
+  id: '/upload-to-cdn',
+  path: '/upload-to-cdn',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PingRoute = PingRouteImport.update({
   id: '/ping',
   path: '/ping',
@@ -33,6 +41,17 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiS3IndexServerRoute = ApiS3IndexServerRouteImport.update({
+  id: '/api/s3/',
+  path: '/api/s3/',
+  getParentRoute: () => rootServerRouteImport,
+} as any)
+const ApiAccessControlIndexServerRoute =
+  ApiAccessControlIndexServerRouteImport.update({
+    id: '/api/access-control/',
+    path: '/api/access-control/',
+    getParentRoute: () => rootServerRouteImport,
+  } as any)
 const ApiAuthSplatServerRoute = ApiAuthSplatServerRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
@@ -43,55 +62,74 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/past-work': typeof PastWorkRoute
   '/ping': typeof PingRoute
+  '/upload-to-cdn': typeof UploadToCdnRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/past-work': typeof PastWorkRoute
   '/ping': typeof PingRoute
+  '/upload-to-cdn': typeof UploadToCdnRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/past-work': typeof PastWorkRoute
   '/ping': typeof PingRoute
+  '/upload-to-cdn': typeof UploadToCdnRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/past-work' | '/ping'
+  fullPaths: '/' | '/past-work' | '/ping' | '/upload-to-cdn'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/past-work' | '/ping'
-  id: '__root__' | '/' | '/past-work' | '/ping'
+  to: '/' | '/past-work' | '/ping' | '/upload-to-cdn'
+  id: '__root__' | '/' | '/past-work' | '/ping' | '/upload-to-cdn'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PastWorkRoute: typeof PastWorkRoute
   PingRoute: typeof PingRoute
+  UploadToCdnRoute: typeof UploadToCdnRoute
 }
 export interface FileServerRoutesByFullPath {
   '/api/auth/$': typeof ApiAuthSplatServerRoute
+  '/api/access-control': typeof ApiAccessControlIndexServerRoute
+  '/api/s3': typeof ApiS3IndexServerRoute
 }
 export interface FileServerRoutesByTo {
   '/api/auth/$': typeof ApiAuthSplatServerRoute
+  '/api/access-control': typeof ApiAccessControlIndexServerRoute
+  '/api/s3': typeof ApiS3IndexServerRoute
 }
 export interface FileServerRoutesById {
   __root__: typeof rootServerRouteImport
   '/api/auth/$': typeof ApiAuthSplatServerRoute
+  '/api/access-control/': typeof ApiAccessControlIndexServerRoute
+  '/api/s3/': typeof ApiS3IndexServerRoute
 }
 export interface FileServerRouteTypes {
   fileServerRoutesByFullPath: FileServerRoutesByFullPath
-  fullPaths: '/api/auth/$'
+  fullPaths: '/api/auth/$' | '/api/access-control' | '/api/s3'
   fileServerRoutesByTo: FileServerRoutesByTo
-  to: '/api/auth/$'
-  id: '__root__' | '/api/auth/$'
+  to: '/api/auth/$' | '/api/access-control' | '/api/s3'
+  id: '__root__' | '/api/auth/$' | '/api/access-control/' | '/api/s3/'
   fileServerRoutesById: FileServerRoutesById
 }
 export interface RootServerRouteChildren {
   ApiAuthSplatServerRoute: typeof ApiAuthSplatServerRoute
+  ApiAccessControlIndexServerRoute: typeof ApiAccessControlIndexServerRoute
+  ApiS3IndexServerRoute: typeof ApiS3IndexServerRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/upload-to-cdn': {
+      id: '/upload-to-cdn'
+      path: '/upload-to-cdn'
+      fullPath: '/upload-to-cdn'
+      preLoaderRoute: typeof UploadToCdnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/ping': {
       id: '/ping'
       path: '/ping'
@@ -117,6 +155,20 @@ declare module '@tanstack/react-router' {
 }
 declare module '@tanstack/react-start/server' {
   interface ServerFileRoutesByPath {
+    '/api/s3/': {
+      id: '/api/s3/'
+      path: '/api/s3'
+      fullPath: '/api/s3'
+      preLoaderRoute: typeof ApiS3IndexServerRouteImport
+      parentRoute: typeof rootServerRouteImport
+    }
+    '/api/access-control/': {
+      id: '/api/access-control/'
+      path: '/api/access-control'
+      fullPath: '/api/access-control'
+      preLoaderRoute: typeof ApiAccessControlIndexServerRouteImport
+      parentRoute: typeof rootServerRouteImport
+    }
     '/api/auth/$': {
       id: '/api/auth/$'
       path: '/api/auth/$'
@@ -131,12 +183,15 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PastWorkRoute: PastWorkRoute,
   PingRoute: PingRoute,
+  UploadToCdnRoute: UploadToCdnRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
 const rootServerRouteChildren: RootServerRouteChildren = {
   ApiAuthSplatServerRoute: ApiAuthSplatServerRoute,
+  ApiAccessControlIndexServerRoute: ApiAccessControlIndexServerRoute,
+  ApiS3IndexServerRoute: ApiS3IndexServerRoute,
 }
 export const serverRouteTree = rootServerRouteImport
   ._addFileChildren(rootServerRouteChildren)

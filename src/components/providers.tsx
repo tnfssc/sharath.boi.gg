@@ -7,6 +7,7 @@ import { ThemeProvider } from "~/components/theme-provider";
 import { SidebarInset, SidebarProvider } from "~/components/ui/sidebar";
 
 import { AppSidebar, PageHeader } from "./sidebar";
+import { Toaster } from "./ui/sonner";
 
 let _queryClientSingleton: null | QueryClient = null;
 
@@ -31,6 +32,7 @@ export const Providers: React.FC<React.PropsWithChildren> = ({ children }) => {
         <LazyMotion features={domAnimation} strict>
           <JotaiProvider>
             <SidebarProvider>
+              <Toaster />
               <AppSidebar />
               <SidebarInset>
                 <PageHeader />

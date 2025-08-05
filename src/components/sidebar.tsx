@@ -1,6 +1,7 @@
+import { useQuery } from "@tanstack/react-query";
 import { Link, useMatchRoute } from "@tanstack/react-router";
 import { useAtom } from "jotai";
-import { FileIcon, GithubIcon, HomeIcon, LinkedinIcon, SparklesIcon, TwitterIcon } from "lucide-react";
+import { FileIcon, GithubIcon, HomeIcon, LinkedinIcon, SparklesIcon, TwitterIcon, UploadCloudIcon } from "lucide-react";
 import * as React from "react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
@@ -28,6 +29,7 @@ import {
   SidebarTrigger,
   useSidebar,
 } from "~/components/ui/sidebar";
+import { queries } from "~/query";
 
 import { AccountButton } from "./account-button";
 import { ModeToggle } from "./theme-toggle";
@@ -89,9 +91,18 @@ const navData = [
   },
 ];
 
+const privateNavData = [
+  {
+    icon: UploadCloudIcon,
+    title: "Upload",
+    url: "/upload-to-cdn",
+  },
+];
+
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { isMobile } = useSidebar();
   const match = useMatchRoute();
+  const isOwnerQuery = useQuery(queries.isOwner());
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -132,6 +143,27 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             ))}
           </SidebarMenu>
         </SidebarGroup>
+        {isOwnerQuery.data && (
+          <SidebarGroup>
+            <SidebarGroupLabel>Private</SidebarGroupLabel>
+            <SidebarMenu>
+              {privateNavData.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton
+                    asChild
+                    className="data-[active=true]:bg-main data-[active=true]:text-main-foreground"
+                    isActive={!!match({ to: item.url })}
+                  >
+                    <Link to={item.url}>
+                      <item.icon />
+                      <span>{item.title}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroup>
+        )}
       </SidebarContent>
       <SidebarFooter>
         <SidebarMenu>
