@@ -29,6 +29,7 @@ import {
   useSidebar,
 } from "~/components/ui/sidebar";
 
+import { AccountButton } from "./account-button";
 import { ModeToggle } from "./theme-toggle";
 
 export { currentInsetAtom };
@@ -158,7 +159,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 sideOffset={4}
               >
                 <DropdownMenuLabel className="font-base p-0">
-                  <div className="flex items-center justify-end gap-2 px-2 py-1.5 text-sm">
+                  <div className="flex items-center justify-between gap-2 px-2 py-1.5 text-sm">
+                    <AccountButton />
                     <ModeToggle />
                   </div>
                 </DropdownMenuLabel>
