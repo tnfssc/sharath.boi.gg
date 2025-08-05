@@ -1,10 +1,11 @@
 import { createClient } from "@libsql/client/http";
 import { drizzle } from "drizzle-orm/libsql/http";
 
+import { serverEnv } from "~/env/server";
+
 const client = createClient({
-  authToken: process.env.LIBSQL_SECRET,
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  url: process.env.LIBSQL_URL!,
+  authToken: serverEnv.LIBSQL_SECRET,
+  url: serverEnv.LIBSQL_URL,
 });
 
 export const db = drizzle({ client });

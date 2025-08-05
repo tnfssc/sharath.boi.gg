@@ -1,11 +1,12 @@
 import "dotenv/config";
 import { defineConfig } from "drizzle-kit";
 
+import { serverEnv } from "~/env/server";
+
 export default defineConfig({
   dbCredentials: {
-    authToken: process.env.LIBSQL_SECRET,
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    url: process.env.LIBSQL_URL!,
+    authToken: serverEnv.LIBSQL_SECRET,
+    url: serverEnv.LIBSQL_URL,
   },
   dialect: "turso",
   out: "./drizzle",
