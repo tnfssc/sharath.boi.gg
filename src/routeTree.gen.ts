@@ -14,6 +14,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as UploadToCdnRouteImport } from './routes/upload-to-cdn'
 import { Route as PingRouteImport } from './routes/ping'
 import { Route as PastWorkRouteImport } from './routes/past-work'
+import { Route as BlogRouteImport } from './routes/blog'
 import { Route as IndexRouteImport } from './routes/index'
 import { ServerRoute as ApiS3IndexServerRouteImport } from './routes/api/s3/index'
 import { ServerRoute as ApiAccessControlIndexServerRouteImport } from './routes/api/access-control/index'
@@ -34,6 +35,11 @@ const PingRoute = PingRouteImport.update({
 const PastWorkRoute = PastWorkRouteImport.update({
   id: '/past-work',
   path: '/past-work',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -60,12 +66,14 @@ const ApiAuthSplatServerRoute = ApiAuthSplatServerRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/blog': typeof BlogRoute
   '/past-work': typeof PastWorkRoute
   '/ping': typeof PingRoute
   '/upload-to-cdn': typeof UploadToCdnRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/blog': typeof BlogRoute
   '/past-work': typeof PastWorkRoute
   '/ping': typeof PingRoute
   '/upload-to-cdn': typeof UploadToCdnRoute
@@ -73,20 +81,22 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/blog': typeof BlogRoute
   '/past-work': typeof PastWorkRoute
   '/ping': typeof PingRoute
   '/upload-to-cdn': typeof UploadToCdnRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/past-work' | '/ping' | '/upload-to-cdn'
+  fullPaths: '/' | '/blog' | '/past-work' | '/ping' | '/upload-to-cdn'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/past-work' | '/ping' | '/upload-to-cdn'
-  id: '__root__' | '/' | '/past-work' | '/ping' | '/upload-to-cdn'
+  to: '/' | '/blog' | '/past-work' | '/ping' | '/upload-to-cdn'
+  id: '__root__' | '/' | '/blog' | '/past-work' | '/ping' | '/upload-to-cdn'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BlogRoute: typeof BlogRoute
   PastWorkRoute: typeof PastWorkRoute
   PingRoute: typeof PingRoute
   UploadToCdnRoute: typeof UploadToCdnRoute
@@ -144,6 +154,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PastWorkRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -181,6 +198,7 @@ declare module '@tanstack/react-start/server' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BlogRoute: BlogRoute,
   PastWorkRoute: PastWorkRoute,
   PingRoute: PingRoute,
   UploadToCdnRoute: UploadToCdnRoute,
