@@ -31,9 +31,7 @@ export const session = sqliteTable("session", {
 
 export const account = sqliteTable("account", {
   accessToken: text("access_token"),
-  accessTokenExpiresAt: integer("access_token_expires_at", {
-    mode: "timestamp",
-  }),
+  accessTokenExpiresAt: integer("access_token_expires_at", { mode: "timestamp" }),
   accountId: text("account_id").notNull(),
   createdAt: integer("created_at", { mode: "timestamp" }).notNull(),
   id: text("id").primaryKey(),
@@ -58,4 +56,27 @@ export const verification = sqliteTable("verification", {
   identifier: text("identifier").notNull(),
   updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(() => /* @__PURE__ */ new Date()),
   value: text("value").notNull(),
+});
+
+export const blog_author = sqliteTable("blog_author", {
+  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => /* @__PURE__ */ new Date()),
+  id: text("id").primaryKey(),
+  image: text("image"),
+  name: text("name").notNull(),
+  social: text("social").notNull(),
+  updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(() => /* @__PURE__ */ new Date()),
+});
+
+export const blog_post = sqliteTable("blog_post", {
+  authorId: text("author_id").references(() => blog_author.id, { onDelete: "cascade" }),
+  content: text("content"),
+  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => /* @__PURE__ */ new Date()),
+  description: text("description"),
+  heroImg: text("hero_img"),
+  id: text("id").primaryKey(),
+  publishedAt: integer("published_at", { mode: "timestamp" }),
+  slug: text("slug").notNull().unique(),
+  tags: text("tags"),
+  title: text("title"),
+  updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(() => /* @__PURE__ */ new Date()),
 });
