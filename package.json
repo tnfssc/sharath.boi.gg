@@ -6,12 +6,14 @@
   "scripts": {
     "build": "vite build",
     "cf-typegen": "wrangler types --env-interface Env",
-    "ci": "pnpm run typecheck && pnpm run lint && pnpm run format",
+    "ci": "pnpm run typecheck && pnpm run lint && pnpm run format:check",
     "deploy": "pnpm run build && wrangler deploy",
     "dev": "vite dev",
     "dev:workerd": "wrangler dev",
     "format": "eslint --fix . && prettier --write .",
+    "format:check": "prettier --check .",
     "lint": "eslint .",
+    "prepush": "pnpm run typecheck && pnpm run format",
     "start": "node .output/server/index.mjs",
     "typecheck": "tsc --noEmit"
   },
