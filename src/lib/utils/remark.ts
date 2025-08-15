@@ -1,6 +1,5 @@
 import { transformerCopyButton } from "@rehype-pretty/transformers";
 import rehypeShiki from "@shikijs/rehype";
-import { transformerTwoslash } from "@shikijs/twoslash";
 import rehypeRaw from "rehype-raw";
 import rehypeStringify from "rehype-stringify";
 import remarkCodeTitle from "remark-code-title";
@@ -24,10 +23,7 @@ export const remarked = (md: string): Promise<string> =>
     .use(rehypeRaw)
     .use(rehypeShiki, {
       themes: { dark: "dark-plus", light: "dark-plus" },
-      transformers: [
-        transformerTwoslash({ explicitTrigger: true }),
-        transformerCopyButton({ feedbackDuration: 3000, visibility: "always" }),
-      ],
+      transformers: [transformerCopyButton({ feedbackDuration: 3000, visibility: "always" })],
     })
     .use(rehypeImg)
     .use(rehypeStringify)
