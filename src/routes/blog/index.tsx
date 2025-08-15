@@ -1,25 +1,20 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
+import { getWebRequest } from "@tanstack/react-start/server";
 
 import { Markdown } from "~/components/ui/markdown";
 import { ScreenCenter } from "~/components/ui/screen-center";
 import { ScrollArea } from "~/components/ui/scroll-area";
-import { serverEnv } from "~/env/server";
-import { Outline } from "~/lib/outline";
-import { remarked } from "~/lib/utils/remark";
+import { createCaller } from "~/server/caller";
 
 const getData = createServerFn().handler(async () => {
-  const { data } = await Outline.documents.list(serverEnv.OUTLINE_COLLECTION_ID);
-  const renderedData = await Promise.all(
-    data.map(async (d) => ({
-      ...d,
-      html: await remarked(d.text).catch(() => void 0),
-    })),
-  );
-  return renderedData;
+  const request = getWebRequest();
+  const caller = await createCaller(request);
+  const data = await caller.blog.post.get();
+  return data;
 });
 
-export const Route = createFileRoute("/blog")({
+export const Route = createFileRoute("/blog/")({
   component: RouteComponent,
   loader: () => getData(),
 });
@@ -31,8 +26,9 @@ function RouteComponent() {
       <ScrollArea className="w-full">
         <div className="m-4 grid grid-cols-1 gap-4">
           {data.map((d) => (
-            <div key={d.id}>
-              <Markdown content={d.text} html={d.html} />
+            <div key={d.blog_post.id}>
+              <span>{d.blog_post.id}</span>
+              <Markdown content={d.blog_post.content ?? ""} html={d.blog_post.html} />
             </div>
           ))}
         </div>

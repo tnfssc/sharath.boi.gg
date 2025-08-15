@@ -14,8 +14,12 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as UploadToCdnRouteImport } from './routes/upload-to-cdn'
 import { Route as PingRouteImport } from './routes/ping'
 import { Route as PastWorkRouteImport } from './routes/past-work'
-import { Route as BlogRouteImport } from './routes/blog'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BlogIndexRouteImport } from './routes/blog/index'
+import { Route as BlogCreateAuthorRouteImport } from './routes/blog/create-author'
+import { Route as BlogCreateRouteImport } from './routes/blog/create'
+import { Route as BlogIdIndexRouteImport } from './routes/blog/$id/index'
+import { Route as BlogIdUpdateRouteImport } from './routes/blog/$id/update'
 import { ServerRoute as ApiTrpcSplatServerRouteImport } from './routes/api/trpc/$'
 import { ServerRoute as ApiAuthSplatServerRouteImport } from './routes/api/auth/$'
 
@@ -36,14 +40,34 @@ const PastWorkRoute = PastWorkRouteImport.update({
   path: '/past-work',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BlogRoute = BlogRouteImport.update({
-  id: '/blog',
-  path: '/blog',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogCreateAuthorRoute = BlogCreateAuthorRouteImport.update({
+  id: '/blog/create-author',
+  path: '/blog/create-author',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogCreateRoute = BlogCreateRouteImport.update({
+  id: '/blog/create',
+  path: '/blog/create',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogIdIndexRoute = BlogIdIndexRouteImport.update({
+  id: '/blog/$id/',
+  path: '/blog/$id/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogIdUpdateRoute = BlogIdUpdateRouteImport.update({
+  id: '/blog/$id/update',
+  path: '/blog/$id/update',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiTrpcSplatServerRoute = ApiTrpcSplatServerRouteImport.update({
@@ -59,40 +83,84 @@ const ApiAuthSplatServerRoute = ApiAuthSplatServerRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/blog': typeof BlogRoute
   '/past-work': typeof PastWorkRoute
   '/ping': typeof PingRoute
   '/upload-to-cdn': typeof UploadToCdnRoute
+  '/blog/create': typeof BlogCreateRoute
+  '/blog/create-author': typeof BlogCreateAuthorRoute
+  '/blog': typeof BlogIndexRoute
+  '/blog/$id/update': typeof BlogIdUpdateRoute
+  '/blog/$id': typeof BlogIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/blog': typeof BlogRoute
   '/past-work': typeof PastWorkRoute
   '/ping': typeof PingRoute
   '/upload-to-cdn': typeof UploadToCdnRoute
+  '/blog/create': typeof BlogCreateRoute
+  '/blog/create-author': typeof BlogCreateAuthorRoute
+  '/blog': typeof BlogIndexRoute
+  '/blog/$id/update': typeof BlogIdUpdateRoute
+  '/blog/$id': typeof BlogIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/blog': typeof BlogRoute
   '/past-work': typeof PastWorkRoute
   '/ping': typeof PingRoute
   '/upload-to-cdn': typeof UploadToCdnRoute
+  '/blog/create': typeof BlogCreateRoute
+  '/blog/create-author': typeof BlogCreateAuthorRoute
+  '/blog/': typeof BlogIndexRoute
+  '/blog/$id/update': typeof BlogIdUpdateRoute
+  '/blog/$id/': typeof BlogIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/blog' | '/past-work' | '/ping' | '/upload-to-cdn'
+  fullPaths:
+    | '/'
+    | '/past-work'
+    | '/ping'
+    | '/upload-to-cdn'
+    | '/blog/create'
+    | '/blog/create-author'
+    | '/blog'
+    | '/blog/$id/update'
+    | '/blog/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/blog' | '/past-work' | '/ping' | '/upload-to-cdn'
-  id: '__root__' | '/' | '/blog' | '/past-work' | '/ping' | '/upload-to-cdn'
+  to:
+    | '/'
+    | '/past-work'
+    | '/ping'
+    | '/upload-to-cdn'
+    | '/blog/create'
+    | '/blog/create-author'
+    | '/blog'
+    | '/blog/$id/update'
+    | '/blog/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/past-work'
+    | '/ping'
+    | '/upload-to-cdn'
+    | '/blog/create'
+    | '/blog/create-author'
+    | '/blog/'
+    | '/blog/$id/update'
+    | '/blog/$id/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  BlogRoute: typeof BlogRoute
   PastWorkRoute: typeof PastWorkRoute
   PingRoute: typeof PingRoute
   UploadToCdnRoute: typeof UploadToCdnRoute
+  BlogCreateRoute: typeof BlogCreateRoute
+  BlogCreateAuthorRoute: typeof BlogCreateAuthorRoute
+  BlogIndexRoute: typeof BlogIndexRoute
+  BlogIdUpdateRoute: typeof BlogIdUpdateRoute
+  BlogIdIndexRoute: typeof BlogIdIndexRoute
 }
 export interface FileServerRoutesByFullPath {
   '/api/auth/$': typeof ApiAuthSplatServerRoute
@@ -143,18 +211,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PastWorkRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/blog': {
-      id: '/blog'
-      path: '/blog'
-      fullPath: '/blog'
-      preLoaderRoute: typeof BlogRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/create-author': {
+      id: '/blog/create-author'
+      path: '/blog/create-author'
+      fullPath: '/blog/create-author'
+      preLoaderRoute: typeof BlogCreateAuthorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/create': {
+      id: '/blog/create'
+      path: '/blog/create'
+      fullPath: '/blog/create'
+      preLoaderRoute: typeof BlogCreateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/$id/': {
+      id: '/blog/$id/'
+      path: '/blog/$id'
+      fullPath: '/blog/$id'
+      preLoaderRoute: typeof BlogIdIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/$id/update': {
+      id: '/blog/$id/update'
+      path: '/blog/$id/update'
+      fullPath: '/blog/$id/update'
+      preLoaderRoute: typeof BlogIdUpdateRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -180,10 +276,14 @@ declare module '@tanstack/react-start/server' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  BlogRoute: BlogRoute,
   PastWorkRoute: PastWorkRoute,
   PingRoute: PingRoute,
   UploadToCdnRoute: UploadToCdnRoute,
+  BlogCreateRoute: BlogCreateRoute,
+  BlogCreateAuthorRoute: BlogCreateAuthorRoute,
+  BlogIndexRoute: BlogIndexRoute,
+  BlogIdUpdateRoute: BlogIdUpdateRoute,
+  BlogIdIndexRoute: BlogIdIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
