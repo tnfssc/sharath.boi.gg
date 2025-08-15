@@ -16,8 +16,7 @@ import { Route as PingRouteImport } from './routes/ping'
 import { Route as PastWorkRouteImport } from './routes/past-work'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as IndexRouteImport } from './routes/index'
-import { ServerRoute as ApiS3IndexServerRouteImport } from './routes/api/s3/index'
-import { ServerRoute as ApiAccessControlIndexServerRouteImport } from './routes/api/access-control/index'
+import { ServerRoute as ApiTrpcSplatServerRouteImport } from './routes/api/trpc/$'
 import { ServerRoute as ApiAuthSplatServerRouteImport } from './routes/api/auth/$'
 
 const rootServerRouteImport = createServerRootRoute()
@@ -47,17 +46,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiS3IndexServerRoute = ApiS3IndexServerRouteImport.update({
-  id: '/api/s3/',
-  path: '/api/s3/',
+const ApiTrpcSplatServerRoute = ApiTrpcSplatServerRouteImport.update({
+  id: '/api/trpc/$',
+  path: '/api/trpc/$',
   getParentRoute: () => rootServerRouteImport,
 } as any)
-const ApiAccessControlIndexServerRoute =
-  ApiAccessControlIndexServerRouteImport.update({
-    id: '/api/access-control/',
-    path: '/api/access-control/',
-    getParentRoute: () => rootServerRouteImport,
-  } as any)
 const ApiAuthSplatServerRoute = ApiAuthSplatServerRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
@@ -103,32 +96,28 @@ export interface RootRouteChildren {
 }
 export interface FileServerRoutesByFullPath {
   '/api/auth/$': typeof ApiAuthSplatServerRoute
-  '/api/access-control': typeof ApiAccessControlIndexServerRoute
-  '/api/s3': typeof ApiS3IndexServerRoute
+  '/api/trpc/$': typeof ApiTrpcSplatServerRoute
 }
 export interface FileServerRoutesByTo {
   '/api/auth/$': typeof ApiAuthSplatServerRoute
-  '/api/access-control': typeof ApiAccessControlIndexServerRoute
-  '/api/s3': typeof ApiS3IndexServerRoute
+  '/api/trpc/$': typeof ApiTrpcSplatServerRoute
 }
 export interface FileServerRoutesById {
   __root__: typeof rootServerRouteImport
   '/api/auth/$': typeof ApiAuthSplatServerRoute
-  '/api/access-control/': typeof ApiAccessControlIndexServerRoute
-  '/api/s3/': typeof ApiS3IndexServerRoute
+  '/api/trpc/$': typeof ApiTrpcSplatServerRoute
 }
 export interface FileServerRouteTypes {
   fileServerRoutesByFullPath: FileServerRoutesByFullPath
-  fullPaths: '/api/auth/$' | '/api/access-control' | '/api/s3'
+  fullPaths: '/api/auth/$' | '/api/trpc/$'
   fileServerRoutesByTo: FileServerRoutesByTo
-  to: '/api/auth/$' | '/api/access-control' | '/api/s3'
-  id: '__root__' | '/api/auth/$' | '/api/access-control/' | '/api/s3/'
+  to: '/api/auth/$' | '/api/trpc/$'
+  id: '__root__' | '/api/auth/$' | '/api/trpc/$'
   fileServerRoutesById: FileServerRoutesById
 }
 export interface RootServerRouteChildren {
   ApiAuthSplatServerRoute: typeof ApiAuthSplatServerRoute
-  ApiAccessControlIndexServerRoute: typeof ApiAccessControlIndexServerRoute
-  ApiS3IndexServerRoute: typeof ApiS3IndexServerRoute
+  ApiTrpcSplatServerRoute: typeof ApiTrpcSplatServerRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -172,18 +161,11 @@ declare module '@tanstack/react-router' {
 }
 declare module '@tanstack/react-start/server' {
   interface ServerFileRoutesByPath {
-    '/api/s3/': {
-      id: '/api/s3/'
-      path: '/api/s3'
-      fullPath: '/api/s3'
-      preLoaderRoute: typeof ApiS3IndexServerRouteImport
-      parentRoute: typeof rootServerRouteImport
-    }
-    '/api/access-control/': {
-      id: '/api/access-control/'
-      path: '/api/access-control'
-      fullPath: '/api/access-control'
-      preLoaderRoute: typeof ApiAccessControlIndexServerRouteImport
+    '/api/trpc/$': {
+      id: '/api/trpc/$'
+      path: '/api/trpc/$'
+      fullPath: '/api/trpc/$'
+      preLoaderRoute: typeof ApiTrpcSplatServerRouteImport
       parentRoute: typeof rootServerRouteImport
     }
     '/api/auth/$': {
@@ -208,8 +190,7 @@ export const routeTree = rootRouteImport
   ._addFileTypes<FileRouteTypes>()
 const rootServerRouteChildren: RootServerRouteChildren = {
   ApiAuthSplatServerRoute: ApiAuthSplatServerRoute,
-  ApiAccessControlIndexServerRoute: ApiAccessControlIndexServerRoute,
-  ApiS3IndexServerRoute: ApiS3IndexServerRoute,
+  ApiTrpcSplatServerRoute: ApiTrpcSplatServerRoute,
 }
 export const serverRouteTree = rootServerRouteImport
   ._addFileChildren(rootServerRouteChildren)

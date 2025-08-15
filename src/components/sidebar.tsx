@@ -29,7 +29,7 @@ import {
   SidebarTrigger,
   useSidebar,
 } from "~/components/ui/sidebar";
-import { queries } from "~/query";
+import { useTRPC } from "~/lib/trpc";
 
 import { AccountButton } from "./account-button";
 import { ModeToggle } from "./theme-toggle";
@@ -102,7 +102,8 @@ const privateNavData = [
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { isMobile } = useSidebar();
   const match = useMatchRoute();
-  const isOwnerQuery = useQuery(queries.isOwner());
+  const trpc = useTRPC();
+  const isOwnerQuery = useQuery(trpc.auth.isOwner.queryOptions());
 
   return (
     <Sidebar collapsible="icon" {...props}>

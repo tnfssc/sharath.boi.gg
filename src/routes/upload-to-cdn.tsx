@@ -19,7 +19,7 @@ import {
 } from "~/components/ui/file-upload";
 import { ScreenCenter } from "~/components/ui/screen-center";
 import { useCopy } from "~/hooks/use-copy";
-import { mutations } from "~/query";
+import { useTRPC } from "~/lib/trpc";
 
 export const Route = createFileRoute("/upload-to-cdn")({
   component: RouteComponent,
@@ -28,6 +28,7 @@ export const Route = createFileRoute("/upload-to-cdn")({
 function RouteComponent() {
   const [file, setFile] = React.useState<File | null>(null);
   const [copied, copyToClipboard] = useCopy();
+  const trpc = useTRPC();
 
   const onFileReject = React.useCallback((file: File, message: string) => {
     toast(message, {
@@ -35,11 +36,14 @@ function RouteComponent() {
     });
   }, []);
 
-  const uploadToCdnMutation = useMutation(mutations.uploadToCDN());
+  const uploadToCdnMutation = useMutation(trpc.owner.uploadToCDN.mutationOptions());
 
   const onSubmit = () => {
     if (!file) return;
-    uploadToCdnMutation.mutate(file, {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    uploadToCdnMutation.mutate(formData, {
       onSuccess: (data) => {
         copyToClipboard(data.url);
         setFile(null);

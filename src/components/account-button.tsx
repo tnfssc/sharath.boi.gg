@@ -1,7 +1,7 @@
 import { useQueryClient } from "@tanstack/react-query";
 
 import { auth } from "~/lib/auth";
-import { queries } from "~/query";
+import { useTRPC } from "~/lib/trpc";
 
 import { Button } from "./ui/button";
 import { EasyTooltip } from "./ui/easy-tooltip";
@@ -9,17 +9,18 @@ import { EasyTooltip } from "./ui/easy-tooltip";
 export const AccountButton = () => {
   const authState = auth.useSession();
   const queryClient = useQueryClient();
+  const trpc = useTRPC();
 
   const emailAddress = authState.data?.user.email;
 
   const handleSignIn = async () => {
     await auth.signIn.social({ provider: "google" });
-    await queryClient.invalidateQueries(queries.isOwner());
+    await queryClient.invalidateQueries(trpc.auth.isOwner.queryOptions());
   };
 
   const handleSignOut = async () => {
     await auth.signOut();
-    await queryClient.invalidateQueries(queries.isOwner());
+    await queryClient.invalidateQueries(trpc.auth.isOwner.queryOptions());
   };
 
   return (

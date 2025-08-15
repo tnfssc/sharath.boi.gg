@@ -22,7 +22,7 @@ export const S3 = {
     const signedUrl = response.url.toString();
     return signedUrl;
   },
-  put: async (key: string, data: ReadableStream) => {
+  put: async (key: string, data: Blob | ReadableStream) => {
     const signedPutUrl = await S3.presignedPut(key);
     const response = await fetch(signedPutUrl, { body: data, method: "PUT" });
     if (!response.ok) {
