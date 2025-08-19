@@ -3,7 +3,7 @@ import { TRPCError } from "@trpc/server";
 import { type } from "arktype";
 
 import { db, orm, schema } from "~/db/index";
-import { remarked } from "~/lib/utils/remark";
+import { mdToHtml } from "~/lib/services/md-to-html";
 import { ownerProcedure, publicProcedure, router } from "~/server/trpc";
 
 export const blogRouter = router({
@@ -86,7 +86,7 @@ export const blogRouter = router({
         .execute();
       const result = await Promise.all(
         data.map(async (d) => {
-          const html = await remarked(d.blog_post.content ?? "");
+          const html = await mdToHtml(d.blog_post.content ?? "");
           return { ...d, blog_post: { ...d.blog_post, html } };
         }),
       );
@@ -106,7 +106,7 @@ export const blogRouter = router({
           code: "INTERNAL_SERVER_ERROR",
           message: `Unexpected: author not found for post ${input.id}`,
         });
-      const html = await remarked(result.blog_post.content ?? "");
+      const html = await mdToHtml(result.blog_post.content ?? "");
       return {
         ...result,
         blog_author: result.blog_author,

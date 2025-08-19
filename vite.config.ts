@@ -7,9 +7,7 @@ import tsConfigPaths from "vite-tsconfig-paths";
 export default defineConfig({
   plugins: [
     tailwindcss(),
-    tsConfigPaths({
-      projects: ["./tsconfig.json"],
-    }),
+    tsConfigPaths({ projects: ["./tsconfig.json"] }),
     tanstackStart({ customViteReactPlugin: true, target: "cloudflare-module" }),
     viteReact(),
   ],

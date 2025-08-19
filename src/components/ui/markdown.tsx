@@ -1,21 +1,12 @@
 import { Slot } from "@radix-ui/react-slot";
-import { useQuery } from "@tanstack/react-query";
 import * as React from "react";
 
 import { cn } from "~/lib/utils/index";
-import { remarked } from "~/lib/utils/remark";
 
-export type MarkdownProps = { asChild?: boolean; content?: string; html?: string } & React.ComponentProps<"div">;
+export type MarkdownProps = { asChild?: boolean; html: string } & React.ComponentProps<"div">;
 
-function Markdown({ asChild = false, className, content, html, ...props }: MarkdownProps) {
+function Markdown({ asChild = false, className, html, ...props }: MarkdownProps) {
   const Comp = asChild ? Slot : "div";
-
-  const htmlQuery = useQuery({
-    enabled: !!html || !!content,
-    initialData: html,
-    queryFn: () => html ?? remarked(content ?? ""),
-    queryKey: ["remaked", html, content],
-  });
 
   return (
     <Comp
@@ -29,7 +20,7 @@ function Markdown({ asChild = false, className, content, html, ...props }: Markd
         "prose-img:my-1 prose-img:shadow-md prose-img:shadow-foreground/20 prose-a:inline-block prose-img:inline prose-hr:my-2 [&_summary]:cursor-pointer",
         "prose-img:hover:outline prose-img:outline-gray-500",
       )}
-      dangerouslySetInnerHTML={{ __html: htmlQuery.data ?? "" }}
+      dangerouslySetInnerHTML={{ __html: html }}
       {...props}
     />
   );
