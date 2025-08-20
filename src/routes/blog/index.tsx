@@ -28,7 +28,7 @@ function RouteComponent() {
           {data.map((d) => (
             <div key={d.blog_post.id}>
               <span>{d.blog_post.id}</span>
-              <Markdown content={d.blog_post.content ?? ""} html={d.blog_post.html} />
+              <Markdown html={d.blog_post.html} />
             </div>
           ))}
         </div>

@@ -1,4 +1,4 @@
-import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { integer, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
 
 export const user = sqliteTable("user", {
   createdAt: integer("created_at", { mode: "timestamp" })
@@ -79,4 +79,12 @@ export const blog_post = sqliteTable("blog_post", {
   tags: text("tags"),
   title: text("title"),
   updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(() => /* @__PURE__ */ new Date()),
+});
+
+export const cache = sqliteTable("cache", {
+  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => /* @__PURE__ */ new Date()),
+  expiresAt: integer("expires_at", { mode: "timestamp" }).notNull(),
+  key: text("key").notNull().unique().primaryKey(),
+  updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(() => /* @__PURE__ */ new Date()),
+  value: text("value").notNull(),
 });
