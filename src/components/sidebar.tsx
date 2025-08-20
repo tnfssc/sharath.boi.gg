@@ -200,19 +200,19 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                   <DropdownMenuItem asChild>
-                    <a href="https://twitter.com/tnfssc" target="_blank">
+                    <a href="https://twitter.com/tnfssc" rel="noreferrer noopener" target="_blank">
                       <TwitterIcon />
                       Twitter
                     </a>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
-                    <a href="https://www.linkedin.com/in/tnfssc/" target="_blank">
+                    <a href="https://www.linkedin.com/in/tnfssc/" rel="noreferrer noopener" target="_blank">
                       <LinkedinIcon />
                       LinkedIn
                     </a>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
-                    <a href="https://github.com/tnfssc" target="_blank">
+                    <a href="https://github.com/tnfssc" rel="noreferrer noopener" target="_blank">
                       <GithubIcon />
                       GitHub
                     </a>

@@ -19,6 +19,16 @@ const SIDEBAR_WIDTH_MOBILE = "18rem";
 const SIDEBAR_WIDTH_ICON = "3rem";
 const SIDEBAR_KEYBOARD_SHORTCUT = "b";
 
+const cookieStore = {
+  get: (name: string) => {
+    const value = document.cookie.match(`(^|;)\\s*${name}\\s*=\\s*([^;]+)`);
+    return value?.pop();
+  },
+  set: (name: string, value: string) => {
+    document.cookie = `${name}=${value}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`;
+  },
+};
+
 export const currentInsetAtom = atom({ horizontal: "0px", vertical: "0px" });
 
 interface SidebarContextProps {
@@ -312,7 +322,7 @@ function SidebarProvider({
       }
 
       // This sets the cookie to keep the sidebar state.
-      document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`;
+      cookieStore.set(SIDEBAR_COOKIE_NAME, `${openState}`);
     },
     [setOpenProp, open],
   );
@@ -364,7 +374,7 @@ function SidebarProvider({
   }, [contextValue]);
 
   return (
-    <SidebarContext.Provider value={contextValue}>
+    <SidebarContext value={contextValue}>
       <TooltipProvider delayDuration={0}>
         <div
           className={cn("group/sidebar-wrapper has-data-[variant=inset]:bg-sidebar flex min-h-svh w-full", className)}
@@ -381,7 +391,7 @@ function SidebarProvider({
           {children}
         </div>
       </TooltipProvider>
-    </SidebarContext.Provider>
+    </SidebarContext>
   );
 }
 
@@ -405,6 +415,7 @@ function SidebarRail({ className, ...props }: React.ComponentProps<"button">) {
       onClick={toggleSidebar}
       tabIndex={-1}
       title="Toggle Sidebar"
+      type="button"
       {...props}
     />
   );
@@ -433,7 +444,7 @@ function SidebarTrigger({ className, onClick, ...props }: React.ComponentProps<t
 }
 
 function useSidebar() {
-  const context = React.useContext(SidebarContext);
+  const context = React.use(SidebarContext);
   if (!context) {
     throw new Error("useSidebar must be used within a SidebarProvider.");
   }

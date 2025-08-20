@@ -1,13 +1,17 @@
 // @ts-check
 
+import eslintReact from "@eslint-react/eslint-plugin";
 import eslint from "@eslint/js";
 import perfectionist from "eslint-plugin-perfectionist";
+import reactCompiler from "eslint-plugin-react-compiler";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
   eslint.configs.recommended,
   tseslint.configs.strictTypeChecked,
   tseslint.configs.stylisticTypeChecked,
+  eslintReact.configs["recommended-type-checked"],
+  reactCompiler.configs.recommended,
   perfectionist.configs["recommended-alphabetical"],
   {
     rules: {

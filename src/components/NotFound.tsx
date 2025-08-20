@@ -11,6 +11,7 @@ export const NotFound: React.FC<React.PropsWithChildren> = ({ children }) => {
         <button
           className="rounded bg-emerald-500 px-2 py-1 text-sm font-black text-white uppercase"
           onClick={() => window.history.back()}
+          type="button"
         >
           Go back
         </button>

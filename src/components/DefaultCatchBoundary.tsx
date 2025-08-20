@@ -20,6 +20,7 @@ export function DefaultCatchBoundary({ error }: ErrorComponentProps) {
           onClick={() => {
             void router.invalidate();
           }}
+          type="button"
         >
           Try Again
         </button>

@@ -201,6 +201,7 @@ export const LoaderFive = ({ text }: { text: string }) => {
           }}
           className="inline-block"
           initial={{ opacity: 0.5, scale: 1 }}
+          // eslint-disable-next-line @eslint-react/no-array-index-key
           key={i}
           transition={{
             delay: i * 0.05,

@@ -214,7 +214,7 @@ function createStore(
 }
 
 function useDirection(dirProp?: Direction): Direction {
-  const contextDir = React.useContext(DirectionContext);
+  const contextDir = React.use(DirectionContext);
   return dirProp ?? contextDir ?? "ltr";
 }
 
@@ -245,6 +245,7 @@ function useStore<T>(selector: (state: StoreState) => T): T {
     }
 
     const nextValue = selector(state);
+    // eslint-disable-next-line react-compiler/react-compiler
     lastValueRef.current = { state, value: nextValue };
     return nextValue;
   }, [store, selector, lastValueRef]);
@@ -253,7 +254,7 @@ function useStore<T>(selector: (state: StoreState) => T): T {
 }
 
 function useStoreContext(consumerName: string) {
-  const context = React.useContext(StoreContext);
+  const context = React.use(StoreContext);
   if (!context) {
     throw new Error(`\`${consumerName}\` must be used within \`${ROOT_NAME}\``);
   }
@@ -409,6 +410,7 @@ function FileUploadDropzone(props: FileUploadDropzoneProps) {
         dataTransfer.items.add(file);
       }
 
+      // eslint-disable-next-line react-compiler/react-compiler
       inputElement.files = dataTransfer.files;
       inputElement.dispatchEvent(new Event("change", { bubbles: true }));
     },
@@ -811,8 +813,8 @@ function FileUploadRoot(props: FileUploadRootProps) {
   const RootPrimitive = asChild ? Slot : "div";
 
   return (
-    <StoreContext.Provider value={store}>
-      <FileUploadContext.Provider value={contextValue}>
+    <StoreContext value={store}>
+      <FileUploadContext value={contextValue}>
         <RootPrimitive
           data-disabled={disabled ? "" : undefined}
           data-slot="file-upload"
@@ -840,8 +842,8 @@ function FileUploadRoot(props: FileUploadRootProps) {
             {label ?? "File upload"}
           </span>
         </RootPrimitive>
-      </FileUploadContext.Provider>
-    </StoreContext.Provider>
+      </FileUploadContext>
+    </StoreContext>
   );
 }
 
@@ -876,7 +878,7 @@ function FileUploadTrigger(props: FileUploadTriggerProps) {
 }
 
 function useFileUploadContext(consumerName: string) {
-  const context = React.useContext(FileUploadContext);
+  const context = React.use(FileUploadContext);
   if (!context) {
     throw new Error(`\`${consumerName}\` must be used within \`${ROOT_NAME}\``);
   }
@@ -997,7 +999,7 @@ function FileUploadItem(props: FileUploadItemProps) {
   const ItemPrimitive = asChild ? Slot : "div";
 
   return (
-    <FileUploadItemContext.Provider value={itemContext}>
+    <FileUploadItemContext value={itemContext}>
       <ItemPrimitive
         aria-describedby={`${nameId} ${sizeId} ${statusId} ${fileState.error ? messageId : ""}`}
         aria-labelledby={nameId}
@@ -1019,7 +1021,7 @@ function FileUploadItem(props: FileUploadItemProps) {
           {statusText}
         </span>
       </ItemPrimitive>
-    </FileUploadItemContext.Provider>
+    </FileUploadItemContext>
   );
 }
 
@@ -1296,7 +1298,7 @@ function getFileIcon(file: File) {
 }
 
 function useFileUploadItemContext(consumerName: string) {
-  const context = React.useContext(FileUploadItemContext);
+  const context = React.use(FileUploadItemContext);
   if (!context) {
     throw new Error(`\`${consumerName}\` must be used within \`${ITEM_NAME}\``);
   }

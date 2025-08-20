@@ -79,6 +79,7 @@ function RouteComponent() {
         </FileUploadDropzone>
         <FileUploadList>
           {files.map((file, index) => (
+            // eslint-disable-next-line @eslint-react/no-array-index-key
             <FileUploadItem className="animate-in fade-in" key={index} value={file}>
               <FileUploadItemPreview />
               <FileUploadItemMetadata />

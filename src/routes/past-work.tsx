@@ -53,7 +53,7 @@ function Item({
           {period ? <div className="text-muted-foreground text-xs font-medium sm:text-sm">{period}</div> : null}
         </div>
 
-        {children && <div className="mt-3 space-y-2">{children}</div>}
+        {!!children && <div className="mt-3 space-y-2">{children}</div>}
 
         {!!tech?.length && (
           <div className="mt-3 flex flex-wrap gap-2">

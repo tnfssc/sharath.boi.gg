@@ -16,6 +16,7 @@ export const ScreenCenter: React.FC<React.PropsWithChildren<{ className?: string
   const [mounted, setMounted] = React.useState(false);
 
   React.useEffect(() => {
+    // eslint-disable-next-line @eslint-react/hooks-extra/no-direct-set-state-in-use-effect
     setMounted(true);
   }, []);
 

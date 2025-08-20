@@ -53,7 +53,9 @@ function Carousel({
       return;
     }
 
+    // eslint-disable-next-line @eslint-react/hooks-extra/no-direct-set-state-in-use-effect
     setCanScrollPrev(api.canScrollPrev());
+    // eslint-disable-next-line @eslint-react/hooks-extra/no-direct-set-state-in-use-effect
     setCanScrollNext(api.canScrollNext());
   }, []);
 
@@ -100,19 +102,22 @@ function Carousel({
     };
   }, [api, onSelect]);
 
+  const value = React.useMemo(
+    () => ({
+      api: api,
+      canScrollNext,
+      canScrollPrev,
+      carouselRef,
+      opts,
+      orientation,
+      scrollNext,
+      scrollPrev,
+    }),
+    [api, canScrollNext, canScrollPrev, carouselRef, opts, orientation, scrollNext, scrollPrev],
+  );
+
   return (
-    <CarouselContext.Provider
-      value={{
-        api: api,
-        canScrollNext,
-        canScrollPrev,
-        carouselRef,
-        opts,
-        orientation,
-        scrollNext,
-        scrollPrev,
-      }}
-    >
+    <CarouselContext value={value}>
       <div
         aria-roledescription="carousel"
         className={cn("relative", className)}
@@ -123,7 +128,7 @@ function Carousel({
       >
         {children}
       </div>
-    </CarouselContext.Provider>
+    </CarouselContext>
   );
 }
 
@@ -212,7 +217,7 @@ function CarouselPrevious({
 }
 
 function useCarousel() {
-  const context = React.useContext(CarouselContext);
+  const context = React.use(CarouselContext);
 
   if (!context) {
     throw new Error("useCarousel must be used within a <Carousel />");
