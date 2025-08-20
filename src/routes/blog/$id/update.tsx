@@ -6,6 +6,7 @@ import { getWebRequest } from "@tanstack/react-start/server";
 import { CodeEditor } from "~/components/blog/code-editor";
 import { MarkdownPreview } from "~/components/blog/preview";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "~/components/ui/resizable";
+import { ScrollArea } from "~/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import { useIsMobile } from "~/hooks/use-mobile";
 import { useTRPC } from "~/lib/trpc";
@@ -24,6 +25,7 @@ const getData = createServerFn()
 export const Route = createFileRoute("/blog/$id/update")({
   component: RouteComponent,
   loader: ({ params }) => getData({ data: params.id }),
+  ssr: false,
 });
 
 function RouteComponent() {
@@ -53,11 +55,14 @@ function RouteComponent() {
         <TabsContent value="edit">
           <CodeEditor
             content={blogPostQuery.data.blog_post.content ?? ""}
+            height="80vh"
             onContentChange={(content) => updateBlogMutation.mutate({ content, id: data.blog_post.id })}
           />
         </TabsContent>
         <TabsContent value="preview">
-          <MarkdownPreview html={blogPostQuery.data.blog_post.html} />
+          <ScrollArea style={{ height: "80vh" }}>
+            <MarkdownPreview html={blogPostQuery.data.blog_post.html} />
+          </ScrollArea>
         </TabsContent>
       </Tabs>
     );
@@ -70,12 +75,15 @@ function RouteComponent() {
       <ResizablePanel defaultSize={50}>
         <CodeEditor
           content={blogPostQuery.data.blog_post.content ?? ""}
+          height="80vh"
           onContentChange={(content) => updateBlogMutation.mutate({ content, id: data.blog_post.id })}
         />
       </ResizablePanel>
       <ResizableHandle />
       <ResizablePanel defaultSize={50}>
-        <MarkdownPreview html={blogPostQuery.data.blog_post.html} />
+        <ScrollArea style={{ height: "80vh" }}>
+          <MarkdownPreview html={blogPostQuery.data.blog_post.html} />
+        </ScrollArea>
       </ResizablePanel>
     </ResizablePanelGroup>
   );

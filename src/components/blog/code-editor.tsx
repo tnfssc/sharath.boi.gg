@@ -1,25 +1,29 @@
-import { useEffect, useState } from "react";
+import Editor, { type EditorProps } from "@monaco-editor/react";
 
-import { Textarea } from "~/components/ui/textarea";
 import { useDebounceHandler } from "~/hooks/use-debounce-handler";
 
-export const CodeEditor: React.FC<{ content: string; onContentChange: (content: string) => void }> = ({
+import { useTheme } from "../theme-provider";
+
+export const CodeEditor: React.FC<{ content: string; onContentChange: (content: string) => void } & EditorProps> = ({
   content,
   onContentChange,
+  ...props
 }) => {
-  const [value, setValue] = useState(content);
-  useEffect(() => {
-    setValue(content);
-  }, [content]);
+  const { theme } = useTheme();
   const handleChange = useDebounceHandler(onContentChange);
 
   return (
-    <Textarea
-      onChange={(e) => {
-        setValue(e.target.value);
-        handleChange(e.target.value);
+    <Editor
+      defaultValue={content}
+      language="markdown"
+      onChange={(value) => {
+        if (value) handleChange(value);
       }}
-      value={value}
+      options={{
+        minimap: { enabled: false },
+      }}
+      theme={theme === "light" ? "vs-light" : "vs-dark"}
+      {...props}
     />
   );
 };
