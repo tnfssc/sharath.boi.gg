@@ -371,7 +371,7 @@ function SidebarProvider({
     } else {
       setCurrentInset((p) => ({ ...p, horizontal: SIDEBAR_WIDTH_ICON }));
     }
-  }, [contextValue]);
+  }, [contextValue, setCurrentInset]);
 
   return (
     <SidebarContext value={contextValue}>

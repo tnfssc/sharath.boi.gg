@@ -618,6 +618,46 @@ function FileUploadRoot(props: FileUploadRootProps) {
     };
   }, [files, urlCache]);
 
+  const onFilesUpload = React.useCallback(
+    async (files: Array<File>) => {
+      try {
+        for (const file of files) {
+          store.dispatch({ file, progress: 0, type: "SET_PROGRESS" });
+        }
+
+        if (onUpload) {
+          await onUpload(files, {
+            onError: (file, error) => {
+              store.dispatch({
+                error: error.message || "Upload failed",
+                file,
+                type: "SET_ERROR",
+              });
+            },
+            onProgress,
+            onSuccess: (file) => {
+              store.dispatch({ file, type: "SET_SUCCESS" });
+            },
+          });
+        } else {
+          for (const file of files) {
+            store.dispatch({ file, type: "SET_SUCCESS" });
+          }
+        }
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : "Upload failed";
+        for (const file of files) {
+          store.dispatch({
+            error: errorMessage,
+            file,
+            type: "SET_ERROR",
+          });
+        }
+      }
+    },
+    [store, onUpload, onProgress],
+  );
+
   const onFilesChange = React.useCallback(
     (originalFiles: Array<File>) => {
       if (disabled) return;
@@ -732,59 +772,20 @@ function FileUploadRoot(props: FileUploadRootProps) {
       }
     },
     [
-      store,
-      isControlled,
-      onValueChange,
-      onAccept,
-      onFileAccept,
-      onUpload,
+      disabled,
       maxFiles,
+      store,
       onFileValidate,
       onFileReject,
       acceptTypes,
       maxSize,
-      disabled,
+      isControlled,
+      onValueChange,
+      onAccept,
+      onUpload,
+      onFileAccept,
+      onFilesUpload,
     ],
-  );
-
-  const onFilesUpload = React.useCallback(
-    async (files: Array<File>) => {
-      try {
-        for (const file of files) {
-          store.dispatch({ file, progress: 0, type: "SET_PROGRESS" });
-        }
-
-        if (onUpload) {
-          await onUpload(files, {
-            onError: (file, error) => {
-              store.dispatch({
-                error: error.message || "Upload failed",
-                file,
-                type: "SET_ERROR",
-              });
-            },
-            onProgress,
-            onSuccess: (file) => {
-              store.dispatch({ file, type: "SET_SUCCESS" });
-            },
-          });
-        } else {
-          for (const file of files) {
-            store.dispatch({ file, type: "SET_SUCCESS" });
-          }
-        }
-      } catch (error) {
-        const errorMessage = error instanceof Error ? error.message : "Upload failed";
-        for (const file of files) {
-          store.dispatch({
-            error: errorMessage,
-            file,
-            type: "SET_ERROR",
-          });
-        }
-      }
-    },
-    [store, onUpload, onProgress],
   );
 
   const onInputChange = React.useCallback(

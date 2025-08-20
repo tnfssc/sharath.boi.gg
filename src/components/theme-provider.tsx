@@ -54,7 +54,7 @@ export function ThemeProvider({
       },
       theme,
     }),
-    [theme],
+    [storageKey, theme],
   );
 
   return (

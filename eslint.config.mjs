@@ -4,6 +4,7 @@ import eslintReact from "@eslint-react/eslint-plugin";
 import eslint from "@eslint/js";
 import perfectionist from "eslint-plugin-perfectionist";
 import reactCompiler from "eslint-plugin-react-compiler";
+import reactHooks from "eslint-plugin-react-hooks";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
@@ -11,6 +12,7 @@ export default tseslint.config(
   tseslint.configs.strictTypeChecked,
   tseslint.configs.stylisticTypeChecked,
   eslintReact.configs["recommended-type-checked"],
+  reactHooks.configs["recommended-latest"],
   reactCompiler.configs.recommended,
   perfectionist.configs["recommended-alphabetical"],
   {
