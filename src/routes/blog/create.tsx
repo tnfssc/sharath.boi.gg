@@ -49,8 +49,8 @@ function RouteComponent() {
 
   const createPostMutation = useMutation(
     trpc.blog.post.create.mutationOptions({
-      onSuccess: async ({ id }) => {
-        await router.navigate({ params: { id }, to: "/blog/$id/update" });
+      onSuccess: async ({ slug }) => {
+        await router.navigate({ params: { slug }, to: "/blog/$slug/update" });
       },
     }),
   );

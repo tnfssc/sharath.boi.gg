@@ -26,8 +26,8 @@ function RouteComponent() {
       <ScrollArea className="w-full">
         <div className="m-4 grid grid-cols-1 gap-4">
           {data.map((d) => (
-            <div key={d.blog_post.id}>
-              <span>{d.blog_post.id}</span>
+            <div key={d.blog_post.slug}>
+              <span>{d.blog_post.slug}</span>
               <Markdown html={d.blog_post.html} />
             </div>
           ))}

@@ -92,11 +92,11 @@ export const blogRouter = router({
       );
       return result;
     }),
-    getById: publicProcedure.input(type({ id: "string" })).query(async ({ input }) => {
+    getBySlug: publicProcedure.input(type({ slug: "0 < string < 128" })).query(async ({ input }) => {
       const data = await db
         .select()
         .from(schema.blog_post)
-        .where(orm.eq(schema.blog_post.id, input.id))
+        .where(orm.eq(schema.blog_post.slug, input.slug))
         .leftJoin(schema.blog_author, orm.eq(schema.blog_post.authorId, schema.blog_author.id))
         .execute();
       const result = data.at(0);
@@ -104,7 +104,7 @@ export const blogRouter = router({
       if (!result.blog_author)
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
-          message: `Unexpected: author not found for post ${input.id}`,
+          message: `Unexpected: author not found for post ${input.slug}`,
         });
       const html = await mdToHtml(result.blog_post.content ?? "");
       return {

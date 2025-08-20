@@ -15,16 +15,16 @@ import { createCaller } from "~/server/caller";
 const getData = createServerFn()
   .validator((id: string) => id)
   .handler(async (ctx) => {
-    const id = ctx.data;
+    const slug = ctx.data;
     const request = getWebRequest();
     const caller = await createCaller(request);
-    const data = await caller.blog.post.getById({ id });
+    const data = await caller.blog.post.getBySlug({ slug });
     return data;
   });
 
-export const Route = createFileRoute("/blog/$id/update")({
+export const Route = createFileRoute("/blog/$slug/update")({
   component: RouteComponent,
-  loader: ({ params }) => getData({ data: params.id }),
+  loader: ({ params }) => getData({ data: params.slug }),
   ssr: false,
 });
 
@@ -35,12 +35,14 @@ function RouteComponent() {
   const trpc = useTRPC();
   const queryClient = useQueryClient();
 
-  const blogPostQuery = useQuery(trpc.blog.post.getById.queryOptions({ id: data.blog_post.id }, { initialData: data }));
+  const blogPostQuery = useQuery(
+    trpc.blog.post.getBySlug.queryOptions({ slug: data.blog_post.slug }, { initialData: data }),
+  );
 
   const updateBlogMutation = useMutation(
     trpc.blog.post.update.mutationOptions({
       onSuccess: async () => {
-        await queryClient.invalidateQueries(trpc.blog.post.getById.queryOptions({ id: data.blog_post.id }));
+        await queryClient.invalidateQueries(trpc.blog.post.getBySlug.queryOptions({ slug: data.blog_post.slug }));
       },
     }),
   );

@@ -18,8 +18,8 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogIndexRouteImport } from './routes/blog/index'
 import { Route as BlogCreateAuthorRouteImport } from './routes/blog/create-author'
 import { Route as BlogCreateRouteImport } from './routes/blog/create'
-import { Route as BlogIdIndexRouteImport } from './routes/blog/$id/index'
-import { Route as BlogIdUpdateRouteImport } from './routes/blog/$id/update'
+import { Route as BlogSlugIndexRouteImport } from './routes/blog/$slug/index'
+import { Route as BlogSlugUpdateRouteImport } from './routes/blog/$slug/update'
 import { ServerRoute as ApiTrpcSplatServerRouteImport } from './routes/api/trpc/$'
 import { ServerRoute as ApiAuthSplatServerRouteImport } from './routes/api/auth/$'
 
@@ -60,14 +60,14 @@ const BlogCreateRoute = BlogCreateRouteImport.update({
   path: '/blog/create',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BlogIdIndexRoute = BlogIdIndexRouteImport.update({
-  id: '/blog/$id/',
-  path: '/blog/$id/',
+const BlogSlugIndexRoute = BlogSlugIndexRouteImport.update({
+  id: '/blog/$slug/',
+  path: '/blog/$slug/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BlogIdUpdateRoute = BlogIdUpdateRouteImport.update({
-  id: '/blog/$id/update',
-  path: '/blog/$id/update',
+const BlogSlugUpdateRoute = BlogSlugUpdateRouteImport.update({
+  id: '/blog/$slug/update',
+  path: '/blog/$slug/update',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiTrpcSplatServerRoute = ApiTrpcSplatServerRouteImport.update({
@@ -89,8 +89,8 @@ export interface FileRoutesByFullPath {
   '/blog/create': typeof BlogCreateRoute
   '/blog/create-author': typeof BlogCreateAuthorRoute
   '/blog': typeof BlogIndexRoute
-  '/blog/$id/update': typeof BlogIdUpdateRoute
-  '/blog/$id': typeof BlogIdIndexRoute
+  '/blog/$slug/update': typeof BlogSlugUpdateRoute
+  '/blog/$slug': typeof BlogSlugIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -100,8 +100,8 @@ export interface FileRoutesByTo {
   '/blog/create': typeof BlogCreateRoute
   '/blog/create-author': typeof BlogCreateAuthorRoute
   '/blog': typeof BlogIndexRoute
-  '/blog/$id/update': typeof BlogIdUpdateRoute
-  '/blog/$id': typeof BlogIdIndexRoute
+  '/blog/$slug/update': typeof BlogSlugUpdateRoute
+  '/blog/$slug': typeof BlogSlugIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -112,8 +112,8 @@ export interface FileRoutesById {
   '/blog/create': typeof BlogCreateRoute
   '/blog/create-author': typeof BlogCreateAuthorRoute
   '/blog/': typeof BlogIndexRoute
-  '/blog/$id/update': typeof BlogIdUpdateRoute
-  '/blog/$id/': typeof BlogIdIndexRoute
+  '/blog/$slug/update': typeof BlogSlugUpdateRoute
+  '/blog/$slug/': typeof BlogSlugIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -125,8 +125,8 @@ export interface FileRouteTypes {
     | '/blog/create'
     | '/blog/create-author'
     | '/blog'
-    | '/blog/$id/update'
-    | '/blog/$id'
+    | '/blog/$slug/update'
+    | '/blog/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -136,8 +136,8 @@ export interface FileRouteTypes {
     | '/blog/create'
     | '/blog/create-author'
     | '/blog'
-    | '/blog/$id/update'
-    | '/blog/$id'
+    | '/blog/$slug/update'
+    | '/blog/$slug'
   id:
     | '__root__'
     | '/'
@@ -147,8 +147,8 @@ export interface FileRouteTypes {
     | '/blog/create'
     | '/blog/create-author'
     | '/blog/'
-    | '/blog/$id/update'
-    | '/blog/$id/'
+    | '/blog/$slug/update'
+    | '/blog/$slug/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -159,8 +159,8 @@ export interface RootRouteChildren {
   BlogCreateRoute: typeof BlogCreateRoute
   BlogCreateAuthorRoute: typeof BlogCreateAuthorRoute
   BlogIndexRoute: typeof BlogIndexRoute
-  BlogIdUpdateRoute: typeof BlogIdUpdateRoute
-  BlogIdIndexRoute: typeof BlogIdIndexRoute
+  BlogSlugUpdateRoute: typeof BlogSlugUpdateRoute
+  BlogSlugIndexRoute: typeof BlogSlugIndexRoute
 }
 export interface FileServerRoutesByFullPath {
   '/api/auth/$': typeof ApiAuthSplatServerRoute
@@ -239,18 +239,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogCreateRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/blog/$id/': {
-      id: '/blog/$id/'
-      path: '/blog/$id'
-      fullPath: '/blog/$id'
-      preLoaderRoute: typeof BlogIdIndexRouteImport
+    '/blog/$slug/': {
+      id: '/blog/$slug/'
+      path: '/blog/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/blog/$id/update': {
-      id: '/blog/$id/update'
-      path: '/blog/$id/update'
-      fullPath: '/blog/$id/update'
-      preLoaderRoute: typeof BlogIdUpdateRouteImport
+    '/blog/$slug/update': {
+      id: '/blog/$slug/update'
+      path: '/blog/$slug/update'
+      fullPath: '/blog/$slug/update'
+      preLoaderRoute: typeof BlogSlugUpdateRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -282,8 +282,8 @@ const rootRouteChildren: RootRouteChildren = {
   BlogCreateRoute: BlogCreateRoute,
   BlogCreateAuthorRoute: BlogCreateAuthorRoute,
   BlogIndexRoute: BlogIndexRoute,
-  BlogIdUpdateRoute: BlogIdUpdateRoute,
-  BlogIdIndexRoute: BlogIdIndexRoute,
+  BlogSlugUpdateRoute: BlogSlugUpdateRoute,
+  BlogSlugIndexRoute: BlogSlugIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
