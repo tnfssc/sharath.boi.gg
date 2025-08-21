@@ -30,7 +30,7 @@ export const ScreenCenter: React.FC<React.PropsWithChildren<{ className?: string
       style={{ height: `calc(100vh - ${vertical})`, width: `calc(100vw - ${horizontal})` } as React.CSSProperties}
     >
       {children}
-      <div className="absolute bottom-0 flex h-32 max-w-xl items-center justify-center">
+      <div className="pointer-events-none absolute bottom-0 flex h-32 max-w-xl items-center justify-center">
         <TextHoverEffect text="boi.gg" />
       </div>
     </div>
