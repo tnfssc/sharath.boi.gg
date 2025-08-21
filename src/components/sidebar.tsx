@@ -1,7 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link, useMatchRoute } from "@tanstack/react-router";
 import { atom, useAtom } from "jotai";
-import { FileIcon, GithubIcon, HomeIcon, LinkedinIcon, SparklesIcon, TwitterIcon, UploadCloudIcon } from "lucide-react";
+import {
+  FileIcon,
+  GithubIcon,
+  HomeIcon,
+  LinkedinIcon,
+  SparklesIcon,
+  TwitterIcon,
+  UploadCloudIcon,
+  MessageSquareTextIcon,
+} from "lucide-react";
 import * as React from "react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
@@ -95,6 +104,11 @@ const navData = [
     icon: FileIcon,
     title: "Past work",
     url: "/past-work",
+  },
+  {
+    icon: MessageSquareTextIcon,
+    title: "Blog",
+    url: "/blog",
   },
   {
     icon: SparklesIcon,
