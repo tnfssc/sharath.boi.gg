@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
+import { ScreenCenter } from "~/components/ui/screen-center";
 import { SubmitButton } from "~/components/ui/submit-button";
 import { useTRPC } from "~/lib/trpc";
 
@@ -42,53 +43,55 @@ function RouteComponent() {
   }
 
   return (
-    <Form {...form}>
-      <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Name</FormLabel>
-              <FormControl>
-                <Input placeholder="Your name" {...field} />
-              </FormControl>
-              <FormDescription>This is your public display name.</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="image"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Image</FormLabel>
-              <FormControl>
-                <Input placeholder="https://github.com/tnfssc.png" {...field} />
-              </FormControl>
-              <FormDescription>Your avatar image.</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="social"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Social</FormLabel>
-              <FormControl>
-                <Input placeholder="https://github.com/tnfssc" {...field} />
-              </FormControl>
-              <FormDescription>Your social media handle.</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+    <ScreenCenter>
+      <Form {...form}>
+        <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="Your name" {...field} />
+                </FormControl>
+                <FormDescription>This is your public display name.</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="image"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Image</FormLabel>
+                <FormControl>
+                  <Input placeholder="https://github.com/tnfssc.png" {...field} />
+                </FormControl>
+                <FormDescription>Your avatar image.</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="social"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Social</FormLabel>
+                <FormControl>
+                  <Input placeholder="https://github.com/tnfssc" {...field} />
+                </FormControl>
+                <FormDescription>Your social media handle.</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <SubmitButton loading={createAuthorMutation.isPending}>Create</SubmitButton>
-      </form>
-    </Form>
+          <SubmitButton loading={createAuthorMutation.isPending}>Create</SubmitButton>
+        </form>
+      </Form>
+    </ScreenCenter>
   );
 }

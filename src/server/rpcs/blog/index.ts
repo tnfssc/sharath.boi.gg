@@ -49,32 +49,12 @@ export const blogRouter = router({
   },
   post: {
     create: ownerProcedure
-      .input(
-        type({
-          authorId: "0 < string < 128",
-          "content?": "string",
-          "description?": "string",
-          "heroImg?": "string",
-          "publishedAt?": "Date",
-          slug: "0 < string < 128",
-          "tags?": "string",
-          "title?": "string",
-        }),
-      )
+      .input(type({ authorId: "0 < string < 128", slug: "0 < string < 128" }))
       .mutation(async ({ input }) => {
+        const content = `---\nauthorId: ${input.authorId}\n---\n\n# Untitled post`;
         const data = await db
           .insert(schema.blog_post)
-          .values({
-            authorId: input.authorId,
-            content: input.content ?? null,
-            description: input.description ?? null,
-            heroImg: input.heroImg ?? null,
-            id: createId(),
-            publishedAt: input.publishedAt ?? null,
-            slug: input.slug,
-            tags: input.tags ?? null,
-            title: input.title ?? null,
-          })
+          .values({ authorId: input.authorId, content, id: createId(), slug: input.slug })
           .returning()
           .execute();
         return data[0];
