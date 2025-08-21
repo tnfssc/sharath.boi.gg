@@ -35,7 +35,7 @@ function RouteComponent() {
     <ScreenCenter>
       <ScrollArea className="w-full">
         <div className="m-4 grid grid-cols-1 gap-4">
-          <Markdown html={blogPostQuery.data.blog_post.html} />
+          <Markdown html={blogPostQuery.data.blog_post.html ?? ""} />
         </div>
       </ScrollArea>
     </ScreenCenter>

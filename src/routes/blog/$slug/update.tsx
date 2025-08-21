@@ -63,7 +63,7 @@ function RouteComponent() {
         </TabsContent>
         <TabsContent value="preview">
           <ScrollArea style={{ height: "80vh" }}>
-            <MarkdownPreview html={blogPostQuery.data.blog_post.html} />
+            <MarkdownPreview html={blogPostQuery.data.blog_post.html ?? ""} />
           </ScrollArea>
         </TabsContent>
       </Tabs>
@@ -84,7 +84,7 @@ function RouteComponent() {
       <ResizableHandle />
       <ResizablePanel defaultSize={50}>
         <ScrollArea style={{ height: "80vh" }}>
-          <MarkdownPreview html={blogPostQuery.data.blog_post.html} />
+          <MarkdownPreview html={blogPostQuery.data.blog_post.html ?? ""} />
         </ScrollArea>
       </ResizablePanel>
     </ResizablePanelGroup>

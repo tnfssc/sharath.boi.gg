@@ -4,6 +4,7 @@ import { type } from "arktype";
 
 import { db, orm, schema } from "~/db/index";
 import { mdToHtml } from "~/lib/services/md-to-html";
+import { BlogPostFrontmatterArk } from "~/lib/types";
 import { ownerProcedure, publicProcedure, router } from "~/server/trpc";
 
 export const blogRouter = router({
@@ -84,13 +85,7 @@ export const blogRouter = router({
         .from(schema.blog_post)
         .leftJoin(schema.blog_author, orm.eq(schema.blog_post.authorId, schema.blog_author.id))
         .execute();
-      const result = await Promise.all(
-        data.map(async (d) => {
-          const { frontmatter, html } = await mdToHtml(d.blog_post.content ?? "");
-          return { ...d, blog_post: { ...d.blog_post, frontmatter, html } };
-        }),
-      );
-      return result;
+      return data;
     }),
     getBySlug: publicProcedure.input(type({ slug: "0 < string < 128" })).query(async ({ input }) => {
       const data = await db
@@ -106,45 +101,33 @@ export const blogRouter = router({
           code: "INTERNAL_SERVER_ERROR",
           message: `Unexpected: author not found for post ${input.slug}`,
         });
-      const { frontmatter, html } = await mdToHtml(result.blog_post.content ?? "");
-      return {
-        ...result,
-        blog_author: result.blog_author,
-        blog_post: { ...result.blog_post, frontmatter, html },
-      };
+      return result;
     }),
-    update: ownerProcedure
-      .input(
-        type({
-          "authorId?": "0 < string < 128",
-          "content?": "string",
-          "description?": "string",
-          "heroImg?": "string",
-          id: "0 < string < 128",
-          "publishedAt?": "Date",
-          "slug?": "0 < string < 128",
-          "tags?": "string",
-          "title?": "string",
-        }),
-      )
-      .mutation(async ({ input }) => {
-        const data = await db
-          .update(schema.blog_post)
-          .set({
-            authorId: input.authorId,
-            content: input.content,
-            description: input.description,
-            heroImg: input.heroImg,
-            publishedAt: input.publishedAt,
-            slug: input.slug,
-            tags: input.tags,
-            title: input.title,
-            updatedAt: new Date(),
-          })
-          .where(orm.eq(schema.blog_post.id, input.id))
-          .returning()
-          .execute();
-        return data[0];
-      }),
+    update: ownerProcedure.input(type({ "content?": "string", id: "0 < string < 128" })).mutation(async ({ input }) => {
+      const { frontmatter, html } = await mdToHtml(input.content ?? "");
+      const matter = BlogPostFrontmatterArk(frontmatter);
+      if (matter instanceof type.errors) throw new TRPCError({ code: "BAD_REQUEST", message: matter.summary });
+      const { authorId, date, description, heroImage, public: isPublic, tags, title } = matter;
+      const data = await db
+        .update(schema.blog_post)
+        .set({
+          authorId,
+          content: input.content,
+          description,
+          heroImg: heroImage,
+          html,
+          publishedAt: isPublic ? date : null,
+          tags: tags?.join(","),
+          title,
+          updatedAt: new Date(),
+        })
+        .where(orm.eq(schema.blog_post.id, input.id))
+        .returning()
+        .execute()
+        .catch((cause: unknown) => {
+          throw new TRPCError({ cause, code: "BAD_REQUEST", message: "Failed to update post" });
+        });
+      return data[0];
+    }),
   },
 });

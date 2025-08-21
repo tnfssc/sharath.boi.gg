@@ -73,6 +73,7 @@ export const blog_post = sqliteTable("blog_post", {
   createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => /* @__PURE__ */ new Date()),
   description: text("description"),
   heroImg: text("hero_img"),
+  html: text("html"),
   id: text("id").primaryKey(),
   publishedAt: integer("published_at", { mode: "timestamp" }),
   slug: text("slug").notNull().unique(),
