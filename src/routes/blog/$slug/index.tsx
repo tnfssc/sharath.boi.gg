@@ -49,6 +49,7 @@ function RouteComponent() {
                 <img
                   alt={post.title ?? "Blog post hero image"}
                   className="h-full w-full object-cover"
+                  referrerPolicy="no-referrer"
                   src={post.heroImg}
                 />
               </div>
