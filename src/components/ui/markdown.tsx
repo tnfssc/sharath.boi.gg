@@ -19,6 +19,7 @@ function Markdown({ asChild = false, className, html, ...props }: MarkdownProps)
         "defaults-for-unplugin-icons hide-quote-marks-inside-blockquote",
         "prose-img:my-1 prose-img:shadow-md prose-img:shadow-foreground/20 prose-a:inline-block prose-img:inline prose-hr:my-2 [&_summary]:cursor-pointer",
         "prose-img:hover:outline prose-img:outline-gray-500",
+        "thin-scrollbar",
       )}
       // eslint-disable-next-line @eslint-react/dom/no-dangerously-set-innerhtml
       dangerouslySetInnerHTML={{ __html: html }}

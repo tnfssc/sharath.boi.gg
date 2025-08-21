@@ -112,4 +112,9 @@
   div[data-remark-code-title] {
     @apply rounded-t-md border-b border-gray-500 bg-[#1e1e1e] p-2 pl-4 font-mono text-xs font-medium text-white;
   }
+
+  .thin-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+  }
 }
