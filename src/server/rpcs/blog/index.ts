@@ -86,8 +86,8 @@ export const blogRouter = router({
         .execute();
       const result = await Promise.all(
         data.map(async (d) => {
-          const html = await mdToHtml(d.blog_post.content ?? "");
-          return { ...d, blog_post: { ...d.blog_post, html } };
+          const { frontmatter, html } = await mdToHtml(d.blog_post.content ?? "");
+          return { ...d, blog_post: { ...d.blog_post, frontmatter, html } };
         }),
       );
       return result;
@@ -106,11 +106,11 @@ export const blogRouter = router({
           code: "INTERNAL_SERVER_ERROR",
           message: `Unexpected: author not found for post ${input.slug}`,
         });
-      const html = await mdToHtml(result.blog_post.content ?? "");
+      const { frontmatter, html } = await mdToHtml(result.blog_post.content ?? "");
       return {
         ...result,
         blog_author: result.blog_author,
-        blog_post: { ...result.blog_post, html },
+        blog_post: { ...result.blog_post, frontmatter, html },
       };
     }),
     update: ownerProcedure

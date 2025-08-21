@@ -8,5 +8,12 @@ export const mdToHtml = cached({ namespace: "md-to-html", ttlMs: 30 * 24 * 60 * 
     method: "POST",
   });
   if (!res.ok) throw new Error("Failed to convert markdown to HTML", { cause: await res.text() });
-  return await res.text();
+  const frontmatter: Partial<Record<string, string>> = await Promise.try(
+    () => JSON.parse(res.headers.get("x-frontmatter") ?? "{}") as Partial<Record<string, string>>,
+  ).catch(() => ({}));
+  const html = await res.text();
+  return {
+    frontmatter,
+    html,
+  };
 });
