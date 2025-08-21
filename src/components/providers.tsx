@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { TRPCClientError } from "@trpc/client";
 import { Provider as JotaiProvider } from "jotai";
 import { domAnimation, LazyMotion } from "motion/react";
 import { useState } from "react";
@@ -19,8 +20,11 @@ const makeQueryClient = () => {
     defaultOptions: {
       mutations: {
         onError: (error) => {
-          toast.error("Something went wrong");
-          return error;
+          if (error instanceof TRPCClientError) {
+            toast.error(error.message);
+          } else {
+            toast.error("Something went wrong");
+          }
         },
       },
     },
