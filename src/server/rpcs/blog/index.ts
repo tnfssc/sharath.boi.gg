@@ -83,6 +83,7 @@ export const blogRouter = router({
       const data = await db
         .select()
         .from(schema.blog_post)
+        .where(orm.isNotNull(schema.blog_post.publishedAt))
         .leftJoin(schema.blog_author, orm.eq(schema.blog_post.authorId, schema.blog_author.id))
         .execute();
       return data;
