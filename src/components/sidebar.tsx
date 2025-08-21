@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link, useMatchRoute } from "@tanstack/react-router";
-import { useAtom } from "jotai";
+import { atom, useAtom } from "jotai";
 import { FileIcon, GithubIcon, HomeIcon, LinkedinIcon, SparklesIcon, TwitterIcon, UploadCloudIcon } from "lucide-react";
 import * as React from "react";
 
@@ -36,8 +36,19 @@ import { ModeToggle } from "./theme-toggle";
 
 export { currentInsetAtom };
 
+const headerContentAtom = atom<React.ReactNode>(null);
+
+export const PageHeaderContent: React.FC<React.PropsWithChildren> = ({ children }) => {
+  const [, setHeaderContent] = useAtom(headerContentAtom);
+  React.useEffect(() => {
+    setHeaderContent(children);
+  }, [children, setHeaderContent]);
+  return null;
+};
+
 export function PageHeader() {
   const [, setCurrentInset] = useAtom(currentInsetAtom);
+  const [headerContent] = useAtom(headerContentAtom);
   const headerRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
@@ -68,6 +79,7 @@ export function PageHeader() {
     >
       <div className="flex w-full items-center justify-between gap-2 px-4">
         <SidebarTrigger className="-ml-1 size-8" />
+        {headerContent}
       </div>
     </header>
   );
