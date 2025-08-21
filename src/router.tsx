@@ -1,3 +1,4 @@
+import "~/lib/polyfill";
 import { createRouter as createTanStackRouter } from "@tanstack/react-router";
 
 import { DefaultCatchBoundary } from "./components/DefaultCatchBoundary";

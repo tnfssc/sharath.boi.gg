@@ -12,8 +12,5 @@ export const mdToHtml = cached({ namespace: "md-to-html", ttlMs: 30 * 24 * 60 * 
     () => JSON.parse(res.headers.get("x-frontmatter") ?? "{}") as Partial<Record<string, string>>,
   ).catch(() => ({}));
   const html = await res.text();
-  return {
-    frontmatter,
-    html,
-  };
+  return { frontmatter, html };
 });
