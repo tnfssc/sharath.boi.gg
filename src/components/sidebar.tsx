@@ -1,15 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
-import { Link, useMatchRoute } from "@tanstack/react-router";
+import { Link, useMatches } from "@tanstack/react-router";
 import { atom, useAtom } from "jotai";
 import {
   FileIcon,
   GithubIcon,
   HomeIcon,
   LinkedinIcon,
+  MessageSquareTextIcon,
   SparklesIcon,
   TwitterIcon,
   UploadCloudIcon,
-  MessageSquareTextIcon,
 } from "lucide-react";
 import * as React from "react";
 
@@ -108,7 +108,7 @@ const navData = [
   {
     icon: MessageSquareTextIcon,
     title: "Blog",
-    url: "/blog",
+    url: "/blog/",
   },
   {
     icon: SparklesIcon,
@@ -127,7 +127,7 @@ const privateNavData = [
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { isMobile } = useSidebar();
-  const match = useMatchRoute();
+  const [, match] = useMatches();
   const trpc = useTRPC();
   const isOwnerQuery = useQuery(trpc.auth.isOwner.queryOptions());
 
@@ -159,7 +159,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <SidebarMenuButton
                   asChild
                   className="data-[active=true]:bg-main data-[active=true]:text-main-foreground"
-                  isActive={!!match({ to: item.url })}
+                  isActive={match.pathname === item.url}
                 >
                   <Link to={item.url}>
                     <item.icon />
@@ -179,7 +179,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <SidebarMenuButton
                     asChild
                     className="data-[active=true]:bg-main data-[active=true]:text-main-foreground"
-                    isActive={!!match({ to: item.url })}
+                    isActive={match.pathname === item.url}
                   >
                     <Link to={item.url}>
                       <item.icon />

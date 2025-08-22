@@ -6,7 +6,7 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
-const words = ["an engineer", "a gamer", "a tinkerer", "a nerd", "an otaku"];
+const words = ["Sharath", "an engineer", "a gamer", "a tinkerer", "a nerd", "an otaku"];
 
 function Home() {
   return (

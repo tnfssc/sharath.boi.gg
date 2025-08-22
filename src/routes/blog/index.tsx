@@ -93,12 +93,12 @@ function RouteComponent() {
                     {tags.length > 0 && (
                       <div className="mb-4 flex flex-wrap gap-2">
                         {tags.slice(0, 3).map((tag) => (
-                          <Badge className="text-xs" key={tag} variant="neutral">
+                          <Badge className="text-xs" key={tag} variant="default">
                             {tag.trim()}
                           </Badge>
                         ))}
                         {tags.length > 3 && (
-                          <Badge className="text-xs" variant="neutral">
+                          <Badge className="text-xs" variant="default">
                             +{tags.length - 3} more
                           </Badge>
                         )}
