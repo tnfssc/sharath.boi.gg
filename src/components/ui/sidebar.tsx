@@ -1,6 +1,5 @@
 import { Slot } from "@radix-ui/react-slot";
 import { cva, VariantProps } from "class-variance-authority";
-import { atom, useAtom } from "jotai";
 import { PanelLeftIcon } from "lucide-react";
 import * as React from "react";
 
@@ -12,24 +11,10 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/comp
 import { useIsMobile } from "~/hooks/use-mobile";
 import { cn } from "~/lib/utils/index";
 
-const SIDEBAR_COOKIE_NAME = "sidebar_state";
-const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
 const SIDEBAR_WIDTH = "16rem";
 const SIDEBAR_WIDTH_MOBILE = "18rem";
 const SIDEBAR_WIDTH_ICON = "3rem";
 const SIDEBAR_KEYBOARD_SHORTCUT = "b";
-
-const cookieStore = {
-  get: (name: string) => {
-    const value = document.cookie.match(`(^|;)\\s*${name}\\s*=\\s*([^;]+)`);
-    return value?.pop();
-  },
-  set: (name: string, value: string) => {
-    document.cookie = `${name}=${value}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`;
-  },
-};
-
-export const currentInsetAtom = atom({ horizontal: "0px", vertical: "0px" });
 
 interface SidebarContextProps {
   isMobile: boolean;
@@ -310,19 +295,16 @@ function SidebarProvider({
 
   // This is the internal state of the sidebar.
   // We use openProp and setOpenProp for control from outside the component.
-  const [_open, _setOpen] = React.useState(defaultOpen);
+  const [_open, _setOpen] = React.useState<boolean>(defaultOpen);
   const open = openProp ?? _open;
   const setOpen = React.useCallback(
     (value: ((value: boolean) => boolean) | boolean) => {
-      const openState = typeof value === "function" ? value(open) : value;
+      const openState = typeof value === "function" ? (value as (v: boolean) => boolean)(open) : value;
       if (setOpenProp) {
         setOpenProp(openState);
       } else {
         _setOpen(openState);
       }
-
-      // This sets the cookie to keep the sidebar state.
-      cookieStore.set(SIDEBAR_COOKIE_NAME, `${openState}`);
     },
     [setOpenProp, open],
   );
@@ -349,7 +331,6 @@ function SidebarProvider({
   // This makes it easier to style the sidebar with Tailwind classes.
   const state = open ? "expanded" : "collapsed";
 
-  const [, setCurrentInset] = useAtom(currentInsetAtom);
   const contextValue = React.useMemo<SidebarContextProps>(
     () => ({
       isMobile,
@@ -362,16 +343,6 @@ function SidebarProvider({
     }),
     [state, open, setOpen, isMobile, openMobile, setOpenMobile, toggleSidebar],
   );
-
-  React.useEffect(() => {
-    if (contextValue.isMobile) {
-      setCurrentInset((p) => ({ ...p, horizontal: "0px" }));
-    } else if (contextValue.open) {
-      setCurrentInset((p) => ({ ...p, horizontal: SIDEBAR_WIDTH }));
-    } else {
-      setCurrentInset((p) => ({ ...p, horizontal: SIDEBAR_WIDTH_ICON }));
-    }
-  }, [contextValue, setCurrentInset]);
 
   return (
     <SidebarContext value={contextValue}>

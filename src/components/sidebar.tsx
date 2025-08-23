@@ -24,7 +24,7 @@ import {
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import {
-  currentInsetAtom,
+  // removed: currentInsetAtom,
   Sidebar,
   SidebarContent,
   SidebarFooter,
@@ -43,7 +43,7 @@ import { useTRPC } from "~/lib/trpc";
 import { AccountButton } from "./account-button";
 import { ModeToggle } from "./theme-toggle";
 
-export { currentInsetAtom };
+// removed: export { currentInsetAtom };
 
 const headerContentAtom = atom<React.ReactNode>(null);
 
@@ -56,36 +56,10 @@ export const PageHeaderContent: React.FC<React.PropsWithChildren> = ({ children 
 };
 
 export function PageHeader() {
-  const [, setCurrentInset] = useAtom(currentInsetAtom);
   const [headerContent] = useAtom(headerContentAtom);
-  const headerRef = React.useRef<HTMLDivElement>(null);
-
-  React.useEffect(() => {
-    if (!headerRef.current) {
-      return;
-    }
-
-    const observer = new ResizeObserver((entries) => {
-      const entry = entries[0];
-      if (!entry.contentRect.width) {
-        return;
-      }
-
-      setCurrentInset((p) => ({ ...p, vertical: `${entry.contentRect.height}px` }));
-    });
-
-    observer.observe(headerRef.current);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [setCurrentInset]);
 
   return (
-    <header
-      className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12"
-      ref={headerRef}
-    >
+    <header className="sticky top-0 z-10 flex h-16 shrink-0 items-center gap-2 backdrop-blur-xs transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
       <div className="flex w-full items-center justify-between gap-2 px-4">
         <SidebarTrigger className="-ml-1 size-8" />
         {headerContent}
@@ -159,7 +133,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <SidebarMenuButton
                   asChild
                   className="data-[active=true]:bg-main data-[active=true]:text-main-foreground"
-                  isActive={match.pathname === item.url}
+                  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                  isActive={match?.pathname === item.url}
                 >
                   <Link to={item.url}>
                     <item.icon />
@@ -179,7 +154,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <SidebarMenuButton
                     asChild
                     className="data-[active=true]:bg-main data-[active=true]:text-main-foreground"
-                    isActive={match.pathname === item.url}
+                    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                    isActive={match?.pathname === item.url}
                   >
                     <Link to={item.url}>
                       <item.icon />

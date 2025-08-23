@@ -65,6 +65,10 @@
 }
 
 @layer base {
+  * {
+    scrollbar-width: thin;
+  }
+
   body {
     @apply text-foreground font-base bg-background;
   }
@@ -114,7 +118,6 @@
   }
 
   .thin-scrollbar {
-    scrollbar-width: thin;
     scrollbar-color: transparent transparent;
   }
 }
