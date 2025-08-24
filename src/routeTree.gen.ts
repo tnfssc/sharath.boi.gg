@@ -21,6 +21,7 @@ import { Route as BlogCreateRouteImport } from './routes/blog/create'
 import { Route as BlogSlugIndexRouteImport } from './routes/blog/$slug/index'
 import { Route as BlogSlugUpdateRouteImport } from './routes/blog/$slug/update'
 import { ServerRoute as ApiTrpcSplatServerRouteImport } from './routes/api/trpc/$'
+import { ServerRoute as ApiPosthogSplatServerRouteImport } from './routes/api/posthog/$'
 import { ServerRoute as ApiAuthSplatServerRouteImport } from './routes/api/auth/$'
 
 const rootServerRouteImport = createServerRootRoute()
@@ -73,6 +74,11 @@ const BlogSlugUpdateRoute = BlogSlugUpdateRouteImport.update({
 const ApiTrpcSplatServerRoute = ApiTrpcSplatServerRouteImport.update({
   id: '/api/trpc/$',
   path: '/api/trpc/$',
+  getParentRoute: () => rootServerRouteImport,
+} as any)
+const ApiPosthogSplatServerRoute = ApiPosthogSplatServerRouteImport.update({
+  id: '/api/posthog/$',
+  path: '/api/posthog/$',
   getParentRoute: () => rootServerRouteImport,
 } as any)
 const ApiAuthSplatServerRoute = ApiAuthSplatServerRouteImport.update({
@@ -164,27 +170,31 @@ export interface RootRouteChildren {
 }
 export interface FileServerRoutesByFullPath {
   '/api/auth/$': typeof ApiAuthSplatServerRoute
+  '/api/posthog/$': typeof ApiPosthogSplatServerRoute
   '/api/trpc/$': typeof ApiTrpcSplatServerRoute
 }
 export interface FileServerRoutesByTo {
   '/api/auth/$': typeof ApiAuthSplatServerRoute
+  '/api/posthog/$': typeof ApiPosthogSplatServerRoute
   '/api/trpc/$': typeof ApiTrpcSplatServerRoute
 }
 export interface FileServerRoutesById {
   __root__: typeof rootServerRouteImport
   '/api/auth/$': typeof ApiAuthSplatServerRoute
+  '/api/posthog/$': typeof ApiPosthogSplatServerRoute
   '/api/trpc/$': typeof ApiTrpcSplatServerRoute
 }
 export interface FileServerRouteTypes {
   fileServerRoutesByFullPath: FileServerRoutesByFullPath
-  fullPaths: '/api/auth/$' | '/api/trpc/$'
+  fullPaths: '/api/auth/$' | '/api/posthog/$' | '/api/trpc/$'
   fileServerRoutesByTo: FileServerRoutesByTo
-  to: '/api/auth/$' | '/api/trpc/$'
-  id: '__root__' | '/api/auth/$' | '/api/trpc/$'
+  to: '/api/auth/$' | '/api/posthog/$' | '/api/trpc/$'
+  id: '__root__' | '/api/auth/$' | '/api/posthog/$' | '/api/trpc/$'
   fileServerRoutesById: FileServerRoutesById
 }
 export interface RootServerRouteChildren {
   ApiAuthSplatServerRoute: typeof ApiAuthSplatServerRoute
+  ApiPosthogSplatServerRoute: typeof ApiPosthogSplatServerRoute
   ApiTrpcSplatServerRoute: typeof ApiTrpcSplatServerRoute
 }
 
@@ -264,6 +274,13 @@ declare module '@tanstack/react-start/server' {
       preLoaderRoute: typeof ApiTrpcSplatServerRouteImport
       parentRoute: typeof rootServerRouteImport
     }
+    '/api/posthog/$': {
+      id: '/api/posthog/$'
+      path: '/api/posthog/$'
+      fullPath: '/api/posthog/$'
+      preLoaderRoute: typeof ApiPosthogSplatServerRouteImport
+      parentRoute: typeof rootServerRouteImport
+    }
     '/api/auth/$': {
       id: '/api/auth/$'
       path: '/api/auth/$'
@@ -290,6 +307,7 @@ export const routeTree = rootRouteImport
   ._addFileTypes<FileRouteTypes>()
 const rootServerRouteChildren: RootServerRouteChildren = {
   ApiAuthSplatServerRoute: ApiAuthSplatServerRoute,
+  ApiPosthogSplatServerRoute: ApiPosthogSplatServerRoute,
   ApiTrpcSplatServerRoute: ApiTrpcSplatServerRoute,
 }
 export const serverRouteTree = rootServerRouteImport
