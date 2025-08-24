@@ -10,6 +10,7 @@ import {
   SparklesIcon,
   TwitterIcon,
   UploadCloudIcon,
+  YoutubeIcon,
 } from "lucide-react";
 import * as React from "react";
 
@@ -217,6 +218,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     <a href="https://github.com/tnfssc" rel="noreferrer noopener" target="_blank">
                       <GithubIcon />
                       GitHub
+                    </a>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <a href="https://www.youtube.com/@tnfssc" rel="noreferrer noopener" target="_blank">
+                      <YoutubeIcon />
+                      YouTube
                     </a>
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
