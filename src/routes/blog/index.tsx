@@ -104,7 +104,7 @@ function RouteComponent() {
                   <CardFooter className="pt-0">
                     <Button asChild className="w-full" variant="neutral">
                       <Link className="w-full" params={{ slug: post.slug }} to={`/blog/$slug`}>
-                        Read More
+                        Read More<span className="sr-only"> about {post.title}</span>
                       </Link>
                     </Button>
                   </CardFooter>
