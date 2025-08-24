@@ -120,4 +120,13 @@
   .thin-scrollbar {
     scrollbar-color: transparent transparent;
   }
+
+  .details-animated details {
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+    max-height: 28px;
+  }
+  .details-animated details[open] {
+    max-height: 100vh;
+  }
 }
