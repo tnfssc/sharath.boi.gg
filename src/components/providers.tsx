@@ -4,7 +4,7 @@ import { TRPCClientError } from "@trpc/client";
 import { Provider as JotaiProvider } from "jotai";
 import { domAnimation, LazyMotion } from "motion/react";
 import { PostHogProvider } from "posthog-js/react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { toast } from "sonner";
 
 import { ThemeProvider } from "~/components/theme-provider";
@@ -12,6 +12,7 @@ import { SidebarInset, SidebarProvider } from "~/components/ui/sidebar";
 import { clientEnv } from "~/env/client";
 import { createClient, TRPCProvider } from "~/lib/trpc";
 
+import { PostHogIdentify } from "./posthog-identify";
 import { AppSidebar, PageHeader } from "./sidebar";
 import { Toaster } from "./ui/sonner";
 
@@ -45,10 +46,10 @@ const getQueryClient = () => {
   return queryClient;
 };
 
-export const Providers: React.FC<React.PropsWithChildren> = ({ children }) => {
-  const queryClient = getQueryClient();
-  const [trpcClient] = useState(() => createClient());
-
+const PHProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
+  if (!clientEnv.VITE_PUBLIC_POSTHOG_KEY) {
+    return <>children</>;
+  }
   return (
     <PostHogProvider
       apiKey={clientEnv.VITE_PUBLIC_POSTHOG_KEY}
@@ -60,6 +61,17 @@ export const Providers: React.FC<React.PropsWithChildren> = ({ children }) => {
         ui_host: "https://us.posthog.com",
       }}
     >
+      {children}
+    </PostHogProvider>
+  );
+};
+
+export const Providers: React.FC<React.PropsWithChildren> = ({ children }) => {
+  const queryClient = getQueryClient();
+  const [trpcClient] = useState(() => createClient());
+
+  return (
+    <PHProvider>
       <QueryClientProvider client={queryClient}>
         <TRPCProvider queryClient={queryClient} trpcClient={trpcClient}>
           <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
@@ -67,6 +79,7 @@ export const Providers: React.FC<React.PropsWithChildren> = ({ children }) => {
               <JotaiProvider>
                 <SidebarProvider>
                   <Toaster />
+                  <PostHogIdentify />
                   <AppSidebar />
                   <SidebarInset>
                     <PageHeader />
@@ -79,6 +92,6 @@ export const Providers: React.FC<React.PropsWithChildren> = ({ children }) => {
           <ReactQueryDevtools />
         </TRPCProvider>
       </QueryClientProvider>
-    </PostHogProvider>
+    </PHProvider>
   );
 };

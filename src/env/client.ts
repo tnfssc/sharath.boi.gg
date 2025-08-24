@@ -1,7 +1,7 @@
 import { type } from "arktype";
 
 export const ClientEnvArk = type({
-  VITE_PUBLIC_POSTHOG_KEY: "string",
+  "VITE_PUBLIC_POSTHOG_KEY?": "string | undefined",
   "VITE_TURNSTILE_SITE_KEY?": "string | undefined",
 });
 
