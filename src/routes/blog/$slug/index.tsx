@@ -12,7 +12,7 @@ import { useTRPC } from "~/lib/trpc";
 import { createCaller } from "~/server/caller";
 
 const getData = createServerFn()
-  .validator((id: string) => id)
+  .validator((slug: string) => slug)
   .handler(async (ctx) => {
     const slug = ctx.data;
     const request = getWebRequest();
