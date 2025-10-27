@@ -6,7 +6,7 @@ import { ScreenCenter } from "~/components/ui/screen-center";
 import { mdToHtml } from "~/lib/services/md-to-html";
 
 const getData = createServerFn().handler(async () => {
-  return await fetch("https://raw.githubusercontent.com/tnfssc/tnfssc/refs/heads/main/RESUME-unredacted.md")
+  return await fetch("https://raw.githubusercontent.com/tnfssc/tnfssc/refs/heads/main/RESUME.md")
     .then((res) => res.text())
     .then(mdToHtml);
 });
