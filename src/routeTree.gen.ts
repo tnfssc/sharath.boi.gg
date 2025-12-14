@@ -21,6 +21,7 @@ import { Route as BlogSlugUpdateRouteImport } from './routes/blog/$slug/update'
 import { Route as ApiTrpcSplatRouteImport } from './routes/api/trpc/$'
 import { Route as ApiPosthogSplatRouteImport } from './routes/api/posthog/$'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as Char43internalExpt001RouteImport } from './routes/+internal/expt/001'
 
 const UploadToCdnRoute = UploadToCdnRouteImport.update({
   id: '/upload-to-cdn',
@@ -82,6 +83,11 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const Char43internalExpt001Route = Char43internalExpt001RouteImport.update({
+  id: '/+internal/expt/001',
+  path: '/+internal/expt/001',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -91,6 +97,7 @@ export interface FileRoutesByFullPath {
   '/blog/create': typeof BlogCreateRoute
   '/blog/create-author': typeof BlogCreateAuthorRoute
   '/blog': typeof BlogIndexRoute
+  '/+internal/expt/001': typeof Char43internalExpt001Route
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/posthog/$': typeof ApiPosthogSplatRoute
   '/api/trpc/$': typeof ApiTrpcSplatRoute
@@ -105,6 +112,7 @@ export interface FileRoutesByTo {
   '/blog/create': typeof BlogCreateRoute
   '/blog/create-author': typeof BlogCreateAuthorRoute
   '/blog': typeof BlogIndexRoute
+  '/+internal/expt/001': typeof Char43internalExpt001Route
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/posthog/$': typeof ApiPosthogSplatRoute
   '/api/trpc/$': typeof ApiTrpcSplatRoute
@@ -120,6 +128,7 @@ export interface FileRoutesById {
   '/blog/create': typeof BlogCreateRoute
   '/blog/create-author': typeof BlogCreateAuthorRoute
   '/blog/': typeof BlogIndexRoute
+  '/+internal/expt/001': typeof Char43internalExpt001Route
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/posthog/$': typeof ApiPosthogSplatRoute
   '/api/trpc/$': typeof ApiTrpcSplatRoute
@@ -136,6 +145,7 @@ export interface FileRouteTypes {
     | '/blog/create'
     | '/blog/create-author'
     | '/blog'
+    | '/+internal/expt/001'
     | '/api/auth/$'
     | '/api/posthog/$'
     | '/api/trpc/$'
@@ -150,6 +160,7 @@ export interface FileRouteTypes {
     | '/blog/create'
     | '/blog/create-author'
     | '/blog'
+    | '/+internal/expt/001'
     | '/api/auth/$'
     | '/api/posthog/$'
     | '/api/trpc/$'
@@ -164,6 +175,7 @@ export interface FileRouteTypes {
     | '/blog/create'
     | '/blog/create-author'
     | '/blog/'
+    | '/+internal/expt/001'
     | '/api/auth/$'
     | '/api/posthog/$'
     | '/api/trpc/$'
@@ -179,6 +191,7 @@ export interface RootRouteChildren {
   BlogCreateRoute: typeof BlogCreateRoute
   BlogCreateAuthorRoute: typeof BlogCreateAuthorRoute
   BlogIndexRoute: typeof BlogIndexRoute
+  Char43internalExpt001Route: typeof Char43internalExpt001Route
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiPosthogSplatRoute: typeof ApiPosthogSplatRoute
   ApiTrpcSplatRoute: typeof ApiTrpcSplatRoute
@@ -272,6 +285,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/+internal/expt/001': {
+      id: '/+internal/expt/001'
+      path: '/+internal/expt/001'
+      fullPath: '/+internal/expt/001'
+      preLoaderRoute: typeof Char43internalExpt001RouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -283,6 +303,7 @@ const rootRouteChildren: RootRouteChildren = {
   BlogCreateRoute: BlogCreateRoute,
   BlogCreateAuthorRoute: BlogCreateAuthorRoute,
   BlogIndexRoute: BlogIndexRoute,
+  Char43internalExpt001Route: Char43internalExpt001Route,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiPosthogSplatRoute: ApiPosthogSplatRoute,
   ApiTrpcSplatRoute: ApiTrpcSplatRoute,
