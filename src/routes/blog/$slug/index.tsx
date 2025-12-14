@@ -1,7 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import { createServerFn } from "@tanstack/react-start";
-import { getWebRequest } from "@tanstack/react-start/server";
 
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Badge } from "~/components/ui/badge";
@@ -9,29 +7,16 @@ import { Markdown } from "~/components/ui/markdown";
 import { ScreenCenter } from "~/components/ui/screen-center";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import { useTRPC } from "~/lib/trpc";
-import { createCaller } from "~/server/caller";
-
-const getData = createServerFn()
-  .validator((slug: string) => slug)
-  .handler(async (ctx) => {
-    const slug = ctx.data;
-    const request = getWebRequest();
-    const caller = await createCaller(request);
-    const data = await caller.blog.post.getBySlug({ slug });
-    return data;
-  });
 
 export const Route = createFileRoute("/blog/$slug/")({
   component: RouteComponent,
-  loader: ({ params }) => getData({ data: params.slug }),
+  // loader: ({ params }) => getData({ data: params.slug }),
 });
 
 function RouteComponent() {
-  const data = Route.useLoaderData();
+  const { slug } = Route.useParams();
   const trpc = useTRPC();
-  const blogPostQuery = useQuery(
-    trpc.blog.post.getBySlug.queryOptions({ slug: data.blog_post.slug }, { initialData: data }),
-  );
+  const blogPostQuery = useQuery(trpc.blog.post.getBySlug.queryOptions({ slug }, { initialData: {} }));
 
   const post = blogPostQuery.data.blog_post;
   const author = blogPostQuery.data.blog_author;

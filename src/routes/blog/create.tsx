@@ -1,8 +1,6 @@
 import { arktypeResolver } from "@hookform/resolvers/arktype";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
-import { createServerFn } from "@tanstack/react-start";
-import { getWebRequest } from "@tanstack/react-start/server";
 import { type } from "arktype";
 import { useForm } from "react-hook-form";
 
@@ -13,27 +11,18 @@ import { ScreenCenter } from "~/components/ui/screen-center";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "~/components/ui/select";
 import { SubmitButton } from "~/components/ui/submit-button";
 import { useTRPC } from "~/lib/trpc";
-import { createCaller } from "~/server/caller";
-
-const getData = createServerFn().handler(async () => {
-  const request = getWebRequest();
-  const caller = await createCaller(request);
-  const data = await caller.blog.author.get();
-  return data;
-});
 
 export const Route = createFileRoute("/blog/create")({
   component: RouteComponent,
-  loader: () => getData(),
+  // loader: () => getData(),
 });
 
 const FormArk = type({ authorId: "string", slug: "string" });
 
 function RouteComponent() {
-  const authors = Route.useLoaderData();
   const trpc = useTRPC();
   const router = useRouter();
-  const authorsQuery = useQuery(trpc.blog.author.get.queryOptions(undefined, { initialData: authors }));
+  const authorsQuery = useQuery(trpc.blog.author.get.queryOptions(undefined, { initialData: [] }));
 
   const form = useForm<typeof FormArk.infer>({
     defaultValues: { authorId: authorsQuery.data.at(0)?.id ?? "", slug: "" },

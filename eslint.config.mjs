@@ -1,30 +1,33 @@
 // @ts-check
 
+import preferArrayAt from "@boi.gg/eslint-plugin-prefer-array-at";
 import eslintReact from "@eslint-react/eslint-plugin";
 import eslint from "@eslint/js";
+import pluginRouter from "@tanstack/eslint-plugin-router";
+import tailwindcss from "eslint-plugin-better-tailwindcss";
+import drizzle from "eslint-plugin-drizzle";
 import perfectionist from "eslint-plugin-perfectionist";
 import reactCompiler from "eslint-plugin-react-compiler";
 import reactHooks from "eslint-plugin-react-hooks";
+import { defineConfig } from "eslint/config";
 import tseslint from "typescript-eslint";
 
-export default tseslint.config(
-  eslint.configs.recommended,
-  tseslint.configs.strictTypeChecked,
-  tseslint.configs.stylisticTypeChecked,
-  eslintReact.configs["recommended-type-checked"],
-  reactHooks.configs["recommended-latest"],
-  reactCompiler.configs.recommended,
-  perfectionist.configs["recommended-alphabetical"],
-  {
-    rules: {
-      "perfectionist/sort-imports": "warn",
-      "perfectionist/sort-interfaces": "warn",
-      "perfectionist/sort-jsx-props": "warn",
-      "perfectionist/sort-named-imports": "warn",
-      "perfectionist/sort-object-types": "warn",
-      "perfectionist/sort-objects": "warn",
-    },
+const tailwind = defineConfig({
+  plugins: { "better-tailwindcss": tailwindcss },
+  rules: {
+    ...tailwindcss.configs["recommended-warn"].rules,
+    "better-tailwindcss/enforce-consistent-line-wrapping": "off",
+    "better-tailwindcss/no-unregistered-classes": "off",
   },
+  settings: { "better-tailwindcss": { entryPoint: "./src/styles/app.css" } },
+});
+
+const drizzleConfig = defineConfig({
+  plugins: { drizzle },
+  rules: drizzle.rules,
+});
+
+export default defineConfig(
   {
     languageOptions: {
       parserOptions: {
@@ -32,6 +35,20 @@ export default tseslint.config(
         tsconfigRootDir: import.meta.dirname,
       },
     },
+  },
+  eslint.configs.recommended,
+  tseslint.configs.strictTypeChecked,
+  tseslint.configs.stylisticTypeChecked,
+  eslintReact.configs["recommended-type-checked"],
+  reactHooks.configs["recommended-latest"],
+  reactCompiler.configs.recommended,
+  ...pluginRouter.configs["flat/recommended"],
+  perfectionist.configs["recommended-alphabetical"],
+  preferArrayAt.configs.recommended,
+  tailwind,
+  // drizzleConfig,
+  {
+    ignores: [".nitro", ".output", "node_modules", ".tanstack", "dist"],
     rules: {
       "@typescript-eslint/array-type": ["warn", { default: "generic", readonly: "generic" }],
       "@typescript-eslint/no-confusing-void-expression": "off",
@@ -54,9 +71,13 @@ export default tseslint.config(
       "@typescript-eslint/only-throw-error": "off",
       "@typescript-eslint/prefer-nullish-coalescing": ["warn"],
       "@typescript-eslint/restrict-template-expressions": ["warn", { allowBoolean: true, allowNumber: true }],
+
+      "perfectionist/sort-imports": "warn",
+      "perfectionist/sort-interfaces": "warn",
+      "perfectionist/sort-jsx-props": "warn",
+      "perfectionist/sort-named-imports": "warn",
+      "perfectionist/sort-object-types": "warn",
+      "perfectionist/sort-objects": "warn",
     },
-  },
-  {
-    ignores: [".nitro", ".output", "node_modules", ".tanstack"],
   },
 );

@@ -1,7 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import { createServerFn } from "@tanstack/react-start";
-import { getWebRequest } from "@tanstack/react-start/server";
 
 import { CodeEditor } from "~/components/blog/code-editor";
 import { MarkdownPreview } from "~/components/blog/preview";
@@ -10,39 +8,25 @@ import { ScrollArea } from "~/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import { useIsMobile } from "~/hooks/use-mobile";
 import { useTRPC } from "~/lib/trpc";
-import { createCaller } from "~/server/caller";
-
-const getData = createServerFn()
-  .validator((id: string) => id)
-  .handler(async (ctx) => {
-    const slug = ctx.data;
-    const request = getWebRequest();
-    const caller = await createCaller(request);
-    const data = await caller.blog.post.getBySlug({ slug });
-    return data;
-  });
 
 export const Route = createFileRoute("/blog/$slug/update")({
   component: RouteComponent,
-  loader: ({ params }) => getData({ data: params.slug }),
+  // loader: ({ params }) => getData({ data: params.slug }),
   ssr: false,
 });
 
 function RouteComponent() {
   const isMobile = useIsMobile();
-  const data = Route.useLoaderData();
-
+  const { slug } = Route.useParams();
   const trpc = useTRPC();
   const queryClient = useQueryClient();
 
-  const blogPostQuery = useQuery(
-    trpc.blog.post.getBySlug.queryOptions({ slug: data.blog_post.slug }, { initialData: data }),
-  );
+  const blogPostQuery = useQuery(trpc.blog.post.getBySlug.queryOptions({ slug }, { initialData: {} }));
 
   const updateBlogMutation = useMutation(
     trpc.blog.post.update.mutationOptions({
       onSuccess: async () => {
-        await queryClient.invalidateQueries(trpc.blog.post.getBySlug.queryOptions({ slug: data.blog_post.slug }));
+        await queryClient.invalidateQueries(trpc.blog.post.getBySlug.queryOptions({ slug }));
       },
     }),
   );
@@ -58,7 +42,7 @@ function RouteComponent() {
           <CodeEditor
             content={blogPostQuery.data.blog_post.content ?? ""}
             height="80vh"
-            onContentChange={(content) => updateBlogMutation.mutate({ content, id: data.blog_post.id })}
+            onContentChange={(content) => updateBlogMutation.mutate({ content, id: blogPostQuery.data.blog_post.id })}
           />
         </TabsContent>
         <TabsContent value="preview">
@@ -71,14 +55,14 @@ function RouteComponent() {
 
   return (
     <ResizablePanelGroup
-      className="rounded-base border-border text-main-foreground shadow-shadow border-2"
+      className="rounded-base border-2 border-border text-main-foreground shadow-shadow"
       direction="horizontal"
     >
       <ResizablePanel defaultSize={50}>
         <CodeEditor
           content={blogPostQuery.data.blog_post.content ?? ""}
           height="80vh"
-          onContentChange={(content) => updateBlogMutation.mutate({ content, id: data.blog_post.id })}
+          onContentChange={(content) => updateBlogMutation.mutate({ content, id: blogPostQuery.data.blog_post.id })}
         />
       </ResizablePanel>
       <ResizableHandle />

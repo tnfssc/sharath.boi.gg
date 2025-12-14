@@ -1,6 +1,4 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { createServerFn } from "@tanstack/react-start";
-import { getWebRequest } from "@tanstack/react-start/server";
 
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Badge } from "~/components/ui/badge";
@@ -8,22 +6,16 @@ import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
 import { ScreenCenter } from "~/components/ui/screen-center";
 import { ScrollArea } from "~/components/ui/scroll-area";
-import { createCaller } from "~/server/caller";
-
-const getData = createServerFn().handler(async () => {
-  const request = getWebRequest();
-  const caller = await createCaller(request);
-  const data = await caller.blog.post.get();
-  return data;
-});
 
 export const Route = createFileRoute("/blog/")({
   component: RouteComponent,
-  loader: () => getData(),
+  // loader: () => getData(),
 });
 
 function RouteComponent() {
   const data = Route.useLoaderData();
+
+  return null;
 
   // Filter only published posts and sort by published date
   const publishedPosts = data

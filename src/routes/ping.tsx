@@ -2,7 +2,7 @@ import { arktypeResolver } from "@hookform/resolvers/arktype";
 // import { Turnstile } from "@marsidev/react-turnstile";
 import { useMutation } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import { createServerFn } from "@tanstack/react-start";
+import { createServerOnlyFn } from "@tanstack/react-start";
 import { useServerFn } from "@tanstack/react-start";
 // import { getHeader } from "@tanstack/react-start/server";
 import { type } from "arktype";
@@ -26,34 +26,32 @@ const FormDataArk = type({
   "turnstileToken?": "string",
 });
 
-const sendToDiscordServerFn = createServerFn({ method: "POST", type: "dynamic" })
-  .validator(FormDataArk)
-  .handler(async ({ data }) => {
-    if (!serverEnv.DISCORD_WEBHOOK_URL) return "not configured";
+const sendToDiscordServerFn = createServerOnlyFn(async (data: typeof FormDataArk.infer) => {
+  if (!serverEnv.DISCORD_WEBHOOK_URL) return "not configured";
 
-    // if (serverEnv.TURNSTILE_SECRET_KEY) {
-    //   if (!data.turnstileToken) return "turnstile token not provided";
-    //   const clientIp = getHeader("CF-Connecting-IP");
-    //   if (!clientIp) return "client ip not provided";
-    //   const isSuccess = await verifyTurnstile({
-    //     clientIp,
-    //     idempotencyKey: data.idempotencyKey,
-    //     token: data.turnstileToken,
-    //   });
-    //   if (!isSuccess) return "turnstile token invalid";
-    // }
+  // if (serverEnv.TURNSTILE_SECRET_KEY) {
+  //   if (!data.turnstileToken) return "turnstile token not provided";
+  //   const clientIp = getHeader("CF-Connecting-IP");
+  //   if (!clientIp) return "client ip not provided";
+  //   const isSuccess = await verifyTurnstile({
+  //     clientIp,
+  //     idempotencyKey: data.idempotencyKey,
+  //     token: data.turnstileToken,
+  //   });
+  //   if (!isSuccess) return "turnstile token invalid";
+  // }
 
-    const response = await fetch(serverEnv.DISCORD_WEBHOOK_URL, {
-      body: JSON.stringify({ content: `**${data.email}** sent a message:\n${data.message}` }),
-      headers: { "Content-Type": "application/json" },
-      method: "POST",
-    });
-    if (!response.ok) {
-      console.error(await response.text());
-      return "error";
-    }
-    return "ok";
+  const response = await fetch(serverEnv.DISCORD_WEBHOOK_URL, {
+    body: JSON.stringify({ content: `**${data.email}** sent a message:\n${data.message}` }),
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
   });
+  if (!response.ok) {
+    console.error(await response.text());
+    return "error";
+  }
+  return "ok";
+});
 
 export const Route = createFileRoute("/ping")({ component: RouteComponent, ssr: false });
 
@@ -77,7 +75,7 @@ function RouteComponent() {
   });
 
   function onSubmit(values: typeof FormDataArk.infer) {
-    sendToDiscordMutation.mutate({ data: values });
+    sendToDiscordMutation.mutate(values);
   }
 
   return (

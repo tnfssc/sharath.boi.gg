@@ -8,8 +8,6 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { createServerRootRoute } from '@tanstack/react-start/server'
-
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UploadToCdnRouteImport } from './routes/upload-to-cdn'
 import { Route as PingRouteImport } from './routes/ping'
@@ -20,11 +18,9 @@ import { Route as BlogCreateAuthorRouteImport } from './routes/blog/create-autho
 import { Route as BlogCreateRouteImport } from './routes/blog/create'
 import { Route as BlogSlugIndexRouteImport } from './routes/blog/$slug/index'
 import { Route as BlogSlugUpdateRouteImport } from './routes/blog/$slug/update'
-import { ServerRoute as ApiTrpcSplatServerRouteImport } from './routes/api/trpc/$'
-import { ServerRoute as ApiPosthogSplatServerRouteImport } from './routes/api/posthog/$'
-import { ServerRoute as ApiAuthSplatServerRouteImport } from './routes/api/auth/$'
-
-const rootServerRouteImport = createServerRootRoute()
+import { Route as ApiTrpcSplatRouteImport } from './routes/api/trpc/$'
+import { Route as ApiPosthogSplatRouteImport } from './routes/api/posthog/$'
+import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
 const UploadToCdnRoute = UploadToCdnRouteImport.update({
   id: '/upload-to-cdn',
@@ -71,20 +67,20 @@ const BlogSlugUpdateRoute = BlogSlugUpdateRouteImport.update({
   path: '/blog/$slug/update',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiTrpcSplatServerRoute = ApiTrpcSplatServerRouteImport.update({
+const ApiTrpcSplatRoute = ApiTrpcSplatRouteImport.update({
   id: '/api/trpc/$',
   path: '/api/trpc/$',
-  getParentRoute: () => rootServerRouteImport,
+  getParentRoute: () => rootRouteImport,
 } as any)
-const ApiPosthogSplatServerRoute = ApiPosthogSplatServerRouteImport.update({
+const ApiPosthogSplatRoute = ApiPosthogSplatRouteImport.update({
   id: '/api/posthog/$',
   path: '/api/posthog/$',
-  getParentRoute: () => rootServerRouteImport,
+  getParentRoute: () => rootRouteImport,
 } as any)
-const ApiAuthSplatServerRoute = ApiAuthSplatServerRouteImport.update({
+const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
-  getParentRoute: () => rootServerRouteImport,
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -95,6 +91,9 @@ export interface FileRoutesByFullPath {
   '/blog/create': typeof BlogCreateRoute
   '/blog/create-author': typeof BlogCreateAuthorRoute
   '/blog': typeof BlogIndexRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/posthog/$': typeof ApiPosthogSplatRoute
+  '/api/trpc/$': typeof ApiTrpcSplatRoute
   '/blog/$slug/update': typeof BlogSlugUpdateRoute
   '/blog/$slug': typeof BlogSlugIndexRoute
 }
@@ -106,6 +105,9 @@ export interface FileRoutesByTo {
   '/blog/create': typeof BlogCreateRoute
   '/blog/create-author': typeof BlogCreateAuthorRoute
   '/blog': typeof BlogIndexRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/posthog/$': typeof ApiPosthogSplatRoute
+  '/api/trpc/$': typeof ApiTrpcSplatRoute
   '/blog/$slug/update': typeof BlogSlugUpdateRoute
   '/blog/$slug': typeof BlogSlugIndexRoute
 }
@@ -118,6 +120,9 @@ export interface FileRoutesById {
   '/blog/create': typeof BlogCreateRoute
   '/blog/create-author': typeof BlogCreateAuthorRoute
   '/blog/': typeof BlogIndexRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/posthog/$': typeof ApiPosthogSplatRoute
+  '/api/trpc/$': typeof ApiTrpcSplatRoute
   '/blog/$slug/update': typeof BlogSlugUpdateRoute
   '/blog/$slug/': typeof BlogSlugIndexRoute
 }
@@ -131,6 +136,9 @@ export interface FileRouteTypes {
     | '/blog/create'
     | '/blog/create-author'
     | '/blog'
+    | '/api/auth/$'
+    | '/api/posthog/$'
+    | '/api/trpc/$'
     | '/blog/$slug/update'
     | '/blog/$slug'
   fileRoutesByTo: FileRoutesByTo
@@ -142,6 +150,9 @@ export interface FileRouteTypes {
     | '/blog/create'
     | '/blog/create-author'
     | '/blog'
+    | '/api/auth/$'
+    | '/api/posthog/$'
+    | '/api/trpc/$'
     | '/blog/$slug/update'
     | '/blog/$slug'
   id:
@@ -153,6 +164,9 @@ export interface FileRouteTypes {
     | '/blog/create'
     | '/blog/create-author'
     | '/blog/'
+    | '/api/auth/$'
+    | '/api/posthog/$'
+    | '/api/trpc/$'
     | '/blog/$slug/update'
     | '/blog/$slug/'
   fileRoutesById: FileRoutesById
@@ -165,37 +179,11 @@ export interface RootRouteChildren {
   BlogCreateRoute: typeof BlogCreateRoute
   BlogCreateAuthorRoute: typeof BlogCreateAuthorRoute
   BlogIndexRoute: typeof BlogIndexRoute
+  ApiAuthSplatRoute: typeof ApiAuthSplatRoute
+  ApiPosthogSplatRoute: typeof ApiPosthogSplatRoute
+  ApiTrpcSplatRoute: typeof ApiTrpcSplatRoute
   BlogSlugUpdateRoute: typeof BlogSlugUpdateRoute
   BlogSlugIndexRoute: typeof BlogSlugIndexRoute
-}
-export interface FileServerRoutesByFullPath {
-  '/api/auth/$': typeof ApiAuthSplatServerRoute
-  '/api/posthog/$': typeof ApiPosthogSplatServerRoute
-  '/api/trpc/$': typeof ApiTrpcSplatServerRoute
-}
-export interface FileServerRoutesByTo {
-  '/api/auth/$': typeof ApiAuthSplatServerRoute
-  '/api/posthog/$': typeof ApiPosthogSplatServerRoute
-  '/api/trpc/$': typeof ApiTrpcSplatServerRoute
-}
-export interface FileServerRoutesById {
-  __root__: typeof rootServerRouteImport
-  '/api/auth/$': typeof ApiAuthSplatServerRoute
-  '/api/posthog/$': typeof ApiPosthogSplatServerRoute
-  '/api/trpc/$': typeof ApiTrpcSplatServerRoute
-}
-export interface FileServerRouteTypes {
-  fileServerRoutesByFullPath: FileServerRoutesByFullPath
-  fullPaths: '/api/auth/$' | '/api/posthog/$' | '/api/trpc/$'
-  fileServerRoutesByTo: FileServerRoutesByTo
-  to: '/api/auth/$' | '/api/posthog/$' | '/api/trpc/$'
-  id: '__root__' | '/api/auth/$' | '/api/posthog/$' | '/api/trpc/$'
-  fileServerRoutesById: FileServerRoutesById
-}
-export interface RootServerRouteChildren {
-  ApiAuthSplatServerRoute: typeof ApiAuthSplatServerRoute
-  ApiPosthogSplatServerRoute: typeof ApiPosthogSplatServerRoute
-  ApiTrpcSplatServerRoute: typeof ApiTrpcSplatServerRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -263,30 +251,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogSlugUpdateRouteImport
       parentRoute: typeof rootRouteImport
     }
-  }
-}
-declare module '@tanstack/react-start/server' {
-  interface ServerFileRoutesByPath {
     '/api/trpc/$': {
       id: '/api/trpc/$'
       path: '/api/trpc/$'
       fullPath: '/api/trpc/$'
-      preLoaderRoute: typeof ApiTrpcSplatServerRouteImport
-      parentRoute: typeof rootServerRouteImport
+      preLoaderRoute: typeof ApiTrpcSplatRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/api/posthog/$': {
       id: '/api/posthog/$'
       path: '/api/posthog/$'
       fullPath: '/api/posthog/$'
-      preLoaderRoute: typeof ApiPosthogSplatServerRouteImport
-      parentRoute: typeof rootServerRouteImport
+      preLoaderRoute: typeof ApiPosthogSplatRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/api/auth/$': {
       id: '/api/auth/$'
       path: '/api/auth/$'
       fullPath: '/api/auth/$'
-      preLoaderRoute: typeof ApiAuthSplatServerRouteImport
-      parentRoute: typeof rootServerRouteImport
+      preLoaderRoute: typeof ApiAuthSplatRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
@@ -299,17 +283,21 @@ const rootRouteChildren: RootRouteChildren = {
   BlogCreateRoute: BlogCreateRoute,
   BlogCreateAuthorRoute: BlogCreateAuthorRoute,
   BlogIndexRoute: BlogIndexRoute,
+  ApiAuthSplatRoute: ApiAuthSplatRoute,
+  ApiPosthogSplatRoute: ApiPosthogSplatRoute,
+  ApiTrpcSplatRoute: ApiTrpcSplatRoute,
   BlogSlugUpdateRoute: BlogSlugUpdateRoute,
   BlogSlugIndexRoute: BlogSlugIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-const rootServerRouteChildren: RootServerRouteChildren = {
-  ApiAuthSplatServerRoute: ApiAuthSplatServerRoute,
-  ApiPosthogSplatServerRoute: ApiPosthogSplatServerRoute,
-  ApiTrpcSplatServerRoute: ApiTrpcSplatServerRoute,
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
 }
-export const serverRouteTree = rootServerRouteImport
-  ._addFileChildren(rootServerRouteChildren)
-  ._addFileTypes<FileServerRouteTypes>()
