@@ -9,8 +9,5 @@
     "**/routeTree.gen.ts": true
   },
   "typescript.tsdk": "node_modules/typescript/lib",
-  "cSpell.words": [
-    "arktype",
-    "posthog"
-  ]
+  "cSpell.words": ["arktype", "posthog"]
 }

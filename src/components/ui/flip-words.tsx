@@ -11,13 +11,14 @@ export const FlipWords = ({
 }: {
   className?: string;
   duration?: number;
-  words: Array<string>;
+  words: [string, ...Array<string>];
 }) => {
+  // eslint-disable-next-line prefer-array-at/prefer-array-at
   const [currentWord, setCurrentWord] = useState(words[0]);
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
 
-  // thanks for the fix Julian - https://github.com/Julian-AT
   const startAnimation = useCallback(() => {
+    // eslint-disable-next-line prefer-array-at/prefer-array-at
     const word = words[words.indexOf(currentWord) + 1] || words[0];
     setCurrentWord(word);
     setIsAnimating(true);

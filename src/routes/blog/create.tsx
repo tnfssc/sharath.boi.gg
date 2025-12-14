@@ -1,5 +1,5 @@
 import { arktypeResolver } from "@hookform/resolvers/arktype";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { type } from "arktype";
 import { useForm } from "react-hook-form";
@@ -14,7 +14,9 @@ import { useTRPC } from "~/lib/trpc";
 
 export const Route = createFileRoute("/blog/create")({
   component: RouteComponent,
-  // loader: () => getData(),
+  loader: ({ context }) => {
+    void context.queryClient.ensureQueryData(context.trpc.blog.author.get.queryOptions(undefined));
+  },
 });
 
 const FormArk = type({ authorId: "string", slug: "string" });
@@ -22,7 +24,7 @@ const FormArk = type({ authorId: "string", slug: "string" });
 function RouteComponent() {
   const trpc = useTRPC();
   const router = useRouter();
-  const authorsQuery = useQuery(trpc.blog.author.get.queryOptions(undefined, { initialData: [] }));
+  const authorsQuery = useSuspenseQuery(trpc.blog.author.get.queryOptions(undefined));
 
   const form = useForm<typeof FormArk.infer>({
     defaultValues: { authorId: authorsQuery.data.at(0)?.id ?? "", slug: "" },

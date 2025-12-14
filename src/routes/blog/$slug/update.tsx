@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { CodeEditor } from "~/components/blog/code-editor";
@@ -11,8 +11,11 @@ import { useTRPC } from "~/lib/trpc";
 
 export const Route = createFileRoute("/blog/$slug/update")({
   component: RouteComponent,
-  // loader: ({ params }) => getData({ data: params.slug }),
   ssr: false,
+  // eslint-disable-next-line perfectionist/sort-objects
+  loader: ({ context, params }) => {
+    void context.queryClient.ensureQueryData(context.trpc.blog.post.getBySlug.queryOptions({ slug: params.slug }));
+  },
 });
 
 function RouteComponent() {
@@ -21,7 +24,7 @@ function RouteComponent() {
   const trpc = useTRPC();
   const queryClient = useQueryClient();
 
-  const blogPostQuery = useQuery(trpc.blog.post.getBySlug.queryOptions({ slug }, { initialData: {} }));
+  const blogPostQuery = useSuspenseQuery(trpc.blog.post.getBySlug.queryOptions({ slug }));
 
   const updateBlogMutation = useMutation(
     trpc.blog.post.update.mutationOptions({

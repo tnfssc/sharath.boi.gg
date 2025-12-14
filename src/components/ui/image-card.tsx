@@ -10,12 +10,12 @@ export default function ImageCard({ caption, className, imageUrl }: Props) {
   return (
     <figure
       className={cn(
-        "rounded-base border-border bg-main font-base shadow-shadow w-[250px] overflow-hidden border-2",
+        "w-[250px] overflow-hidden rounded-base border-2 border-border bg-main font-base shadow-shadow",
         className,
       )}
     >
       <img alt="image" className="aspect-4/3 w-full" src={imageUrl} />
-      <figcaption className="text-main-foreground border-border border-t-2 p-4">{caption}</figcaption>
+      <figcaption className="border-t-2 border-border p-4 text-main-foreground">{caption}</figcaption>
     </figure>
   );
 }

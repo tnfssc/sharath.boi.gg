@@ -98,7 +98,7 @@ function RouteComponent() {
       </Button>
 
       {uploadToCdnMutation.isSuccess && (
-        <Alert className="animate-in fade-in mt-4 max-w-md">
+        <Alert className="mt-4 max-w-md animate-in fade-in">
           <CheckCircle2Icon />
           <AlertTitle>Success! Your file has been uploaded</AlertTitle>
           <AlertDescription>

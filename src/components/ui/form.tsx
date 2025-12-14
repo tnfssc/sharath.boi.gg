@@ -86,7 +86,7 @@ function FormDescription({ className, ...props }: React.ComponentProps<"p">) {
 
   return (
     <p
-      className={cn("font-base text-foreground text-sm", className)}
+      className={cn("text-sm font-base text-foreground", className)}
       data-slot="form-description"
       id={formDescriptionId}
       {...props}
@@ -121,7 +121,7 @@ function FormLabel({ className, ...props }: React.ComponentProps<typeof LabelPri
 
 function FormMessage({ className, ...props }: React.ComponentProps<"p">) {
   const { error, formMessageId } = useFormField();
-  const body = error ? String(error.message ?? "") : props.children;
+  const body = error ? (error.message ?? "") : props.children;
 
   if (!body) {
     return null;
@@ -129,7 +129,7 @@ function FormMessage({ className, ...props }: React.ComponentProps<"p">) {
 
   return (
     <p
-      className={cn("font-base text-sm text-red-500", className)}
+      className={cn("text-sm font-base text-red-500", className)}
       data-slot="form-message"
       id={formMessageId}
       {...props}

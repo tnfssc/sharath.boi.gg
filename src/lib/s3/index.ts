@@ -19,7 +19,7 @@ export const S3 = {
       }),
       { aws: { signQuery: true } },
     );
-    const signedUrl = response.url.toString();
+    const signedUrl = response.url;
     return signedUrl;
   },
   put: async (key: string, data: Blob | ReadableStream) => {

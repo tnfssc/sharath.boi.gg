@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
@@ -10,13 +10,15 @@ import { useTRPC } from "~/lib/trpc";
 
 export const Route = createFileRoute("/blog/$slug/")({
   component: RouteComponent,
-  // loader: ({ params }) => getData({ data: params.slug }),
+  loader: ({ context, params }) => {
+    void context.queryClient.ensureQueryData(context.trpc.blog.post.getBySlug.queryOptions({ slug: params.slug }));
+  },
 });
 
 function RouteComponent() {
   const { slug } = Route.useParams();
   const trpc = useTRPC();
-  const blogPostQuery = useQuery(trpc.blog.post.getBySlug.queryOptions({ slug }, { initialData: {} }));
+  const blogPostQuery = useSuspenseQuery(trpc.blog.post.getBySlug.queryOptions({ slug }));
 
   const post = blogPostQuery.data.blog_post;
   const author = blogPostQuery.data.blog_author;
@@ -30,7 +32,7 @@ function RouteComponent() {
           {/* Hero Section */}
           <header className="mb-8">
             {post.heroImg && (
-              <div className="rounded-base mb-6 aspect-video overflow-hidden">
+              <div className="mb-6 aspect-video overflow-hidden rounded-base">
                 <img
                   alt={post.title ?? "Blog post hero image"}
                   className="h-full w-full object-cover"

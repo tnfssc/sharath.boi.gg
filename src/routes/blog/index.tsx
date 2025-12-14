@@ -1,3 +1,4 @@
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
@@ -6,25 +7,28 @@ import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
 import { ScreenCenter } from "~/components/ui/screen-center";
 import { ScrollArea } from "~/components/ui/scroll-area";
+import { useTRPC } from "~/lib/trpc";
 
 export const Route = createFileRoute("/blog/")({
   component: RouteComponent,
-  // loader: () => getData(),
+  loader: ({ context }) => {
+    void context.queryClient.ensureQueryData(context.trpc.blog.post.get.queryOptions());
+  },
 });
 
 function RouteComponent() {
-  const data = Route.useLoaderData();
-
-  return null;
+  const trpc = useTRPC();
+  const publishedPostsQuery = useSuspenseQuery(trpc.blog.post.get.queryOptions());
 
   // Filter only published posts and sort by published date
-  const publishedPosts = data
+  const publishedPosts = publishedPostsQuery.data
     .filter((d) => d.blog_post.publishedAt)
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    .map((d) => ({ ...d, blog_post: { ...d.blog_post, publishedAt: d.blog_post.publishedAt! } }))
     .sort((a, b) => {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const dateA = new Date(a.blog_post.publishedAt!).getTime();
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const dateB = new Date(b.blog_post.publishedAt!).getTime();
+      const dateA = new Date(a.blog_post.publishedAt).getTime();
+
+      const dateB = new Date(b.blog_post.publishedAt).getTime();
       return dateB - dateA; // Most recent first
     });
 
@@ -37,12 +41,12 @@ function RouteComponent() {
               const post = d.blog_post;
               const author = d.blog_author;
               const tags = post.tags ? post.tags.split(",").filter(Boolean) : [];
-              const publishedDate = post.publishedAt ? new Date(post.publishedAt) : null;
+              const publishedDate = post.publishedAt;
 
               return (
                 <Card className="flex flex-col transition-shadow duration-200 hover:shadow-lg" key={post.slug}>
                   {post.heroImg && (
-                    <div className="rounded-t-base aspect-video overflow-hidden">
+                    <div className="aspect-video overflow-hidden rounded-t-base">
                       <img
                         alt={post.title ?? "Blog post hero image"}
                         className="h-full w-full object-cover transition-transform duration-200 hover:scale-105"
@@ -62,15 +66,13 @@ function RouteComponent() {
                           </Avatar>
                           <div className="flex flex-col">
                             <span className="text-sm font-medium">{author.name}</span>
-                            {publishedDate && (
-                              <span className="text-muted-foreground text-xs">
-                                {publishedDate.toLocaleDateString("en-US", {
-                                  day: "numeric",
-                                  month: "long",
-                                  year: "numeric",
-                                })}
-                              </span>
-                            )}
+                            <span className="text-muted-foreground text-xs">
+                              {publishedDate.toLocaleDateString("en-US", {
+                                day: "numeric",
+                                month: "long",
+                                year: "numeric",
+                              })}
+                            </span>
                           </div>
                         </>
                       )}

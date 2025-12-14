@@ -11,7 +11,7 @@ function TabsContent({ className, ...props }: React.ComponentProps<typeof TabsPr
   return (
     <TabsPrimitive.Content
       className={cn(
-        "focus-visible:ring-ring mt-2 ring-offset-white focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none",
+        "mt-2 ring-offset-white focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none",
         className,
       )}
       data-slot="tabs-content"
@@ -24,7 +24,7 @@ function TabsList({ className, ...props }: React.ComponentProps<typeof TabsPrimi
   return (
     <TabsPrimitive.List
       className={cn(
-        "rounded-base border-border bg-background text-foreground inline-flex h-12 items-center justify-center border-2 p-1",
+        "inline-flex h-12 items-center justify-center rounded-base border-2 border-border bg-background p-1 text-foreground",
         className,
       )}
       data-slot="tabs-list"
@@ -37,7 +37,7 @@ function TabsTrigger({ className, ...props }: React.ComponentProps<typeof TabsPr
   return (
     <TabsPrimitive.Trigger
       className={cn(
-        "rounded-base font-heading focus-visible:ring-ring data-[state=active]:bg-main data-[state=active]:text-main-foreground data-[state=active]:border-border inline-flex items-center justify-center gap-1.5 border-2 border-transparent px-2 py-1 text-sm whitespace-nowrap ring-offset-white transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50",
+        "inline-flex items-center justify-center gap-1.5 rounded-base border-2 border-transparent px-2 py-1 text-sm font-heading whitespace-nowrap ring-offset-white transition-all focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 data-[state=active]:border-border data-[state=active]:bg-main data-[state=active]:text-main-foreground",
         className,
       )}
       data-slot="tabs-trigger"

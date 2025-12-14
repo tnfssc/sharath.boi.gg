@@ -240,7 +240,7 @@ function useStore<T>(selector: (state: StoreState) => T): T {
     const state = store.getState();
     const prevValue = lastValueRef.current;
 
-    if (prevValue && prevValue.state === state) {
+    if (prevValue?.state === state) {
       return prevValue.value;
     }
 
@@ -487,10 +487,10 @@ function FileUploadDropzone(props: FileUploadDropzoneProps) {
       {...dropzoneProps}
       className={cn(
         // Neobrutalistic dropzone: bold border, offset shadow, animated hover translate removing shadow
-        "rounded-base border-border bg-background relative flex flex-col items-center justify-center gap-3 border-2 p-6 outline-hidden transition-all select-none data-[disabled]:pointer-events-none",
+        "relative flex flex-col items-center justify-center gap-3 rounded-base border-2 border-border bg-background p-6 outline-hidden transition-all select-none data-[disabled]:pointer-events-none",
         "shadow-shadow",
         // Drag/invalid feedback
-        "data-[dragging]:bg-secondary-background data-[dragging]:border-primary/40",
+        "data-[dragging]:border-primary/40 data-[dragging]:bg-secondary-background",
         "data-[invalid]:border-destructive data-[invalid]:bg-destructive/5",
         // Focus ring to match neobrutal inputs/buttons
         "ring-offset-white focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2",
@@ -530,7 +530,7 @@ function FileUploadList(props: FileUploadListProps) {
       {...listProps}
       className={cn(
         // Keep subtle motion but align spacing with neobrutal UI
-        "data-[state=inactive]:fade-out-0 data-[state=active]:fade-in-0 data-[state=inactive]:slide-out-to-top-2 data-[state=active]:slide-in-from-top-2 data-[state=active]:animate-in data-[state=inactive]:animate-out",
+        "data-[state=active]:animate-in data-[state=active]:fade-in-0 data-[state=active]:slide-in-from-top-2 data-[state=inactive]:animate-out data-[state=inactive]:fade-out-0 data-[state=inactive]:slide-out-to-top-2",
         "flex flex-col gap-3",
         orientation === "horizontal" && "flex-row overflow-x-auto p-2",
         className,
@@ -1013,7 +1013,7 @@ function FileUploadItem(props: FileUploadItemProps) {
         {...itemProps}
         className={cn(
           // Neobrutal list item: strong border, shadow, spacing
-          "rounded-base border-border bg-background shadow-shadow relative flex items-center gap-3 border-2 p-3",
+          "relative flex items-center gap-3 rounded-base border-2 border-border bg-background p-3 shadow-shadow",
           className,
         )}
       >
@@ -1076,19 +1076,19 @@ function FileUploadItemMetadata(props: FileUploadItemMetadataProps) {
       data-slot="file-upload-metadata"
       dir={context.dir}
       {...metadataProps}
-      className={cn("text-foreground flex min-w-0 flex-1 flex-col", className)}
+      className={cn("flex min-w-0 flex-1 flex-col text-foreground", className)}
     >
       {children ?? (
         <>
           <span
-            className={cn("font-base truncate text-sm", size === "sm" && "text-[13px] leading-snug")}
+            className={cn("truncate text-sm font-base", size === "sm" && "text-[13px] leading-snug")}
             id={itemContext.nameId}
           >
             {itemContext.fileState.file.name}
           </span>
           <span
             className={cn(
-              "text-muted-foreground font-base truncate text-xs",
+              "text-muted-foreground truncate text-xs font-base",
               size === "sm" && "text-[11px] leading-snug",
             )}
             id={itemContext.sizeId}
@@ -1096,7 +1096,7 @@ function FileUploadItemMetadata(props: FileUploadItemMetadataProps) {
             {formatBytes(itemContext.fileState.file.size)}
           </span>
           {itemContext.fileState.error && (
-            <span className="text-destructive font-base text-xs" id={itemContext.messageId}>
+            <span className="text-destructive text-xs font-base" id={itemContext.messageId}>
               {itemContext.fileState.error}
             </span>
           )}
@@ -1142,7 +1142,7 @@ function FileUploadItemPreview(props: FileUploadItemPreviewProps) {
       {...previewProps}
       className={cn(
         // Neobrutal preview tile
-        "rounded-base border-border bg-secondary-background relative flex size-12 shrink-0 items-center justify-center overflow-hidden border-2 [&>svg]:size-10",
+        "relative flex size-12 shrink-0 items-center justify-center overflow-hidden rounded-base border-2 border-border bg-secondary-background [&>svg]:size-10",
         className,
       )}
     >
@@ -1180,7 +1180,7 @@ function FileUploadItemProgress(props: FileUploadItemProgressProps) {
           data-slot="file-upload-progress"
           role="progressbar"
           {...progressProps}
-          className={cn("text-foreground absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2", className)}
+          className={cn("absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-foreground", className)}
         >
           <svg
             className="rotate-[-90deg] transform"
@@ -1241,7 +1241,7 @@ function FileUploadItemProgress(props: FileUploadItemProgressProps) {
           {...progressProps}
           className={cn(
             // Neobrutal linear progress: bold track and border
-            "rounded-base border-border bg-secondary-background text-foreground relative h-2.5 w-full overflow-hidden border-2",
+            "relative h-2.5 w-full overflow-hidden rounded-base border-2 border-border bg-secondary-background text-foreground",
             className,
           )}
         >

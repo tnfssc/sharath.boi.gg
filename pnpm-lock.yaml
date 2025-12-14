@@ -104,6 +104,9 @@ importers:
       '@tanstack/react-start':
         specifier: ^1.139.14
         version: 1.139.14(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(rolldown-vite@7.2.10(@types/node@22.19.1)(esbuild@0.25.8)(jiti@2.6.1)(terser@5.43.1)(tsx@4.21.0)(yaml@2.8.2))
+      '@total-typescript/ts-reset':
+        specifier: ^0.6.1
+        version: 0.6.1
       '@trpc/client':
         specifier: ^11.7.2
         version: 11.7.2(@trpc/server@11.7.2(typescript@5.8.3))(typescript@5.8.3)
@@ -167,9 +170,6 @@ importers:
       eslint-plugin-better-tailwindcss:
         specifier: ^3.7.11
         version: 3.7.11(eslint@9.39.1(jiti@2.6.1))(tailwindcss@4.1.17)
-      eslint-plugin-drizzle:
-        specifier: ^0.2.3
-        version: 0.2.3(eslint@9.39.1(jiti@2.6.1))
       eslint-plugin-perfectionist:
         specifier: ^4.15.1
         version: 4.15.1(eslint@9.39.1(jiti@2.6.1))(typescript@5.8.3)
@@ -2468,6 +2468,9 @@ packages:
     resolution: {integrity: sha512-9PImF1d1tovTUIpjFVa0W7Fwj/MHif7BaaczgJJfbv3sDt1Gh+oW9W9uCw9M3ndEJynnp5ZD/TTs0RGubH5ssg==}
     engines: {node: '>=12'}
 
+  '@total-typescript/ts-reset@0.6.1':
+    resolution: {integrity: sha512-cka47fVSo6lfQDIATYqb/vO1nvFfbPw7uWLayIXIhGETj0wcOOlrlkobOMDNQOFr9QOafegUPq13V2+6vtD7yg==}
+
   '@trpc/client@11.7.2':
     resolution: {integrity: sha512-OQxqUMfpDvjcszo9dbnqWQXnW2L5IbrKSz2H7l8s+mVM3EvYw7ztQ/gjFIN3iy0NcamiQfd4eE6qjcb9Lm+63A==}
     peerDependencies:
@@ -3058,11 +3061,6 @@ packages:
     peerDependencies:
       eslint: ^7.0.0 || ^8.0.0 || ^9.0.0
       tailwindcss: ^3.3.0 || ^4.1.6
-
-  eslint-plugin-drizzle@0.2.3:
-    resolution: {integrity: sha512-BO+ymHo33IUNoJlC0rbd7HP9EwwpW4VIp49R/tWQF/d2E1K2kgTf0tCXT0v9MSiBr6gGR1LtPwMLapTKEWSg9A==}
-    peerDependencies:
-      eslint: '>=8.0.0'
 
   eslint-plugin-perfectionist@4.15.1:
     resolution: {integrity: sha512-MHF0cBoOG0XyBf7G0EAFCuJJu4I18wy0zAoT1OHfx2o6EOx1EFTIzr2HGeuZa1kDcusoX0xJ9V7oZmaeFd773Q==}
@@ -6371,6 +6369,8 @@ snapshots:
 
   '@tanstack/virtual-file-routes@1.139.0': {}
 
+  '@total-typescript/ts-reset@0.6.1': {}
+
   '@trpc/client@11.7.2(@trpc/server@11.7.2(typescript@5.8.3))(typescript@5.8.3)':
     dependencies:
       '@trpc/server': 11.7.2(typescript@5.8.3)
@@ -7013,10 +7013,6 @@ snapshots:
       tailwind-csstree: 0.1.4
       tailwindcss: 4.1.17
       tsconfig-paths-webpack-plugin: 4.2.0
-
-  eslint-plugin-drizzle@0.2.3(eslint@9.39.1(jiti@2.6.1)):
-    dependencies:
-      eslint: 9.39.1(jiti@2.6.1)
 
   eslint-plugin-perfectionist@4.15.1(eslint@9.39.1(jiti@2.6.1))(typescript@5.8.3):
     dependencies:

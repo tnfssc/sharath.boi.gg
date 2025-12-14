@@ -6,7 +6,7 @@ function Card({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       className={cn(
-        "rounded-base shadow-shadow border-border bg-background text-foreground font-base flex flex-col gap-6 border-2 py-6",
+        "flex flex-col gap-6 rounded-base border-2 border-border bg-background py-6 font-base text-foreground shadow-shadow",
         className,
       )}
       data-slot="card"
@@ -30,7 +30,7 @@ function CardContent({ className, ...props }: React.ComponentProps<"div">) {
 }
 
 function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
-  return <div className={cn("font-base text-sm", className)} data-slot="card-description" {...props} />;
+  return <div className={cn("text-sm font-base", className)} data-slot="card-description" {...props} />;
 }
 
 function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
@@ -53,7 +53,7 @@ function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
 }
 
 function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
-  return <div className={cn("font-heading leading-none", className)} data-slot="card-title" {...props} />;
+  return <div className={cn("leading-none font-heading", className)} data-slot="card-title" {...props} />;
 }
 
 export { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle };

@@ -22,7 +22,9 @@ export const blogRouter = router({
           })
           .returning()
           .execute();
-        return data[0];
+        const result = data.at(0);
+        if (!result) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to create post" });
+        return result;
       }),
     get: publicProcedure.query(async () => {
       const data = await db.select().from(schema.blog_author).execute();
@@ -44,7 +46,9 @@ export const blogRouter = router({
           .where(orm.eq(schema.blog_author.id, input.id))
           .returning()
           .execute();
-        return data[0];
+        const result = data.at(0);
+        if (!result) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to create post" });
+        return result;
       }),
   },
   post: {
@@ -57,7 +61,9 @@ export const blogRouter = router({
           .values({ authorId: input.authorId, content, id: createId(), slug: input.slug })
           .returning()
           .execute();
-        return data[0];
+        const result = data.at(0);
+        if (!result) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to create post" });
+        return result;
       }),
     get: publicProcedure.query(async () => {
       const data = await db
@@ -108,7 +114,9 @@ export const blogRouter = router({
         .catch((cause: unknown) => {
           throw new TRPCError({ cause, code: "BAD_REQUEST", message: "Failed to update post" });
         });
-      return data[0];
+      const result = data.at(0);
+      if (!result) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to create post" });
+      return result;
     }),
   },
 });

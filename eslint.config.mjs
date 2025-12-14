@@ -5,7 +5,6 @@ import eslintReact from "@eslint-react/eslint-plugin";
 import eslint from "@eslint/js";
 import pluginRouter from "@tanstack/eslint-plugin-router";
 import tailwindcss from "eslint-plugin-better-tailwindcss";
-import drizzle from "eslint-plugin-drizzle";
 import perfectionist from "eslint-plugin-perfectionist";
 import reactCompiler from "eslint-plugin-react-compiler";
 import reactHooks from "eslint-plugin-react-hooks";
@@ -22,12 +21,12 @@ const tailwind = defineConfig({
   settings: { "better-tailwindcss": { entryPoint: "./src/styles/app.css" } },
 });
 
-const drizzleConfig = defineConfig({
-  plugins: { drizzle },
-  rules: drizzle.rules,
-});
-
 export default defineConfig(
+  {
+    // Ignore generated/build output before any type-aware configs run.
+    // This prevents @typescript-eslint's project service from trying to load built JS files.
+    ignores: ["**/node_modules/**", "**/.tanstack/**", "**/.nitro/**", "**/.output/**", "**/dist/**"],
+  },
   {
     languageOptions: {
       parserOptions: {
@@ -46,9 +45,7 @@ export default defineConfig(
   perfectionist.configs["recommended-alphabetical"],
   preferArrayAt.configs.recommended,
   tailwind,
-  // drizzleConfig,
   {
-    ignores: [".nitro", ".output", "node_modules", ".tanstack", "dist"],
     rules: {
       "@typescript-eslint/array-type": ["warn", { default: "generic", readonly: "generic" }],
       "@typescript-eslint/no-confusing-void-expression": "off",

@@ -27,7 +27,7 @@ export const Outline = {
         method: "POST",
       });
       if (!response.ok) throw new Error("Failed to fetch documents", { cause: await response.text() });
-      return (await response.json()) as unknown;
+      return await response.json();
     },
     info: async (collectionId: string) => {
       const response = await fetch(`${serverEnv.OUTLINE_API_BASE}/collections.info`, {
@@ -36,7 +36,7 @@ export const Outline = {
         method: "POST",
       });
       if (!response.ok) throw new Error("Failed to fetch collection info", { cause: await response.text() });
-      return (await response.json()) as unknown;
+      return await response.json();
     },
   },
   documents: {
@@ -47,7 +47,7 @@ export const Outline = {
         method: "POST",
       });
       if (!response.ok) throw new Error("Failed to export document", { cause: await response.text() });
-      return (await response.json()) as unknown;
+      return await response.json();
     },
     info: async (documentId: string) => {
       const response = await fetch(`${serverEnv.OUTLINE_API_BASE}/documents.info`, {
@@ -56,7 +56,7 @@ export const Outline = {
         method: "POST",
       });
       if (!response.ok) throw new Error("Failed to fetch document info", { cause: await response.text() });
-      return (await response.json()) as unknown;
+      return await response.json();
     },
     list: async (collectionId: string) => {
       const response = await fetch(`${serverEnv.OUTLINE_API_BASE}/documents.list`, {

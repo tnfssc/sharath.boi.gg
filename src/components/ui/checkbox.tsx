@@ -8,7 +8,7 @@ function Checkbox({ className, ...props }: React.ComponentProps<typeof CheckboxP
   return (
     <CheckboxPrimitive.Root
       className={cn(
-        "peer outline-border data-[state=checked]:bg-main size-4 shrink-0 ring-offset-white outline-2 focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 focus-visible:outline-hidden disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:text-white",
+        "peer size-4 shrink-0 ring-offset-white outline-2 outline-border focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 focus-visible:outline-hidden disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-main data-[state=checked]:text-white",
         className,
       )}
       data-slot="checkbox"
@@ -18,7 +18,7 @@ function Checkbox({ className, ...props }: React.ComponentProps<typeof CheckboxP
         className={cn("flex items-center justify-center text-current")}
         data-slot="checkbox-indicator"
       >
-        <Check className="text-main-foreground size-4" />
+        <Check className="size-4 text-main-foreground" />
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Root>
   );

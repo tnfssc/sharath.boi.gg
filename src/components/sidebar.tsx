@@ -117,7 +117,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <img alt="Sharath's logo" className="size-7" src="/icon.svg" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="font-heading truncate">sharath</span>
+                  <span className="truncate font-heading">sharath</span>
                   <span className="truncate text-xs">@boi.gg</span>
                 </div>
               </SidebarMenuButton>
@@ -183,7 +183,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     <AvatarFallback>T</AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="font-heading truncate">Socials</span>
+                    <span className="truncate font-heading">Socials</span>
                     <span className="truncate text-xs">Contact me</span>
                   </div>
                 </SidebarMenuButton>
@@ -194,7 +194,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 side={isMobile ? "bottom" : "right"}
                 sideOffset={4}
               >
-                <DropdownMenuLabel className="font-base p-0">
+                <DropdownMenuLabel className="p-0 font-base">
                   <div className="flex items-center justify-between gap-2 px-2 py-1.5 text-sm">
                     <AccountButton />
                     <ModeToggle />
