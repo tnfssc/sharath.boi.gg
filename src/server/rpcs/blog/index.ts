@@ -1,9 +1,6 @@
 import { init as CUID2 } from "@paralleldrive/cuid2";
 
-const createId = (() => {
-  let id: ReturnType<typeof CUID2>;
-  return () => (id ??= CUID2())();
-})();
+const createId = () => CUID2()();
 import { TRPCError } from "@trpc/server";
 import { type } from "arktype";
 

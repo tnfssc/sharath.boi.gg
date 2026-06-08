@@ -5,10 +5,7 @@ import { type } from "arktype";
 import { serverEnv } from "~/env/server";
 import { S3 } from "~/lib/s3";
 import { ownerProcedure, router } from "~/server/trpc";
-const createId = (() => {
-  let id: ReturnType<typeof CUID2>;
-  return () => (id ??= CUID2({ length: 5 }))();
-})();
+const createId = () => CUID2({ length: 5 })();
 
 export const ownerRouter = router({
   uploadToCDN: ownerProcedure.input(type.instanceOf(FormData)).mutation(async ({ input }) => {

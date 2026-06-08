@@ -8,270 +8,270 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './routes/__root'
-import { Route as UploadToCdnRouteImport } from './routes/upload-to-cdn'
-import { Route as PingRouteImport } from './routes/ping'
-import { Route as PastWorkRouteImport } from './routes/past-work'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as BlogIndexRouteImport } from './routes/blog/index'
-import { Route as BlogCreateAuthorRouteImport } from './routes/blog/create-author'
-import { Route as BlogCreateRouteImport } from './routes/blog/create'
-import { Route as BlogSlugIndexRouteImport } from './routes/blog/$slug/index'
-import { Route as BlogSlugUpdateRouteImport } from './routes/blog/$slug/update'
-import { Route as ApiTrpcSplatRouteImport } from './routes/api/trpc/$'
-import { Route as ApiPosthogSplatRouteImport } from './routes/api/posthog/$'
-import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as rootRouteImport } from "./routes/__root";
+import { Route as UploadToCdnRouteImport } from "./routes/upload-to-cdn";
+import { Route as PingRouteImport } from "./routes/ping";
+import { Route as PastWorkRouteImport } from "./routes/past-work";
+import { Route as IndexRouteImport } from "./routes/index";
+import { Route as BlogIndexRouteImport } from "./routes/blog/index";
+import { Route as BlogCreateAuthorRouteImport } from "./routes/blog/create-author";
+import { Route as BlogCreateRouteImport } from "./routes/blog/create";
+import { Route as BlogSlugIndexRouteImport } from "./routes/blog/$slug/index";
+import { Route as BlogSlugUpdateRouteImport } from "./routes/blog/$slug/update";
+import { Route as ApiTrpcSplatRouteImport } from "./routes/api/trpc/$";
+import { Route as ApiPosthogSplatRouteImport } from "./routes/api/posthog/$";
+import { Route as ApiAuthSplatRouteImport } from "./routes/api/auth/$";
 
 const UploadToCdnRoute = UploadToCdnRouteImport.update({
-  id: '/upload-to-cdn',
-  path: '/upload-to-cdn',
+  id: "/upload-to-cdn",
+  path: "/upload-to-cdn",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const PingRoute = PingRouteImport.update({
-  id: '/ping',
-  path: '/ping',
+  id: "/ping",
+  path: "/ping",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const PastWorkRoute = PastWorkRouteImport.update({
-  id: '/past-work',
-  path: '/past-work',
+  id: "/past-work",
+  path: "/past-work",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+  id: "/",
+  path: "/",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const BlogIndexRoute = BlogIndexRouteImport.update({
-  id: '/blog/',
-  path: '/blog/',
+  id: "/blog/",
+  path: "/blog/",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const BlogCreateAuthorRoute = BlogCreateAuthorRouteImport.update({
-  id: '/blog/create-author',
-  path: '/blog/create-author',
+  id: "/blog/create-author",
+  path: "/blog/create-author",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const BlogCreateRoute = BlogCreateRouteImport.update({
-  id: '/blog/create',
-  path: '/blog/create',
+  id: "/blog/create",
+  path: "/blog/create",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const BlogSlugIndexRoute = BlogSlugIndexRouteImport.update({
-  id: '/blog/$slug/',
-  path: '/blog/$slug/',
+  id: "/blog/$slug/",
+  path: "/blog/$slug/",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const BlogSlugUpdateRoute = BlogSlugUpdateRouteImport.update({
-  id: '/blog/$slug/update',
-  path: '/blog/$slug/update',
+  id: "/blog/$slug/update",
+  path: "/blog/$slug/update",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const ApiTrpcSplatRoute = ApiTrpcSplatRouteImport.update({
-  id: '/api/trpc/$',
-  path: '/api/trpc/$',
+  id: "/api/trpc/$",
+  path: "/api/trpc/$",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const ApiPosthogSplatRoute = ApiPosthogSplatRouteImport.update({
-  id: '/api/posthog/$',
-  path: '/api/posthog/$',
+  id: "/api/posthog/$",
+  path: "/api/posthog/$",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
-  id: '/api/auth/$',
-  path: '/api/auth/$',
+  id: "/api/auth/$",
+  path: "/api/auth/$",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/past-work': typeof PastWorkRoute
-  '/ping': typeof PingRoute
-  '/upload-to-cdn': typeof UploadToCdnRoute
-  '/blog/create': typeof BlogCreateRoute
-  '/blog/create-author': typeof BlogCreateAuthorRoute
-  '/blog/': typeof BlogIndexRoute
-  '/api/auth/$': typeof ApiAuthSplatRoute
-  '/api/posthog/$': typeof ApiPosthogSplatRoute
-  '/api/trpc/$': typeof ApiTrpcSplatRoute
-  '/blog/$slug/update': typeof BlogSlugUpdateRoute
-  '/blog/$slug/': typeof BlogSlugIndexRoute
+  "/": typeof IndexRoute;
+  "/past-work": typeof PastWorkRoute;
+  "/ping": typeof PingRoute;
+  "/upload-to-cdn": typeof UploadToCdnRoute;
+  "/blog/create": typeof BlogCreateRoute;
+  "/blog/create-author": typeof BlogCreateAuthorRoute;
+  "/blog/": typeof BlogIndexRoute;
+  "/api/auth/$": typeof ApiAuthSplatRoute;
+  "/api/posthog/$": typeof ApiPosthogSplatRoute;
+  "/api/trpc/$": typeof ApiTrpcSplatRoute;
+  "/blog/$slug/update": typeof BlogSlugUpdateRoute;
+  "/blog/$slug/": typeof BlogSlugIndexRoute;
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/past-work': typeof PastWorkRoute
-  '/ping': typeof PingRoute
-  '/upload-to-cdn': typeof UploadToCdnRoute
-  '/blog/create': typeof BlogCreateRoute
-  '/blog/create-author': typeof BlogCreateAuthorRoute
-  '/blog': typeof BlogIndexRoute
-  '/api/auth/$': typeof ApiAuthSplatRoute
-  '/api/posthog/$': typeof ApiPosthogSplatRoute
-  '/api/trpc/$': typeof ApiTrpcSplatRoute
-  '/blog/$slug/update': typeof BlogSlugUpdateRoute
-  '/blog/$slug': typeof BlogSlugIndexRoute
+  "/": typeof IndexRoute;
+  "/past-work": typeof PastWorkRoute;
+  "/ping": typeof PingRoute;
+  "/upload-to-cdn": typeof UploadToCdnRoute;
+  "/blog/create": typeof BlogCreateRoute;
+  "/blog/create-author": typeof BlogCreateAuthorRoute;
+  "/blog": typeof BlogIndexRoute;
+  "/api/auth/$": typeof ApiAuthSplatRoute;
+  "/api/posthog/$": typeof ApiPosthogSplatRoute;
+  "/api/trpc/$": typeof ApiTrpcSplatRoute;
+  "/blog/$slug/update": typeof BlogSlugUpdateRoute;
+  "/blog/$slug": typeof BlogSlugIndexRoute;
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/past-work': typeof PastWorkRoute
-  '/ping': typeof PingRoute
-  '/upload-to-cdn': typeof UploadToCdnRoute
-  '/blog/create': typeof BlogCreateRoute
-  '/blog/create-author': typeof BlogCreateAuthorRoute
-  '/blog/': typeof BlogIndexRoute
-  '/api/auth/$': typeof ApiAuthSplatRoute
-  '/api/posthog/$': typeof ApiPosthogSplatRoute
-  '/api/trpc/$': typeof ApiTrpcSplatRoute
-  '/blog/$slug/update': typeof BlogSlugUpdateRoute
-  '/blog/$slug/': typeof BlogSlugIndexRoute
+  __root__: typeof rootRouteImport;
+  "/": typeof IndexRoute;
+  "/past-work": typeof PastWorkRoute;
+  "/ping": typeof PingRoute;
+  "/upload-to-cdn": typeof UploadToCdnRoute;
+  "/blog/create": typeof BlogCreateRoute;
+  "/blog/create-author": typeof BlogCreateAuthorRoute;
+  "/blog/": typeof BlogIndexRoute;
+  "/api/auth/$": typeof ApiAuthSplatRoute;
+  "/api/posthog/$": typeof ApiPosthogSplatRoute;
+  "/api/trpc/$": typeof ApiTrpcSplatRoute;
+  "/blog/$slug/update": typeof BlogSlugUpdateRoute;
+  "/blog/$slug/": typeof BlogSlugIndexRoute;
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
+  fileRoutesByFullPath: FileRoutesByFullPath;
   fullPaths:
-    | '/'
-    | '/past-work'
-    | '/ping'
-    | '/upload-to-cdn'
-    | '/blog/create'
-    | '/blog/create-author'
-    | '/blog/'
-    | '/api/auth/$'
-    | '/api/posthog/$'
-    | '/api/trpc/$'
-    | '/blog/$slug/update'
-    | '/blog/$slug/'
-  fileRoutesByTo: FileRoutesByTo
+    | "/"
+    | "/past-work"
+    | "/ping"
+    | "/upload-to-cdn"
+    | "/blog/create"
+    | "/blog/create-author"
+    | "/blog/"
+    | "/api/auth/$"
+    | "/api/posthog/$"
+    | "/api/trpc/$"
+    | "/blog/$slug/update"
+    | "/blog/$slug/";
+  fileRoutesByTo: FileRoutesByTo;
   to:
-    | '/'
-    | '/past-work'
-    | '/ping'
-    | '/upload-to-cdn'
-    | '/blog/create'
-    | '/blog/create-author'
-    | '/blog'
-    | '/api/auth/$'
-    | '/api/posthog/$'
-    | '/api/trpc/$'
-    | '/blog/$slug/update'
-    | '/blog/$slug'
+    | "/"
+    | "/past-work"
+    | "/ping"
+    | "/upload-to-cdn"
+    | "/blog/create"
+    | "/blog/create-author"
+    | "/blog"
+    | "/api/auth/$"
+    | "/api/posthog/$"
+    | "/api/trpc/$"
+    | "/blog/$slug/update"
+    | "/blog/$slug";
   id:
-    | '__root__'
-    | '/'
-    | '/past-work'
-    | '/ping'
-    | '/upload-to-cdn'
-    | '/blog/create'
-    | '/blog/create-author'
-    | '/blog/'
-    | '/api/auth/$'
-    | '/api/posthog/$'
-    | '/api/trpc/$'
-    | '/blog/$slug/update'
-    | '/blog/$slug/'
-  fileRoutesById: FileRoutesById
+    | "__root__"
+    | "/"
+    | "/past-work"
+    | "/ping"
+    | "/upload-to-cdn"
+    | "/blog/create"
+    | "/blog/create-author"
+    | "/blog/"
+    | "/api/auth/$"
+    | "/api/posthog/$"
+    | "/api/trpc/$"
+    | "/blog/$slug/update"
+    | "/blog/$slug/";
+  fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  PastWorkRoute: typeof PastWorkRoute
-  PingRoute: typeof PingRoute
-  UploadToCdnRoute: typeof UploadToCdnRoute
-  BlogCreateRoute: typeof BlogCreateRoute
-  BlogCreateAuthorRoute: typeof BlogCreateAuthorRoute
-  BlogIndexRoute: typeof BlogIndexRoute
-  ApiAuthSplatRoute: typeof ApiAuthSplatRoute
-  ApiPosthogSplatRoute: typeof ApiPosthogSplatRoute
-  ApiTrpcSplatRoute: typeof ApiTrpcSplatRoute
-  BlogSlugUpdateRoute: typeof BlogSlugUpdateRoute
-  BlogSlugIndexRoute: typeof BlogSlugIndexRoute
+  IndexRoute: typeof IndexRoute;
+  PastWorkRoute: typeof PastWorkRoute;
+  PingRoute: typeof PingRoute;
+  UploadToCdnRoute: typeof UploadToCdnRoute;
+  BlogCreateRoute: typeof BlogCreateRoute;
+  BlogCreateAuthorRoute: typeof BlogCreateAuthorRoute;
+  BlogIndexRoute: typeof BlogIndexRoute;
+  ApiAuthSplatRoute: typeof ApiAuthSplatRoute;
+  ApiPosthogSplatRoute: typeof ApiPosthogSplatRoute;
+  ApiTrpcSplatRoute: typeof ApiTrpcSplatRoute;
+  BlogSlugUpdateRoute: typeof BlogSlugUpdateRoute;
+  BlogSlugIndexRoute: typeof BlogSlugIndexRoute;
 }
 
-declare module '@tanstack/react-router' {
+declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
-    '/upload-to-cdn': {
-      id: '/upload-to-cdn'
-      path: '/upload-to-cdn'
-      fullPath: '/upload-to-cdn'
-      preLoaderRoute: typeof UploadToCdnRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/ping': {
-      id: '/ping'
-      path: '/ping'
-      fullPath: '/ping'
-      preLoaderRoute: typeof PingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/past-work': {
-      id: '/past-work'
-      path: '/past-work'
-      fullPath: '/past-work'
-      preLoaderRoute: typeof PastWorkRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/blog/': {
-      id: '/blog/'
-      path: '/blog'
-      fullPath: '/blog/'
-      preLoaderRoute: typeof BlogIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/blog/create-author': {
-      id: '/blog/create-author'
-      path: '/blog/create-author'
-      fullPath: '/blog/create-author'
-      preLoaderRoute: typeof BlogCreateAuthorRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/blog/create': {
-      id: '/blog/create'
-      path: '/blog/create'
-      fullPath: '/blog/create'
-      preLoaderRoute: typeof BlogCreateRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/blog/$slug/': {
-      id: '/blog/$slug/'
-      path: '/blog/$slug'
-      fullPath: '/blog/$slug/'
-      preLoaderRoute: typeof BlogSlugIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/blog/$slug/update': {
-      id: '/blog/$slug/update'
-      path: '/blog/$slug/update'
-      fullPath: '/blog/$slug/update'
-      preLoaderRoute: typeof BlogSlugUpdateRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/trpc/$': {
-      id: '/api/trpc/$'
-      path: '/api/trpc/$'
-      fullPath: '/api/trpc/$'
-      preLoaderRoute: typeof ApiTrpcSplatRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/posthog/$': {
-      id: '/api/posthog/$'
-      path: '/api/posthog/$'
-      fullPath: '/api/posthog/$'
-      preLoaderRoute: typeof ApiPosthogSplatRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/auth/$': {
-      id: '/api/auth/$'
-      path: '/api/auth/$'
-      fullPath: '/api/auth/$'
-      preLoaderRoute: typeof ApiAuthSplatRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+    "/upload-to-cdn": {
+      id: "/upload-to-cdn";
+      path: "/upload-to-cdn";
+      fullPath: "/upload-to-cdn";
+      preLoaderRoute: typeof UploadToCdnRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/ping": {
+      id: "/ping";
+      path: "/ping";
+      fullPath: "/ping";
+      preLoaderRoute: typeof PingRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/past-work": {
+      id: "/past-work";
+      path: "/past-work";
+      fullPath: "/past-work";
+      preLoaderRoute: typeof PastWorkRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/": {
+      id: "/";
+      path: "/";
+      fullPath: "/";
+      preLoaderRoute: typeof IndexRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/blog/": {
+      id: "/blog/";
+      path: "/blog";
+      fullPath: "/blog/";
+      preLoaderRoute: typeof BlogIndexRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/blog/create-author": {
+      id: "/blog/create-author";
+      path: "/blog/create-author";
+      fullPath: "/blog/create-author";
+      preLoaderRoute: typeof BlogCreateAuthorRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/blog/create": {
+      id: "/blog/create";
+      path: "/blog/create";
+      fullPath: "/blog/create";
+      preLoaderRoute: typeof BlogCreateRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/blog/$slug/": {
+      id: "/blog/$slug/";
+      path: "/blog/$slug";
+      fullPath: "/blog/$slug/";
+      preLoaderRoute: typeof BlogSlugIndexRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/blog/$slug/update": {
+      id: "/blog/$slug/update";
+      path: "/blog/$slug/update";
+      fullPath: "/blog/$slug/update";
+      preLoaderRoute: typeof BlogSlugUpdateRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/api/trpc/$": {
+      id: "/api/trpc/$";
+      path: "/api/trpc/$";
+      fullPath: "/api/trpc/$";
+      preLoaderRoute: typeof ApiTrpcSplatRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/api/posthog/$": {
+      id: "/api/posthog/$";
+      path: "/api/posthog/$";
+      fullPath: "/api/posthog/$";
+      preLoaderRoute: typeof ApiPosthogSplatRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/api/auth/$": {
+      id: "/api/auth/$";
+      path: "/api/auth/$";
+      fullPath: "/api/auth/$";
+      preLoaderRoute: typeof ApiAuthSplatRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
   }
 }
 
@@ -288,16 +288,14 @@ const rootRouteChildren: RootRouteChildren = {
   ApiTrpcSplatRoute: ApiTrpcSplatRoute,
   BlogSlugUpdateRoute: BlogSlugUpdateRoute,
   BlogSlugIndexRoute: BlogSlugIndexRoute,
-}
-export const routeTree = rootRouteImport
-  ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+};
+export const routeTree = rootRouteImport._addFileChildren(rootRouteChildren)._addFileTypes<FileRouteTypes>();
 
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
+import type { getRouter } from "./router.tsx";
+import type { createStart } from "@tanstack/react-start";
+declare module "@tanstack/react-start" {
   interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
+    ssr: true;
+    router: Awaited<ReturnType<typeof getRouter>>;
   }
 }
