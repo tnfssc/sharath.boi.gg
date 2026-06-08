@@ -20,12 +20,11 @@ const buttonVariants = cva(
       },
       variant: {
         default:
-          "border-2 border-border bg-main text-main-foreground shadow-shadow hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:shadow-none",
+          "border-2 border-border bg-main text-main-foreground shadow-shadow hover:-translate-reverseBoxShadowX hover:shadow-none",
         neutral:
-          "border-2 border-border bg-secondary-background text-foreground shadow-shadow hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:shadow-none",
+          "border-2 border-border bg-secondary-background text-foreground shadow-shadow hover:-translate-reverseBoxShadowX hover:shadow-none",
         noShadow: "border-2 border-border bg-main text-main-foreground",
-        reverse:
-          "border-2 border-border bg-main text-main-foreground hover:translate-x-reverseBoxShadowX hover:translate-y-reverseBoxShadowY hover:shadow-shadow",
+        reverse: "border-2 border-border bg-main text-main-foreground hover:-translate-boxShadowX hover:shadow-shadow",
       },
     },
   },

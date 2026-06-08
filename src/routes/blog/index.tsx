@@ -49,7 +49,7 @@ function RouteComponent() {
                     <div className="aspect-video overflow-hidden rounded-t-base">
                       <img
                         alt={post.title ?? "Blog post hero image"}
-                        className="h-full w-full object-cover transition-transform duration-200 hover:scale-105"
+                        className="size-full object-cover transition-transform duration-200 hover:scale-105"
                         referrerPolicy="no-referrer"
                         src={post.heroImg}
                       />
@@ -60,7 +60,7 @@ function RouteComponent() {
                     <div className="mb-3 flex items-center gap-2">
                       {author && (
                         <>
-                          <Avatar className="h-8 w-8">
+                          <Avatar className="size-8">
                             <AvatarImage alt={author.name} src={author.image ?? undefined} />
                             <AvatarFallback className="text-xs">{author.name.slice(0, 2).toUpperCase()}</AvatarFallback>
                           </Avatar>

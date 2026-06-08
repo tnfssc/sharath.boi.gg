@@ -410,7 +410,7 @@ function FileUploadDropzone(props: FileUploadDropzoneProps) {
         dataTransfer.items.add(file);
       }
 
-      // eslint-disable-next-line react-compiler/react-compiler
+      // eslint-disable-next-line react-compiler/react-compiler, react-hooks/immutability
       inputElement.files = dataTransfer.files;
       inputElement.dispatchEvent(new Event("change", { bubbles: true }));
     },
@@ -451,6 +451,7 @@ function FileUploadDropzone(props: FileUploadDropzoneProps) {
         dataTransfer.items.add(file);
       }
 
+      // eslint-disable-next-line react-hooks/immutability
       inputElement.files = dataTransfer.files;
       inputElement.dispatchEvent(new Event("change", { bubbles: true }));
     },
@@ -487,10 +488,10 @@ function FileUploadDropzone(props: FileUploadDropzoneProps) {
       {...dropzoneProps}
       className={cn(
         // Neobrutalistic dropzone: bold border, offset shadow, animated hover translate removing shadow
-        "relative flex flex-col items-center justify-center gap-3 rounded-base border-2 border-border bg-background p-6 outline-hidden transition-all select-none data-[disabled]:pointer-events-none",
+        "relative flex flex-col items-center justify-center gap-3 rounded-base border-2 border-border bg-background p-6 outline-hidden transition-all select-none data-disabled:pointer-events-none",
         "shadow-shadow",
         // Drag/invalid feedback
-        "data-[dragging]:border-primary/40 data-[dragging]:bg-secondary-background",
+        "data-[dragging]:border-primary/40 data-dragging:bg-secondary-background",
         "data-[invalid]:border-destructive data-[invalid]:bg-destructive/5",
         // Focus ring to match neobrutal inputs/buttons
         "ring-offset-white focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2",
@@ -702,6 +703,7 @@ function FileUploadRoot(props: FileUploadRootProps) {
           if (validationMessage) {
             rejectionMessage = validationMessage;
             onFileReject?.(file, rejectionMessage);
+            // eslint-disable-next-line no-useless-assignment
             rejected = true;
             invalid = true;
             continue;
@@ -1180,10 +1182,10 @@ function FileUploadItemProgress(props: FileUploadItemProgressProps) {
           data-slot="file-upload-progress"
           role="progressbar"
           {...progressProps}
-          className={cn("absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-foreground", className)}
+          className={cn("absolute top-1/2 left-1/2 -translate-1/2 text-foreground", className)}
         >
           <svg
-            className="rotate-[-90deg] transform"
+            className="-rotate-90 transform"
             fill="none"
             height={size}
             stroke="currentColor"
@@ -1246,7 +1248,7 @@ function FileUploadItemProgress(props: FileUploadItemProgressProps) {
           )}
         >
           <div
-            className="bg-primary h-full w-full flex-1 transition-transform duration-300 ease-linear"
+            className="bg-primary size-full flex-1 transition-transform duration-300 ease-linear"
             style={{
               transform: `translateX(-${100 - itemContext.fileState.progress}%)`,
             }}

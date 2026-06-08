@@ -35,7 +35,7 @@ function RouteComponent() {
               <div className="mb-6 aspect-video overflow-hidden rounded-base">
                 <img
                   alt={post.title ?? "Blog post hero image"}
-                  className="h-full w-full object-cover"
+                  className="size-full object-cover"
                   referrerPolicy="no-referrer"
                   src={post.heroImg}
                 />
@@ -43,14 +43,14 @@ function RouteComponent() {
             )}
 
             <div className="space-y-4">
-              <h1 className="text-4xl leading-tight font-bold md:text-5xl">{post.title ?? "Untitled Post"}</h1>
+              <h1 className="text-4xl/tight font-bold md:text-5xl">{post.title ?? "Untitled Post"}</h1>
 
-              {post.description && <p className="text-muted-foreground text-xl leading-relaxed">{post.description}</p>}
+              {post.description && <p className="text-muted-foreground text-xl/relaxed">{post.description}</p>}
 
               {/* Author Info */}
               {author && (
                 <div className="mb-4 flex items-center gap-3">
-                  <Avatar className="h-12 w-12">
+                  <Avatar className="size-12">
                     <AvatarImage alt={author.name} src={author.image ?? undefined} />
                     <AvatarFallback>{author.name.slice(0, 2).toUpperCase()}</AvatarFallback>
                   </Avatar>

@@ -6,7 +6,7 @@ import * as m from "motion/react-m";
 import { cn } from "~/lib/utils";
 
 export const LoaderZero = (props: LucideProps) => {
-  return <LoaderIcon {...props} className={cn("h-4 w-4 animate-spin", props.className)} />;
+  return <LoaderIcon {...props} className={cn("size-4 animate-spin", props.className)} />;
 };
 
 export const LoaderOne = () => {
@@ -25,7 +25,7 @@ export const LoaderOne = () => {
         animate={{
           y: [0, 10, 0],
         }}
-        className="h-4 w-4 rounded-full border border-neutral-300 bg-gradient-to-b from-neutral-400 to-neutral-300"
+        className="size-4 rounded-full border border-neutral-300 bg-linear-to-b from-neutral-400 to-neutral-300"
         initial={{
           y: 0,
         }}
@@ -35,7 +35,7 @@ export const LoaderOne = () => {
         animate={{
           y: [0, 10, 0],
         }}
-        className="h-4 w-4 rounded-full border border-neutral-300 bg-gradient-to-b from-neutral-400 to-neutral-300"
+        className="size-4 rounded-full border border-neutral-300 bg-linear-to-b from-neutral-400 to-neutral-300"
         initial={{
           y: 0,
         }}
@@ -45,7 +45,7 @@ export const LoaderOne = () => {
         animate={{
           y: [0, 10, 0],
         }}
-        className="h-4 w-4 rounded-full border border-neutral-300 bg-gradient-to-b from-neutral-400 to-neutral-300"
+        className="size-4 rounded-full border border-neutral-300 bg-linear-to-b from-neutral-400 to-neutral-300"
         initial={{
           y: 0,
         }}
@@ -71,7 +71,7 @@ export const LoaderTwo = () => {
         animate={{
           x: [0, 20, 0],
         }}
-        className="h-4 w-4 rounded-full bg-neutral-200 shadow-md dark:bg-neutral-500"
+        className="size-4 rounded-full bg-neutral-200 shadow-md dark:bg-neutral-500"
         initial={{
           x: 0,
         }}
@@ -81,7 +81,7 @@ export const LoaderTwo = () => {
         animate={{
           x: [0, 20, 0],
         }}
-        className="h-4 w-4 -translate-x-2 rounded-full bg-neutral-200 shadow-md dark:bg-neutral-500"
+        className="size-4 -translate-x-2 rounded-full bg-neutral-200 shadow-md dark:bg-neutral-500"
         initial={{
           x: 0,
         }}
@@ -91,7 +91,7 @@ export const LoaderTwo = () => {
         animate={{
           x: [0, 20, 0],
         }}
-        className="h-4 w-4 -translate-x-4 rounded-full bg-neutral-200 shadow-md dark:bg-neutral-500"
+        className="size-4 -translate-x-4 rounded-full bg-neutral-200 shadow-md dark:bg-neutral-500"
         initial={{
           x: 0,
         }}
@@ -104,7 +104,7 @@ export const LoaderTwo = () => {
 export const LoaderThree = () => {
   return (
     <m.svg
-      className="h-20 w-20 stroke-neutral-500 [--fill-final:var(--color-yellow-300)] [--fill-initial:var(--color-neutral-50)] dark:stroke-neutral-100 dark:[--fill-final:var(--color-yellow-500)] dark:[--fill-initial:var(--color-neutral-800)]"
+      className="size-20 stroke-neutral-500 [--fill-final:var(--color-yellow-300)] [--fill-initial:var(--color-neutral-50)] dark:stroke-neutral-100 dark:[--fill-final:var(--color-yellow-500)] dark:[--fill-initial:var(--color-neutral-800)]"
       fill="none"
       height="24"
       stroke="currentColor"
@@ -133,7 +133,7 @@ export const LoaderThree = () => {
 
 export const LoaderFour = ({ text = "Loading..." }: { text?: string }) => {
   return (
-    <div className="relative font-bold text-black [perspective:1000px] dark:text-white">
+    <div className="relative font-bold text-black perspective-[1000px] dark:text-white">
       <m.span
         animate={{
           scaleX: [1, 2, 1],

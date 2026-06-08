@@ -9,13 +9,13 @@ export const NotFound: React.FC<React.PropsWithChildren> = ({ children }) => {
       </div>
       <p className="flex flex-wrap items-center gap-2">
         <button
-          className="rounded bg-emerald-500 px-2 py-1 text-sm font-black text-white uppercase"
+          className="rounded-sm bg-emerald-500 px-2 py-1 text-sm font-black text-white uppercase"
           onClick={() => window.history.back()}
           type="button"
         >
           Go back
         </button>
-        <Link className="rounded bg-cyan-600 px-2 py-1 text-sm font-black text-white uppercase" to="/">
+        <Link className="rounded-sm bg-cyan-600 px-2 py-1 text-sm font-black text-white uppercase" to="/">
           Start Over
         </Link>
       </p>

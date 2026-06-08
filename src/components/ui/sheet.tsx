@@ -43,7 +43,7 @@ function SheetContent({
       >
         {children}
         <SheetPrimitive.Close className="absolute top-4 right-4 rounded-base ring-offset-white focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:outline-none disabled:pointer-events-none">
-          <X className="h-4 w-4" />
+          <X className="size-4" />
           <span className="sr-only">Close</span>
         </SheetPrimitive.Close>
       </SheetPrimitive.Content>

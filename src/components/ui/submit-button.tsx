@@ -18,7 +18,7 @@ export const SubmitButton: React.FC<{ loading?: boolean } & ButtonProps> = ({ ch
       }}
     >
       {loading && (
-        <span className="pointer-events-none absolute top-0 left-0 flex h-full w-full items-center justify-center">
+        <span className="pointer-events-none absolute top-0 left-0 flex size-full items-center justify-center">
           <LoaderZero />
         </span>
       )}

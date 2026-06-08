@@ -5,6 +5,7 @@ import { cn } from "~/lib/utils/index";
 
 export type MarkdownProps = { asChild?: boolean; html: string } & React.ComponentProps<"div">;
 
+// eslint-disable-next-line no-unused-vars
 function Markdown({ asChild = false, className, html, ...props }: MarkdownProps) {
   const Comp = asChild ? Slot : "div";
 
@@ -15,13 +16,13 @@ function Markdown({ asChild = false, className, html, ...props }: MarkdownProps)
         "prose-a:break-all prose-a:no-underline prose-a:hover:underline",
         "prose-img:rounded-xl",
         "prose-pre:mt-0 prose-pre:rounded-t-none",
-        "prose-code:rounded prose-code:border-[#1e1e1e] prose-code:bg-[#1e1e1e] prose-code:p-0.5 prose-code:whitespace-pre prose-code:text-white prose-code:before:hidden prose-code:after:hidden",
+        "prose-code:rounded-sm prose-code:border-[#1e1e1e] prose-code:bg-[#1e1e1e] prose-code:p-0.5 prose-code:whitespace-pre prose-code:text-white prose-code:before:hidden prose-code:after:hidden",
         "defaults-for-unplugin-icons hide-quote-marks-inside-blockquote",
         "prose-a:inline-block prose-img:my-1 prose-img:inline prose-img:shadow-md prose-img:shadow-foreground/20 prose-hr:my-2 [&_summary]:cursor-pointer",
         "prose-img:outline-gray-500 prose-img:hover:outline",
         "thin-scrollbar details-animated",
       )}
-      // eslint-disable-next-line @eslint-react/dom/no-dangerously-set-innerhtml
+      // eslint-disable-next-line @eslint-react/dom-no-dangerously-set-innerhtml
       dangerouslySetInnerHTML={{ __html: html }}
       {...props}
     />

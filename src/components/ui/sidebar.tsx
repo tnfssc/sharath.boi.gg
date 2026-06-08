@@ -73,7 +73,7 @@ function Sidebar({
             <SheetTitle>Sidebar</SheetTitle>
             <SheetDescription>Displays the mobile sidebar.</SheetDescription>
           </SheetHeader>
-          <div className="flex h-full w-full flex-col">{children}</div>
+          <div className="flex size-full flex-col">{children}</div>
         </SheetContent>
       </Sheet>
     );
@@ -104,19 +104,19 @@ function Sidebar({
         className={cn(
           "fixed inset-y-0 z-10 hidden h-svh w-(--sidebar-width) transition-[left,right,width] duration-200 ease-linear md:flex",
           side === "left"
-            ? "left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]"
-            : "right-0 group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]",
+            ? "left-0 group-data-[collapsible=offcanvas]:-left-(--sidebar-width)"
+            : "right-0 group-data-[collapsible=offcanvas]:-right-(--sidebar-width)",
           // Adjust the padding for floating and inset variants.
           variant === "floating" || variant === "inset"
             ? "p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]"
-            : "border-r-border border-l-border group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[side=left]:border-r-2 group-data-[side=right]:border-l-2",
+            : "border-x-border group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[side=left]:border-r-2 group-data-[side=right]:border-l-2",
           className,
         )}
         data-slot="sidebar-container"
         {...props}
       >
         <div
-          className="flex h-full w-full flex-col bg-secondary-background"
+          className="flex size-full flex-col bg-secondary-background"
           data-sidebar="sidebar"
           data-slot="sidebar-inner"
         >
@@ -299,7 +299,7 @@ function SidebarProvider({
   const open = openProp ?? _open;
   const setOpen = React.useCallback(
     (value: ((value: boolean) => boolean) | boolean) => {
-      const openState = typeof value === "function" ? (value as (v: boolean) => boolean)(open) : value;
+      const openState = typeof value === "function" ? value(open) : value;
       if (setOpenProp) {
         setOpenProp(openState);
       } else {
@@ -348,7 +348,7 @@ function SidebarProvider({
     <SidebarContext value={contextValue}>
       <TooltipProvider delayDuration={0}>
         <div
-          className={cn("group/sidebar-wrapper flex min-h-svh w-full has-data-[variant=inset]:bg-sidebar", className)}
+          className={cn("group/sidebar-wrapper has-data-[variant=inset]:bg-sidebar flex min-h-svh w-full", className)}
           data-slot="sidebar-wrapper"
           style={
             {
@@ -541,6 +541,7 @@ function SidebarMenuSkeleton({
 } & React.ComponentProps<"div">) {
   // Random width between 50 to 90%.
   const width = React.useMemo(() => {
+    // eslint-disable-next-line react-hooks/purity
     return `${Math.floor(Math.random() * 40) + 50}%`;
   }, []);
 

@@ -2,15 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import { Link, useMatches } from "@tanstack/react-router";
 import { atom, useAtom } from "jotai";
 import {
+  ExternalLinkIcon,
   FileIcon,
-  GithubIcon,
   HomeIcon,
-  LinkedinIcon,
   MessageSquareTextIcon,
   SparklesIcon,
-  TwitterIcon,
   UploadCloudIcon,
-  YoutubeIcon,
 } from "lucide-react";
 import * as React from "react";
 
@@ -60,7 +57,7 @@ export function PageHeader() {
   const [headerContent] = useAtom(headerContentAtom);
 
   return (
-    <header className="sticky top-0 z-10 flex h-16 shrink-0 items-center gap-2 backdrop-blur-xs transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
+    <header className="sticky top-0 z-10 flex h-16 shrink-0 items-center gap-2 backdrop-blur-xs transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
       <div className="flex w-full items-center justify-between gap-2 px-4">
         <SidebarTrigger className="-ml-1 size-8" />
         {headerContent}
@@ -116,7 +113,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <div className="flex aspect-square size-8 items-center justify-center rounded-full bg-black">
                   <img alt="Sharath's logo" className="size-7" src="/icon.svg" />
                 </div>
-                <div className="grid flex-1 text-left text-sm leading-tight">
+                <div className="grid flex-1 text-left text-sm/tight">
                   <span className="truncate font-heading">sharath</span>
                   <span className="truncate text-xs">@boi.gg</span>
                 </div>
@@ -178,11 +175,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   className="overflow-visible group-data-[state=collapsed]:hover:bg-transparent group-data-[state=collapsed]:hover:outline-0"
                   size="lg"
                 >
-                  <Avatar className="h-8 w-8">
+                  <Avatar className="size-8">
                     <AvatarImage alt="tnfssc" src="https://github.com/tnfssc.png?size=40" />
                     <AvatarFallback>T</AvatarFallback>
                   </Avatar>
-                  <div className="grid flex-1 text-left text-sm leading-tight">
+                  <div className="grid flex-1 text-left text-sm/tight">
                     <span className="truncate font-heading">Socials</span>
                     <span className="truncate text-xs">Contact me</span>
                   </div>
@@ -204,25 +201,25 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <DropdownMenuGroup>
                   <DropdownMenuItem asChild>
                     <a href="https://twitter.com/tnfssc" rel="noreferrer noopener" target="_blank">
-                      <TwitterIcon />
+                      <ExternalLinkIcon />
                       Twitter
                     </a>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <a href="https://www.linkedin.com/in/tnfssc/" rel="noreferrer noopener" target="_blank">
-                      <LinkedinIcon />
+                      <ExternalLinkIcon />
                       LinkedIn
                     </a>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <a href="https://github.com/tnfssc" rel="noreferrer noopener" target="_blank">
-                      <GithubIcon />
+                      <ExternalLinkIcon />
                       GitHub
                     </a>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <a href="https://www.youtube.com/@tnfssc" rel="noreferrer noopener" target="_blank">
-                      <YoutubeIcon />
+                      <ExternalLinkIcon />
                       YouTube
                     </a>
                   </DropdownMenuItem>

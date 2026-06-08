@@ -28,7 +28,7 @@ export const Spotlight = ({
       animate={{
         opacity: 1,
       }}
-      className="pointer-events-none absolute inset-0 h-full w-full"
+      className="pointer-events-none absolute inset-0 size-full"
       initial={{
         opacity: 0,
       }}

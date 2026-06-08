@@ -26,7 +26,6 @@ function TooltipContent({
 }
 
 function TooltipProvider({ delayDuration = 0, ...props }: React.ComponentProps<typeof TooltipPrimitive.Provider>) {
-  // eslint-disable-next-line @eslint-react/no-context-provider
   return <TooltipPrimitive.Provider data-slot="tooltip-provider" delayDuration={delayDuration} {...props} />;
 }
 

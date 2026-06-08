@@ -53,9 +53,9 @@ function Carousel({
       return;
     }
 
-    // eslint-disable-next-line @eslint-react/hooks-extra/no-direct-set-state-in-use-effect
+    // eslint-disable-next-line @eslint-react/set-state-in-effect
     setCanScrollPrev(api.canScrollPrev());
-    // eslint-disable-next-line @eslint-react/hooks-extra/no-direct-set-state-in-use-effect
+    // eslint-disable-next-line @eslint-react/set-state-in-effect
     setCanScrollNext(api.canScrollNext());
   }, []);
 
@@ -93,6 +93,7 @@ function Carousel({
       return;
     }
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     onSelect(api);
     api.on("reInit", onSelect);
     api.on("select", onSelect);
@@ -167,7 +168,7 @@ function CarouselNext({
   return (
     <Button
       className={cn(
-        "absolute h-8 w-8 rounded-base",
+        "absolute size-8 rounded-base",
         orientation === "horizontal"
           ? "top-1/2 -right-12 -translate-y-1/2"
           : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",

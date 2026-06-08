@@ -1,2 +1,14 @@
+overrides:
+  kysely: ~0.28.17
+
 onlyBuiltDependencies:
   - workerd
+  - esbuild
+  - sharp
+  - core-js
+
+allowBuilds:
+  core-js: true
+  esbuild: true
+  sharp: true
+  workerd: true

@@ -59,7 +59,7 @@ function RouteComponent() {
   return (
     <ResizablePanelGroup
       className="rounded-base border-2 border-border text-main-foreground shadow-shadow"
-      direction="horizontal"
+      orientation="horizontal"
     >
       <ResizablePanel defaultSize={50}>
         <CodeEditor

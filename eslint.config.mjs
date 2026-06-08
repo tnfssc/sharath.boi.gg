@@ -1,32 +1,16 @@
 // @ts-check
-
-import preferArrayAt from "@boi.gg/eslint-plugin-prefer-array-at";
 import eslintReact from "@eslint-react/eslint-plugin";
 import eslint from "@eslint/js";
 import pluginRouter from "@tanstack/eslint-plugin-router";
-import tailwindcss from "eslint-plugin-better-tailwindcss";
 import perfectionist from "eslint-plugin-perfectionist";
 import reactCompiler from "eslint-plugin-react-compiler";
 import reactHooks from "eslint-plugin-react-hooks";
-import { defineConfig } from "eslint/config";
+import { defineConfig, globalIgnores } from "eslint/config";
 import tseslint from "typescript-eslint";
 
-const tailwind = defineConfig({
-  plugins: { "better-tailwindcss": tailwindcss },
-  rules: {
-    ...tailwindcss.configs["recommended-warn"].rules,
-    "better-tailwindcss/enforce-consistent-line-wrapping": "off",
-    "better-tailwindcss/no-unregistered-classes": "off",
-  },
-  settings: { "better-tailwindcss": { entryPoint: "./src/styles/app.css" } },
-});
-
 export default defineConfig(
-  {
-    // Ignore generated/build output before any type-aware configs run.
-    // This prevents @typescript-eslint's project service from trying to load built JS files.
-    ignores: ["**/node_modules/**", "**/.tanstack/**", "**/.nitro/**", "**/.output/**", "**/dist/**"],
-  },
+  globalIgnores(["**/node_modules/**", "**/.tanstack/**", "**/.nitro/**", "**/.output/**", "**/dist/**"]),
+
   {
     languageOptions: {
       parserOptions: {
@@ -35,16 +19,30 @@ export default defineConfig(
       },
     },
   },
+
   eslint.configs.recommended,
   tseslint.configs.strictTypeChecked,
   tseslint.configs.stylisticTypeChecked,
   eslintReact.configs["recommended-type-checked"],
-  reactHooks.configs["recommended-latest"],
-  reactCompiler.configs.recommended,
+
+  {
+    // @ts-expect-error - eslint-plugin-react-hooks v7 flat configs incompatible with ESLint v10 Plugin type
+    plugins: { "react-hooks": reactHooks },
+    rules: reactHooks.configs["recommended-latest"].rules,
+  },
+
+  {
+    plugins: { "react-compiler": reactCompiler },
+    rules: reactCompiler.configs.recommended.rules,
+  },
+
   ...pluginRouter.configs["flat/recommended"],
-  perfectionist.configs["recommended-alphabetical"],
-  preferArrayAt.configs.recommended,
-  tailwind,
+
+  {
+    plugins: { perfectionist },
+    rules: perfectionist.configs["recommended-alphabetical"].rules,
+  },
+
   {
     rules: {
       "@typescript-eslint/array-type": ["warn", { default: "generic", readonly: "generic" }],
@@ -68,7 +66,6 @@ export default defineConfig(
       "@typescript-eslint/only-throw-error": "off",
       "@typescript-eslint/prefer-nullish-coalescing": ["warn"],
       "@typescript-eslint/restrict-template-expressions": ["warn", { allowBoolean: true, allowNumber: true }],
-
       "perfectionist/sort-imports": "warn",
       "perfectionist/sort-interfaces": "warn",
       "perfectionist/sort-jsx-props": "warn",
