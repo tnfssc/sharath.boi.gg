@@ -1,6 +1,8 @@
-# [sharath.boi.gg](https://sharath.boi.gg)
+# [sharath.boi.gg](https://sharath.boi.gg) (Deprecated)
 
-This repo has all the code for my site [sharath.boi.gg](https://sharath.boi.gg).
+This site is deprecated. Visit my new site at [sharath.ai](https://sharath.ai).
+
+This repo contains the code for the former [sharath.boi.gg](https://sharath.boi.gg) site.
 The entire website was made using TanStack Start.
 
 ![TanStack Start](https://img.shields.io/badge/TanStack%20Start-0-c93679?style=for-the-badge&logo=zap)
